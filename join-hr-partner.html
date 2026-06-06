@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Join as HR Partner | verQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<style>
+.perks-strip { background: rgba(190,255,0,0.04); border-bottom: 1px solid rgba(190,255,0,0.1); padding: 12px 40px; display: flex; gap: 20px; overflow-x: auto; }
+.perk { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--accent); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.perk::before { content: '✓'; }
+</style>
+</head>
+<body>
+
+<!-- Netlify form detection (hidden) -->
+<form name="hr-partner" netlify netlify-honeypot="bot-field" hidden>
+  <input name="name"/><input name="city"/><input name="email"/>
+  <input name="phone"/><input name="linkedin"/><input name="experience"/>
+  <input name="role"/><input name="industries"/><input name="skills"/>
+  <input name="availability"/><input name="earnings"/><textarea name="notes"></textarea>
+</form>
+
+<nav>
+  <a href="/" class="nav-logo">ver<span>Q</span></a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About Us</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
+  </div>
+  <div class="nav-hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="form-page">
+  <div class="form-card-wrap">
+    <div class="form-card">
+      <div class="perks-strip">
+        <div class="perk">Flexible hours</div>
+        <div class="perk">Pan-India opportunities</div>
+        <div class="perk">Transparent payments</div>
+        <div class="perk">Work from anywhere</div>
+      </div>
+      <div class="form-card-header">
+        <div class="form-card-badge">For HR Professionals</div>
+        <div class="form-card-title">Join as an HR Partner</div>
+        <div class="form-card-sub">Get matched with funded startups. Work flexible. Earn well.</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+
+      <div class="form-card-body">
+        <form id="partnerForm" name="hr-partner" method="POST" data-netlify="true" novalidate>
+          <input type="hidden" name="form-name" value="hr-partner"/>
+          <p hidden><input name="bot-field"/></p>
+
+          <span class="eyebrow" style="margin-bottom:16px;">Personal Details</span>
+          <div class="form-grid">
+            <div class="form-field"><label class="form-label">Full Name <span class="req">*</span></label><input class="form-input" name="name" placeholder="Priya Sharma" required/></div>
+            <div class="form-field"><label class="form-label">Current City <span class="req">*</span></label><input class="form-input" name="city" placeholder="Mumbai" required/></div>
+            <div class="form-field"><label class="form-label">Email <span class="req">*</span></label><input class="form-input" type="email" name="email" placeholder="priya@email.com" required/></div>
+            <div class="form-field"><label class="form-label">Phone <span class="req">*</span></label><input class="form-input" type="tel" name="phone" placeholder="+91 98765 43210" required/></div>
+            <div class="form-field full"><label class="form-label">LinkedIn Profile URL</label><input class="form-input" type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile"/></div>
+          </div>
+
+          <div class="form-divider"></div>
+          <span class="eyebrow" style="margin-bottom:16px;">Your HR Experience</span>
+          <div class="form-grid">
+            <div class="form-field"><label class="form-label">Total Experience <span class="req">*</span></label>
+              <select class="form-select" name="experience" required><option value="" disabled selected>Select years</option><option>0–2 years</option><option>2–5 years</option><option>5–8 years</option><option>8–12 years</option><option>12+ years</option></select>
+            </div>
+            <div class="form-field"><label class="form-label">Current / Last Role</label><input class="form-input" name="role" placeholder="HR Manager / Recruiter"/></div>
+            <div class="form-field full"><label class="form-label">Industries Worked In</label><input class="form-input" name="industries" placeholder="E.g. Fintech, E-commerce, SaaS, Healthcare"/></div>
+          </div>
+
+          <div class="form-divider"></div>
+          <span class="eyebrow" style="margin-bottom:14px;">Skill Areas — Select All That Apply</span>
+          <div class="chips">
+            <div class="chip"><input type="checkbox" name="skills" id="s1" value="Recruitment"/><label for="s1">Recruitment</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s2" value="Payroll"/><label for="s2">Payroll</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s3" value="Compliance"/><label for="s3">Compliance</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s4" value="HR Ops"/><label for="s4">HR Ops</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s5" value="Policy Writing"/><label for="s5">Policy Writing</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s6" value="Employee Engagement"/><label for="s6">Engagement</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s7" value="Training & L&D"/><label for="s7">Training & L&D</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s8" value="HRBP"/><label for="s8">HRBP</label></div>
+            <div class="chip"><input type="checkbox" name="skills" id="s9" value="PF / ESIC"/><label for="s9">PF / ESIC</label></div>
+          </div>
+
+          <div class="form-divider"></div>
+          <span class="eyebrow" style="margin-bottom:14px;">Availability</span>
+          <div class="avail-grid">
+            <div class="avail-chip"><input type="radio" name="availability" id="a1" value="Available Now"/><label for="a1">Available Now</label></div>
+            <div class="avail-chip"><input type="radio" name="availability" id="a2" value="Part-Time Only"/><label for="a2">Part-Time Only</label></div>
+            <div class="avail-chip"><input type="radio" name="availability" id="a3" value="Weekends Only"/><label for="a3">Weekends Only</label></div>
+            <div class="avail-chip"><input type="radio" name="availability" id="a4" value="In 2 Weeks"/><label for="a4">In 2 Weeks</label></div>
+            <div class="avail-chip"><input type="radio" name="availability" id="a5" value="Next Month"/><label for="a5">Next Month</label></div>
+            <div class="avail-chip"><input type="radio" name="availability" id="a6" value="Open to Discuss"/><label for="a6">Open to Discuss</label></div>
+          </div>
+
+          <div class="form-divider"></div>
+          <div class="form-grid">
+            <div class="form-field full"><label class="form-label">Expected Monthly Earnings from verQ</label>
+              <select class="form-select" name="earnings"><option value="" disabled selected>Select expected range</option><option>₹5,000 – ₹10,000/month</option><option>₹10,000 – ₹25,000/month</option><option>₹25,000 – ₹50,000/month</option><option>₹50,000+/month</option><option>Open to discuss</option></select>
+            </div>
+            <div class="form-field full"><label class="form-label">Anything Else You'd Like Us to Know?</label><textarea class="form-textarea" name="notes" placeholder="E.g. I specialise in tech hiring, worked with 5 funded startups, currently freelancing..."></textarea></div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="partnerBtn">Apply to Join verQ</button>
+          <p class="form-note">We review every application personally. You'll hear from us within 48 hours.</p>
+        </form>
+
+        <div class="success-state" id="partnerSuccess">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Application Received!</div>
+          <div class="success-sub">Naveen from verQ will personally review your profile and reach out within 48 hours to discuss next steps.</div>
+        </div>
+      </div>
+      <div class="form-card-footer">Questions? <a href="mailto:info@verq.in">info@verq.in</a> · <a href="tel:+917703897083">+91 7703897083</a></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+  initFormProgress('partnerForm', 'fill');
+  initNetlifyForm('partnerForm', 'partnerSuccess', 'partnerBtn');
+</script>
+</body>
+</html>

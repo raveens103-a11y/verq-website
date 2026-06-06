@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="verQ — India's on-demand HR marketplace. Browse 150+ verified HR professionals. Hire in 48 hours. Fixed fee. No mandate."/>
+<title>verQ | India's On-Demand HR Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<style>
+/* HERO */
+.hero { min-height: 100vh; padding: 120px 5% 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 1; }
+.hero::before { content: ''; position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(168,230,0,0.06) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 10%; right: 5%; width: 400px; height: 400px; background: radial-gradient(ellipse, rgba(0,221,240,0.04) 0%, transparent 70%); pointer-events: none; }
+
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(168,230,0,0.25); background: rgba(168,230,0,0.04); color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 32px; animation: fadeUp 0.6s ease both; }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: pulse 2s infinite; }
+
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(46px, 6.5vw, 84px); font-weight: 700; letter-spacing: -3px; line-height: 1.0; margin-bottom: 24px; animation: fadeUp 0.6s 0.1s ease both; }
+.gradient-text { background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.dim { color: var(--muted); }
+.hero-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 540px; margin: 0 auto 44px; animation: fadeUp 0.6s 0.2s ease both; }
+.hero-sub span { color: var(--white); font-weight: 500; }
+
+/* SEARCH */
+.search-wrap { width: 100%; max-width: 660px; margin-bottom: 36px; animation: fadeUp 0.6s 0.3s ease both; }
+.search-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 8px 8px 8px 20px; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s, box-shadow 0.2s; }
+.search-bar:focus-within { border-color: rgba(168,230,0,0.35); box-shadow: var(--glow); }
+.search-icon { font-size: 18px; opacity: 0.35; flex-shrink: 0; }
+.search-input { flex: 1; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--white); background: transparent; }
+.search-input::placeholder { color: var(--muted); }
+.search-btn { background: var(--accent); color: var(--accent-text); padding: 12px 22px; border-radius: 8px; border: none; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.search-btn:hover { background: var(--accent-dark); }
+.search-tags { display: flex; align-items: center; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+.tag-label { font-size: 12px; color: var(--muted); }
+.stag { border: 1px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; cursor: pointer; text-decoration: none; transition: all 0.15s; }
+.stag:hover { border-color: var(--accent); color: var(--accent); background: rgba(168,230,0,0.04); }
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.35s ease both; margin-bottom: 52px; }
+
+.stats-bar { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); overflow: hidden; animation: fadeUp 0.6s 0.4s ease both; width: 100%; max-width: 680px; }
+.stat-item { flex: 1; text-align: center; padding: 18px 16px; border-right: 1px solid var(--border); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 34px; color: var(--accent); line-height: 1; letter-spacing: 1px; }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* PROFILES */
+.profiles-section { padding: 80px 5%; position: relative; z-index: 1; }
+.section-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
+.view-all { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+.view-all:hover { opacity: 0.75; }
+.profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
+.profile-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+.profile-card:hover { border-color: rgba(168,230,0,0.22); box-shadow: var(--glow); transform: translateY(-4px); }
+.profile-card:hover::before { transform: scaleX(1); }
+.p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.p-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; flex-shrink: 0; }
+.avail-now { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(168,230,0,0.1); color: var(--accent); border: 1px solid rgba(168,230,0,0.2); }
+.avail-soon { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0,221,240,0.08); color: var(--cyan); border: 1px solid rgba(0,221,240,0.2); }
+.p-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.p-role { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.p-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+.ptag { font-size: 10px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
+.p-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+.p-loc { font-size: 11px; color: var(--muted); }
+.p-rate { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); }
+.p-rate span { font-size: 10px; color: var(--muted); font-weight: 400; }
+.p-verified { font-size: 10px; font-weight: 700; color: var(--accent); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+.p-verified::before { content: '✓'; }
+
+/* CATEGORIES */
+.cats-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
+.cat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; cursor: pointer; text-decoration: none; transition: all 0.25s; position: relative; display: block; }
+.cat-card:hover { border-color: rgba(0,221,240,0.25); box-shadow: var(--glow-cyan); transform: translateY(-3px); }
+.cat-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+.cat-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.cat-count { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.cat-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.ctag { font-size: 10px; padding: 2px 7px; border-radius: 3px; border: 1px solid var(--border); color: var(--muted); }
+.cat-arr { position: absolute; top: 22px; right: 22px; font-size: 14px; color: var(--border); transition: all 0.2s; }
+.cat-card:hover .cat-arr { color: var(--cyan); transform: translateX(3px); }
+
+/* HOW IT WORKS */
+.how-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 48px; position: relative; }
+.steps-grid::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+.step-item { text-align: center; padding: 0 12px; }
+.step-circle { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; position: relative; z-index: 1; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+.step-item:hover .step-circle { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(168,230,0,0.18); background: rgba(168,230,0,0.04); }
+.step-title { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* PRICING */
+.pricing-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+.price-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: all 0.25s; }
+.price-card:hover { border-color: rgba(168,230,0,0.22); transform: translateY(-4px); box-shadow: var(--glow); }
+.price-card.featured { border-color: rgba(168,230,0,0.32); background: rgba(168,230,0,0.03); }
+.price-band { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.price-band.hot { color: var(--accent); }
+.price-role { font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.price-ctc { font-size: 12px; color: var(--muted); margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+.price-old { font-size: 11px; color: #2E3545; text-decoration: line-through; margin-bottom: 8px; }
+.price-save { display: inline-block; background: rgba(0,221,240,0.08); color: var(--cyan); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0,221,240,0.18); }
+
+/* SPLIT — FIXED CONTRAST ON LIME CARD */
+.split-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* Lime card — darkened background for better text readability */
+.split-lime {
+  background: #7DB800;   /* Darker, richer green for contrast */
+  border-radius: 20px; padding: 48px 44px;
+  position: relative; overflow: hidden;
+}
+.split-lime::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,0,0,0.1); }
+.split-dark-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px 44px; transition: border-color 0.2s; }
+.split-dark-card:hover { border-color: rgba(0,221,240,0.25); box-shadow: var(--glow-cyan); }
+
+.s-eyebrow-lime { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,0,0,0.55); margin-bottom: 12px; display: block; }
+.s-eyebrow-dark { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: block; }
+.s-title-lime { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 800; color: #000000; letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
+.s-title-dark { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
+.s-title-dark span { color: var(--cyan); }
+.s-desc-lime { font-size: 14px; color: rgba(0,0,0,0.72); line-height: 1.65; margin-bottom: 24px; font-weight: 500; }
+.s-desc-dark { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
+.s-list { list-style: none; margin-bottom: 28px; }
+.s-list li { font-size: 13px; padding: 8px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(0,0,0,0.12); font-weight: 600; color: #000; }
+.split-dark-card .s-list li { border-bottom-color: var(--border); color: var(--white); font-weight: 400; }
+.s-list li::before { content: '→'; font-weight: 900; flex-shrink: 0; color: rgba(0,0,0,0.7); }
+.split-dark-card .s-list li::before { color: var(--accent); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) { .profiles-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .pricing-grid { grid-template-columns: repeat(2, 1fr); } .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } .steps-grid::before { display: none; } }
+@media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } .stats-bar { flex-wrap: wrap; } .stat-item { width: 50%; border-right: none; border-bottom: 1px solid var(--border); } }
+@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } .stat-item { width: 100%; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">ver<span>Q</span></a>
+  <div class="nav-links">
+    <a href="/" class="active">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About Us</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
+  </div>
+  <div class="nav-hamburger" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><div class="badge-dot"></div>India's First HR-Only Marketplace · 150+ Verified Professionals</div>
+  <h1 class="hero-title"><span class="dim">The</span> <span class="gradient-text">smarter way</span><br/>to hire HR talent.</h1>
+  <p class="hero-sub">Browse <span>150+ verified HR professionals</span> — recruiters, payroll specialists, compliance experts. Matched to your startup in <span>48 hours</span>. Fixed fee. No mandate.</p>
+
+  <div class="search-wrap">
+    <div class="search-bar">
+      <div class="search-icon">⌕</div>
+      <input class="search-input" type="text" placeholder="Search — Recruiter, Payroll, Compliance, HRBP..."/>
+      <button class="search-btn" onclick="window.location='/post-requirement.html'">Find HR Partner</button>
+    </div>
+    <div class="search-tags">
+      <span class="tag-label">Popular:</span>
+      <a href="/post-requirement.html" class="stag">Recruiter</a>
+      <a href="/post-requirement.html" class="stag">Payroll</a>
+      <a href="/post-requirement.html" class="stag">Compliance</a>
+      <a href="/post-requirement.html" class="stag">HR Generalist</a>
+      <a href="/post-requirement.html" class="stag">HRBP</a>
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <a href="/post-requirement.html" class="btn-primary">Post a Requirement →</a>
+    <a href="/join-hr-partner.html" class="btn-outline">Join as HR Partner</a>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">HR Partners</div></div>
+    <div class="stat-item"><div class="stat-num">48H</div><div class="stat-label">First Match</div></div>
+    <div class="stat-item"><div class="stat-num">0%</div><div class="stat-label">CTC Commission</div></div>
+    <div class="stat-item"><div class="stat-num">60D</div><div class="stat-label">Replacement</div></div>
+    <div class="stat-item"><div class="stat-num">7D</div><div class="stat-label">First Shortlist</div></div>
+  </div>
+</section>
+
+<!-- PROFILES -->
+<section class="profiles-section" id="browse">
+  <div class="section-header">
+    <div><span class="eyebrow">Featured HR Professionals</span><h2 class="section-title">Ready to work. Right now.</h2></div>
+    <a href="/post-requirement.html" class="view-all">View all →</a>
+  </div>
+  <div class="profiles-grid">
+    <div class="profile-card reveal">
+      <div class="p-top"><div class="p-avatar" style="background:linear-gradient(135deg,#A8E600,#7DB800);color:#000;">P</div><div class="avail-now">Available</div></div>
+      <div class="p-name">Priya Sharma</div><div class="p-role">Senior Technical Recruiter · 6 yrs</div>
+      <div class="p-tags"><span class="ptag">Tech Hiring</span><span class="ptag">SaaS</span><span class="ptag">Fintech</span></div>
+      <div class="p-meta"><div class="p-loc">📍 Mumbai</div><div class="p-rate">₹22,000 <span>/hire</span></div></div>
+      <div class="p-verified">verQ Verified</div>
+    </div>
+    <div class="profile-card reveal">
+      <div class="p-top"><div class="p-avatar" style="background:linear-gradient(135deg,#00DDF0,#00A8B8);color:#000;">R</div><div class="avail-now">Available</div></div>
+      <div class="p-name">Rahul Mehta</div><div class="p-role">Payroll & Compliance · 8 yrs</div>
+      <div class="p-tags"><span class="ptag">Payroll</span><span class="ptag">PF/ESIC</span><span class="ptag">Labour Law</span></div>
+      <div class="p-meta"><div class="p-loc">📍 Bangalore</div><div class="p-rate">₹38,000 <span>/project</span></div></div>
+      <div class="p-verified">verQ Verified</div>
+    </div>
+    <div class="profile-card reveal">
+      <div class="p-top"><div class="p-avatar" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff;">A</div><div class="avail-soon">In 1 week</div></div>
+      <div class="p-name">Anjali Verma</div><div class="p-role">HR Generalist & HRBP · 5 yrs</div>
+      <div class="p-tags"><span class="ptag">HRBP</span><span class="ptag">Policy</span><span class="ptag">Engagement</span></div>
+      <div class="p-meta"><div class="p-loc">📍 Delhi NCR</div><div class="p-rate">₹25,000 <span>/month</span></div></div>
+      <div class="p-verified">verQ Verified</div>
+    </div>
+    <div class="profile-card reveal">
+      <div class="p-top"><div class="p-avatar" style="background:linear-gradient(135deg,#F97316,#EA580C);color:#fff;">S</div><div class="avail-now">Available</div></div>
+      <div class="p-name">Sonal Jain</div><div class="p-role">Talent Acquisition Lead · 7 yrs</div>
+      <div class="p-tags"><span class="ptag">Volume Hiring</span><span class="ptag">D2C</span><span class="ptag">Startups</span></div>
+      <div class="p-meta"><div class="p-loc">📍 Pune</div><div class="p-rate">₹22,000 <span>/hire</span></div></div>
+      <div class="p-verified">verQ Verified</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cats-section">
+  <span class="eyebrow">Browse by Category</span>
+  <h2 class="section-title">Every HR need. One platform.</h2>
+  <div class="cats-grid">
+    <a href="/post-requirement.html" class="cat-card reveal"><span class="cat-arr">→</span><span class="cat-icon">🎯</span><div class="cat-name">Recruitment</div><div class="cat-count">68 professionals</div><div class="cat-tags"><span class="ctag">Tech</span><span class="ctag">Volume</span><span class="ctag">Leadership</span></div></a>
+    <a href="/post-requirement.html" class="cat-card reveal"><span class="cat-arr">→</span><span class="cat-icon">💰</span><div class="cat-name">Payroll & Compliance</div><div class="cat-count">34 professionals</div><div class="cat-tags"><span class="ctag">PF/ESIC</span><span class="ctag">TDS</span><span class="ctag">Labour Law</span></div></a>
+    <a href="/post-requirement.html" class="cat-card reveal"><span class="cat-arr">→</span><span class="cat-icon">📋</span><div class="cat-name">HR Operations</div><div class="cat-count">28 professionals</div><div class="cat-tags"><span class="ctag">HRBP</span><span class="ctag">Policy</span><span class="ctag">Docs</span></div></a>
+    <a href="/post-requirement.html" class="cat-card reveal"><span class="cat-arr">→</span><span class="cat-icon">🎓</span><div class="cat-name">Training & L&D</div><div class="cat-count">21 professionals</div><div class="cat-tags"><span class="ctag">Onboarding</span><span class="ctag">L&D</span><span class="ctag">Culture</span></div></a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <span class="eyebrow">How It Works</span>
+  <h2 class="section-title">From requirement to hire. 5 steps.</h2>
+  <div class="steps-grid">
+    <div class="step-item reveal"><div class="step-circle">01</div><div class="step-title">Post your need</div><div class="step-desc">Role, CTC range, timeline. Under 5 minutes.</div></div>
+    <div class="step-item reveal"><div class="step-circle">02</div><div class="step-title">Match in 48hrs</div><div class="step-desc">We hand-pick 3 verified HR professionals.</div></div>
+    <div class="step-item reveal"><div class="step-circle">03</div><div class="step-title">Review & select</div><div class="step-desc">Profiles with our honest personal assessment.</div></div>
+    <div class="step-item reveal"><div class="step-circle">04</div><div class="step-title">Work tracked</div><div class="step-desc">Contracts and timesheets via verQ.</div></div>
+    <div class="step-item reveal"><div class="step-circle">05</div><div class="step-title">Pay on joining</div><div class="step-desc">100% fee due only on candidate's joining date.</div></div>
+  </div>
+</section>
+
+<!-- PRICING — CTC based, no experience ranges -->
+<section class="pricing-section" id="pricing">
+  <span class="eyebrow">Pricing</span>
+  <h2 class="section-title">Flat fee. No surprises.</h2>
+  <p class="section-sub" style="margin-bottom:0;">Pay only when the candidate joins. Based on CTC — not years of experience.</p>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-band">Junior</div>
+      <div class="price-role">Up to ₹5 LPA</div>
+      <div class="price-ctc">Entry-level roles</div>
+      <div class="price-amount">₹12K</div>
+      <div class="price-old">Consultancy: ₹40–50K</div>
+      <div class="price-save">Save ₹28–38K</div>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-band">Mid-Level</div>
+      <div class="price-role">₹5L – ₹12 LPA</div>
+      <div class="price-ctc">Mid-level roles</div>
+      <div class="price-amount">₹22K</div>
+      <div class="price-old">Consultancy: ₹60K–1.08L</div>
+      <div class="price-save">Save ₹38–86K</div>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-band hot">Most Popular</div>
+      <div class="price-role">₹12L – ₹25 LPA</div>
+      <div class="price-ctc">Senior roles</div>
+      <div class="price-amount">₹38K</div>
+      <div class="price-old">Consultancy: ₹1.08L–2.25L</div>
+      <div class="price-save">Save ₹70K–1.87L</div>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-band">Leadership</div>
+      <div class="price-role">₹25L+ LPA</div>
+      <div class="price-ctc">Head / VP / Director roles</div>
+      <div class="price-amount">₹65K</div>
+      <div class="price-old">Consultancy: ₹2.25L–5L</div>
+      <div class="price-save">Save ₹1.6L–4.35L</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT CTA — FIXED CONTRAST -->
+<div class="split-section">
+  <div class="split-lime reveal">
+    <span class="s-eyebrow-lime">For Startups & Companies</span>
+    <div class="s-title-lime">Hire HR talent on your terms.</div>
+    <div class="s-desc-lime">No retainers. No mandate. No % of CTC. Get verified HR professionals exactly when you need them.</div>
+    <ul class="s-list">
+      <li>First shortlist in 7 working days</li>
+      <li>Flat fee — never % of CTC</li>
+      <li>60-day free replacement</li>
+      <li>No exclusive mandate</li>
+    </ul>
+    <a href="/post-requirement.html" class="btn-dark-lime">Post a Requirement →</a>
+  </div>
+  <div class="split-dark-card reveal">
+    <span class="s-eyebrow-dark">For HR Professionals</span>
+    <div class="s-title-dark">Work flexible. <span>Earn well.</span></div>
+    <div class="s-desc-dark">Get matched with funded startups. Choose your projects, set your availability, grow your portfolio.</div>
+    <ul class="s-list">
+      <li>Access 500+ startup mandates</li>
+      <li>Transparent on-time payments</li>
+      <li>Work from anywhere in India</li>
+      <li>Build a verified portfolio</li>
+    </ul>
+    <a href="/join-hr-partner.html" class="btn-lime-dark">Join as HR Partner →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div><span class="footer-logo">ver<span>Q</span></span><p class="footer-tagline">India's On-Demand HR Marketplace. Connecting startups with verified HR professionals.</p></div>
+    <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/#browse">Browse HR Partners</a></li><li><a href="/pricing.html">Pricing</a></li></ul></div>
+    <div><div class="footer-col-title">For HR Pros</div><ul class="footer-links"><li><a href="/join-hr-partner.html">Join as Partner</a></li><li><a href="/referral.html">Referral Program</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li><a href="/services.html">Services</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 verQ. All rights reserved. Gurugram, Haryana.</div><div class="footer-email"><a href="mailto:info@verq.in">info@verq.in</a></div></div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
