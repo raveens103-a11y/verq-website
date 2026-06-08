@@ -139,7 +139,7 @@
       <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
 
       <div class="form-card-body">
-        <form id="refForm" name="referral" method="POST" data-netlify="true" novalidate>
+        <form id="refForm" name="referral" method="POST" action="/success-referral.html" data-netlify="true">
           <input type="hidden" name="form-name" value="referral"/>
           <p hidden><input name="bot-field"/></p>
 
@@ -197,7 +197,7 @@
 <script src="js/main.js"></script>
 <script>
   initFormProgress('refForm', 'fill');
-  initNetlifyForm('refForm', 'refSuccess', 'refBtn');
+  // form uses native POST redirect
 </script>
 
 <script>

@@ -52,7 +52,7 @@
       <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
 
       <div class="form-card-body">
-        <form id="partnerForm" name="hr-partner" method="POST" data-netlify="true" novalidate>
+        <form id="partnerForm" name="hr-partner" method="POST" action="/success-partner.html" data-netlify="true">
           <input type="hidden" name="form-name" value="hr-partner"/>
           <p hidden><input name="bot-field"/></p>
 
@@ -126,7 +126,7 @@
 <script src="js/main.js"></script>
 <script>
   initFormProgress('partnerForm', 'fill');
-  initNetlifyForm('partnerForm', 'partnerSuccess', 'partnerBtn');
+  // form uses native POST redirect
 </script>
 
 <script>

@@ -41,7 +41,7 @@
       <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
 
       <div class="form-card-body">
-        <form id="reqForm" name="requirement" method="POST" data-netlify="true" novalidate>
+        <form id="reqForm" name="requirement" method="POST" action="/success-requirement.html" data-netlify="true">
           <input type="hidden" name="form-name" value="requirement"/>
           <p hidden><input name="bot-field"/></p>
 
@@ -101,7 +101,7 @@
 <script src="js/main.js"></script>
 <script>
   initFormProgress('reqForm', 'fill');
-  initNetlifyForm('reqForm', 'reqSuccess', 'reqBtn');
+  // form uses native POST redirect
 </script>
 
 <script>
