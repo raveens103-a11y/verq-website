@@ -29,5 +29,36 @@
     <a href="/referral.html" class="s-back">Submit Another Referral</a>
   </div>
 </div>
+
+
+
+<script>
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  const burger = document.getElementById('hamburger');
+  if (!links || !burger) return;
+  const isOpen = links.classList.contains('open');
+  if (isOpen) { links.classList.remove('open'); burger.classList.remove('open'); document.body.style.overflow = ''; }
+  else { links.classList.add('open'); burger.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      document.querySelector('.nav-links')?.classList.remove('open');
+      document.getElementById('hamburger')?.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+  document.addEventListener('click', function(e) {
+    const nav = document.querySelector('nav');
+    const links = document.querySelector('.nav-links');
+    if (nav && !nav.contains(e.target) && links?.classList.contains('open')) {
+      links.classList.remove('open');
+      document.getElementById('hamburger')?.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+});
+</script>
 </body>
 </html>

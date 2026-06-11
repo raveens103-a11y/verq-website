@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Match | verQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<style>
+.page-hero{padding:60px 5% 40px;text-align:center;position:relative;z-index:1;}
+.page-hero::before{content:'';position:absolute;top:10%;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(190,255,0,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(190,255,0,0.25);background:rgba(190,255,0,0.04);color:var(--accent);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px;animation:fadeUp 0.5s ease both;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.5)}}
+.page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:14px;animation:fadeUp 0.5s 0.1s ease both;}
+.gradient-text{background:linear-gradient(135deg,var(--accent) 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.page-sub{font-size:16px;color:var(--muted);line-height:1.7;max-width:500px;margin:0 auto;animation:fadeUp 0.5s 0.2s ease both;}
+.main-wrap{max-width:1100px;margin:0 auto;padding:0 5% 80px;display:grid;grid-template-columns:360px 1fr;gap:32px;position:relative;z-index:1;align-items:start;}
+.req-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:sticky;top:80px;}
+.req-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);background:rgba(190,255,0,0.03);}
+.req-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:3px;}
+.req-sub{font-size:11px;color:var(--muted);}
+.req-body{padding:18px 24px 24px;}
+.f-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block;}
+.f-select,.f-textarea{width:100%;padding:10px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--white);outline:none;transition:border-color 0.2s;appearance:none;margin-bottom:12px;}
+.f-select:focus,.f-textarea:focus{border-color:rgba(190,255,0,0.4);}
+.f-textarea{resize:vertical;min-height:72px;}
+.f-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer;}
+.f-select option{background:var(--surface2);}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.chip-btn{padding:5px 11px;border-radius:100px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;transition:all 0.15s;}
+.chip-btn.active{border-color:var(--accent);background:rgba(190,255,0,0.08);color:var(--accent);}
+.match-btn{width:100%;padding:13px;background:var(--accent);color:var(--space);border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 0 20px rgba(190,255,0,0.2);display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px;}
+.match-btn:hover{box-shadow:0 0 36px rgba(190,255,0,0.4);}
+.match-btn:disabled{opacity:0.5;cursor:not-allowed;box-shadow:none;}
+.err{font-size:12px;color:#F87171;margin-bottom:8px;}
+/* RESULTS */
+.empty-state{background:var(--surface);border:1px dashed var(--border);border-radius:16px;padding:56px 24px;text-align:center;}
+.loading-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:56px 24px;text-align:center;}
+.spinner{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin 1s linear infinite;margin:0 auto 20px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:16px;}
+.load-steps{max-width:260px;margin:0 auto;}
+.load-step{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);}
+.load-step:last-child{border-bottom:none;}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0;transition:all 0.3s;}
+.step-dot.active{background:var(--accent);box-shadow:0 0 8px rgba(190,255,0,0.5);}
+.step-dot.done{background:var(--cyan);}
+.results-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.results-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--white);}
+.results-badge{font-size:11px;font-weight:700;background:rgba(190,255,0,0.08);color:var(--accent);border:1px solid rgba(190,255,0,0.2);padding:4px 12px;border-radius:100px;}
+.new-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:6px;font-size:11px;cursor:pointer;}
+/* MATCH CARDS */
+.match-cards{display:flex;flex-direction:column;gap:14px;}
+.match-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;animation:fadeUp 0.4s ease both;}
+.match-card:hover{border-color:rgba(190,255,0,0.22);}
+.match-card.top{border-color:rgba(190,255,0,0.3);}
+.card-bar{height:3px;transition:width 1s ease;}
+.card-body{padding:18px 20px;}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px;}
+.card-left{display:flex;align-items:flex-start;gap:12px;flex:1;}
+/* CIRCLE AVATAR — same as Image 1 */
+.c-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;flex-shrink:0;}
+.c-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:2px;}
+.c-role{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.c-meta{display:flex;gap:10px;flex-wrap:wrap;}
+.c-meta span{font-size:11px;color:var(--muted);}
+.c-score{text-align:right;flex-shrink:0;}
+.c-score-num{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;line-height:1;}
+.c-score-lbl{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.c-best{font-size:9px;font-weight:700;background:rgba(190,255,0,0.1);color:var(--accent);border:1px solid rgba(190,255,0,0.2);padding:3px 8px;border-radius:4px;margin-top:4px;letter-spacing:1px;display:inline-block;}
+.c-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.c-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid var(--border);color:var(--muted);}
+.c-tag.matched{border-color:rgba(190,255,0,0.3);color:var(--accent);background:rgba(190,255,0,0.05);}
+.c-reasoning{background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.12);border-radius:8px;padding:12px 14px;margin-bottom:12px;}
+.c-ai-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:5px;}
+.c-ai-txt{font-size:12px;color:var(--white);line-height:1.65;opacity:0.88;}
+.c-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+.c-verified{font-size:10px;font-weight:700;color:var(--accent);}
+.c-connect{background:var(--accent);color:var(--space);padding:8px 18px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;border:none;cursor:pointer;text-decoration:none;box-shadow:0 0 12px rgba(190,255,0,0.15);}
+.c-avail-now{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(190,255,0,0.1);color:var(--accent);border:1px solid rgba(190,255,0,0.2);}
+.c-avail-soon{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(0,245,255,0.08);color:var(--cyan);border:1px solid rgba(0,245,255,0.2);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.main-wrap{grid-template-columns:1fr;}.req-panel{position:static;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">ver<span>Q</span></a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/services.html">Services</a>
+    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/about.html">About Us</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
+  </div>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-badge"><div class="badge-dot"></div>Powered by Claude AI · 68 Verified HR Professionals</div>
+  <h1 class="page-title">Find your <span class="gradient-text">perfect HR match.</span></h1>
+  <p class="page-sub" id="heroSub">Describe what you need. Our AI scans all 68 verified HR partners — including their resumes — and returns your top 3 matches with specific evidence-based reasoning.</p>
+</div>
+
+<div class="main-wrap">
+  <!-- FORM PANEL -->
+  <div class="req-panel">
+    <div class="req-header">
+      <div class="req-title">Your Requirement</div>
+      <div class="req-sub">All HR partners work remotely — no location filter needed</div>
+    </div>
+    <div class="req-body">
+      <label class="f-label">HR Support Type *</label>
+      <select class="f-select" id="hrType">
+        <option value="" disabled selected>Select type</option>
+        <option>Recruitment — Single Role</option>
+        <option>Recruitment — Multiple Roles</option>
+        <option>Payroll Setup & Management</option>
+        <option>HR Compliance & Audit</option>
+        <option>HR Generalist Support</option>
+        <option>Policy Writing & Documentation</option>
+        <option>Training & L&D</option>
+        <option>HRBP Support</option>
+      </select>
+
+      <label class="f-label">Industry / Sector *</label>
+      <select class="f-select" id="industry">
+        <option value="" disabled selected>Select industry</option>
+        <option>Fintech / Banking</option>
+        <option>SaaS / Tech</option>
+        <option>E-commerce / D2C</option>
+        <option>Healthcare</option>
+        <option>Manufacturing</option>
+        <option>Logistics</option>
+        <option>AI / Deeptech</option>
+        <option>EdTech</option>
+        <option>BFSI</option>
+        <option>Other</option>
+      </select>
+
+      <label class="f-label">Experience Level</label>
+      <select class="f-select" id="experience">
+        <option value="">Any level</option>
+        <option>Junior (0–3 years)</option>
+        <option>Mid-level (3–6 years)</option>
+        <option>Senior (6–10 years)</option>
+        <option>Leadership (10+ years)</option>
+      </select>
+
+      <label class="f-label">Duration</label>
+      <select class="f-select" id="duration">
+        <option value="">Flexible</option>
+        <option>One-time / Short project</option>
+        <option>1 month</option>
+        <option>2–3 months</option>
+        <option>Ongoing / Retainer</option>
+      </select>
+
+      <label class="f-label">Skills Needed</label>
+      <div class="chips" id="skillChips">
+        <button class="chip-btn" onclick="toggleChip(this,'Recruitment')">Recruitment</button>
+        <button class="chip-btn" onclick="toggleChip(this,'Payroll')">Payroll</button>
+        <button class="chip-btn" onclick="toggleChip(this,'Compliance')">Compliance</button>
+        <button class="chip-btn" onclick="toggleChip(this,'HRBP')">HRBP</button>
+        <button class="chip-btn" onclick="toggleChip(this,'Policy Writing')">Policy</button>
+        <button class="chip-btn" onclick="toggleChip(this,'L&D')">L&D</button>
+        <button class="chip-btn" onclick="toggleChip(this,'PF/ESIC')">PF/ESIC</button>
+        <button class="chip-btn" onclick="toggleChip(this,'HR Ops')">HR Ops</button>
+      </div>
+
+      <label class="f-label">Specific Notes</label>
+      <textarea class="f-textarea" id="notes" placeholder="E.g. Must have e-commerce hiring experience, should start immediately..."></textarea>
+
+      <div class="err" id="errMsg" style="display:none"></div>
+
+      <button class="match-btn" id="matchBtn" onclick="runMatching()">
+        <span>✦</span> Find My AI Match
+      </button>
+    </div>
+  </div>
+
+  <!-- RESULTS PANEL -->
+  <div id="resultsPanel">
+    <div class="empty-state" id="emptyState">
+      <div style="font-size:40px;opacity:0.25;margin-bottom:14px;">✦</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px;opacity:0.5;">AI matching ready</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6;max-width:300px;margin:0 auto;">Select HR Type and Industry, click Find My AI Match. Claude scans all 68 real partners and returns top 3 with specific evidence-based reasoning.</div>
+      <div style="margin-top:20px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);">68</div><div style="font-size:10px;color:var(--muted);margin-top:2px;">Real Partners</div></div>
+        <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);">Resume</div><div style="font-size:10px;color:var(--muted);margin-top:2px;">Company Data</div></div>
+        <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);">0</div><div style="font-size:10px;color:var(--muted);margin-top:2px;">Location Filter</div></div>
+      </div>
+    </div>
+
+    <div class="loading-box" id="loadingState" style="display:none;">
+      <div class="spinner"></div>
+      <div class="load-title">AI finding your matches...</div>
+      <div class="load-steps">
+        <div class="load-step"><div class="step-dot" id="dot1"></div><span>Analysing your requirement</span></div>
+        <div class="load-step"><div class="step-dot" id="dot2"></div><span>Scanning 68 verified HR profiles</span></div>
+        <div class="load-step"><div class="step-dot" id="dot3"></div><span>Checking resume & company data</span></div>
+        <div class="load-step"><div class="step-dot" id="dot4"></div><span>Scoring on match criteria</span></div>
+        <div class="load-step"><div class="step-dot" id="dot5"></div><span>Preparing top 3 results</span></div>
+      </div>
+    </div>
+
+    <div id="resultsHeader" style="display:none;" class="results-hdr">
+      <div class="results-title">Your Top Matches</div>
+      <div style="display:flex;gap:8px;">
+        <div class="results-badge" id="resultsBadge">3 matched</div>
+        <button class="new-btn" onclick="resetUI()">← New Search</button>
+      </div>
+    </div>
+    <div class="match-cards" id="matchCards"></div>
+  </div>
+</div>
+
+<script src="js/hr-partners-data.js"></script>
+<script>
+
+// ── CHIP TOGGLE ──
+const selectedSkills = [];
+function toggleChip(btn, skill) {
+  btn.classList.toggle('active');
+  const idx = selectedSkills.indexOf(skill);
+  if (idx > -1) selectedSkills.splice(idx, 1);
+  else selectedSkills.push(skill);
+}
+
+// ── LOCAL SCORING ──
+function localScore(req) {
+  const iMap = {
+    "fintech / banking":["fintech","bfsi","banking","finance","nbfc"],
+    "saas / tech":["it","saas","tech","software","digital"],
+    "e-commerce / d2c":["e-commerce","ecommerce","retail","d2c","consumer","amazon","flipkart","meesho"],
+    "healthcare":["healthcare","pharma","health","medical","hospital"],
+    "manufacturing":["manufacturing","non-it","industrial","automobile","ceat","birla"],
+    "logistics":["logistics","supply chain","delhivery","delivery","warehouse"],
+    "ai / deeptech":["ai","deeptech","tech","it"],
+    "edtech":["education","edtech","learning"],
+    "bfsi":["bfsi","banking","finance","insurance","nbfc"]
+  };
+  const kws = iMap[req.industry?.toLowerCase()] || [req.industry?.toLowerCase()?.split("/")[0]?.trim()];
+  const NOISE = ["equity & inc","diversity & inc","hr shared services","applicant tracking","bpo for","on demand agility","vlsi hiring","physical design","ecommerce & digital","shared services"];
+
+  return HR_PARTNERS.map(p => {
+    let sc = 0; const ms = [];
+    const allInd = [(p.industriesRaw||""), ...(p.resumeSectors||[])].join(" ").toLowerCase();
+    const indSc = kws.some(k => allInd.includes(k)) ? 35 : allInd.includes("startup") ? 12 : 5;
+    sc += indSc;
+
+    const allSk = [...(p.skills||[]), ...(p.keySkills||[])].join(" ").toLowerCase();
+    const rsk = [...(req.selectedSkills||[])];
+    if (req.hrType?.includes("Recruitment")) rsk.push("Recruitment");
+    if (req.hrType?.includes("Payroll")) rsk.push("Payroll");
+    if (req.hrType?.includes("Compliance")) rsk.push("Compliance");
+    if (req.hrType?.includes("HRBP")) rsk.push("HRBP");
+    if (req.hrType?.includes("Training")||req.hrType?.includes("L&D")) rsk.push("L&D");
+    rsk.forEach(sk => { if (allSk.includes(sk.toLowerCase())) { sc += Math.floor(20/Math.max(rsk.length,1)); ms.push(sk); }});
+    sc = Math.min(sc, 55);
+
+    const expMap = {"Junior (0–3 years)":[0,3],"Mid-level (3–6 years)":[3,6],"Senior (6–10 years)":[6,10],"Leadership (10+ years)":[10,99]};
+    const range = expMap[req.experience] || [0,99];
+    sc += (p.experienceNum >= range[0] && p.experienceNum <= range[1]) ? 25 : 8;
+    sc += p.availability === "Available Now" ? 15 : 10;
+    sc = Math.min(sc, 100);
+
+    const comps = (p.resumeCompanies||[]).filter(c => c && c.length > 4 && !NOISE.some(n => c.toLowerCase().includes(n))).slice(0,2).join(", ");
+    const indList = [...new Set([...(p.industriesRaw||"").split(",").map(s=>s.trim()), ...(p.resumeSectors||[]).map(s=>s.split("/")[0].trim())])].filter(s=>s&&s.length>1).slice(0,4).join(", ");
+    const topSk = (p.keySkills||[]).slice(0,3).join(", ");
+    const tools = p.toolsUsed ? ` Uses ${p.toolsUsed.split(",").slice(0,3).join(", ")}.` : "";
+    const indComment = indSc >= 30 ? `Strong industry match — has worked across ${indList}.` : `Background in ${indList}, with transferable skills applicable.`;
+    const compStr = comps ? ` Previously at: ${comps}.` : "";
+    return {...p, score:sc, matchedSkills:[...new Set(ms)], reasoning:`${indComment}${compStr} Key skills: ${topSk}.${tools} ${p.availability}.`};
+  }).sort((a,b) => b.score - a.score).slice(0,3);
+}
+
+// ── SMART LOCAL MATCHING (no API cost) ──
+async function getAIMatches(req) {
+  return smartLocalMatch(req);
+}
+
+function smartLocalMatch(req) {
+  const NOISE = ["equity & inc","diversity & inc","hr shared services","applicant tracking","bpo for","on demand agility","vlsi hiring","physical design","ecommerce & digital","shared services","data entry","certificate","class x","class xi","nism","axis bank"];
+
+  const iMap = {
+    "fintech / banking":["fintech","bfsi","banking","finance","nbfc","insurance"],
+    "saas / tech":["it","saas","tech","software","digital","cloud","startup"],
+    "e-commerce / d2c":["e-commerce","ecommerce","retail","d2c","consumer","amazon","flipkart","meesho","nykaa","snapdeal"],
+    "healthcare":["healthcare","pharma","health","medical","hospital","diagnostic","apollo","fortis"],
+    "manufacturing":["manufacturing","non-it","industrial","automobile","automotive","ceat","birla","maruti"],
+    "logistics":["logistics","supply chain","delhivery","delivery","warehouse","freight","bluedart"],
+    "ai / deeptech":["ai","deeptech","tech","it","software"],
+    "edtech":["education","edtech","learning","school","byju","unacademy"],
+    "bfsi":["bfsi","banking","finance","insurance","nbfc"]
+  };
+
+  const adjMap = {
+    "e-commerce / d2c": ["saas / tech","logistics","bfsi"],
+    "fintech / banking": ["saas / tech","bfsi"],
+    "saas / tech": ["ai / deeptech","e-commerce / d2c","fintech / banking"],
+    "manufacturing": ["logistics"],
+    "healthcare": ["manufacturing"],
+    "logistics": ["manufacturing","e-commerce / d2c"],
+    "bfsi": ["fintech / banking","saas / tech"]
+  };
+
+  const reqInd = req.industry?.toLowerCase() || "";
+  const kws = iMap[reqInd] || [reqInd.split("/")[0].trim()];
+  const adjKws = (adjMap[reqInd]||[]).flatMap(adj => iMap[adj]||[]);
+
+  const scored = HR_PARTNERS.map(p => {
+    let score = 0;
+    const ms = [];
+
+    // ── INDUSTRY MATCH (35pts) ──
+    const allInd = [(p.industriesRaw||""), ...(p.resumeSectors||[])].join(" ").toLowerCase();
+    const compText = (p.resumeCompanies||[]).join(" ").toLowerCase();
+    const fullText = allInd + " " + compText;
+
+    let indSc = 0;
+    if (kws.some(k => fullText.includes(k))) indSc = 35;
+    else if (adjKws.some(k => fullText.includes(k))) indSc = 18;
+    else if (fullText.includes("startup")) indSc = 10;
+    else indSc = 5;
+    score += indSc;
+
+    // ── SKILL MATCH (25pts) ──
+    const allSk = [...(p.skills||[]),...(p.keySkills||[]),...(p.specsRaw||"").split(",")].join(" ").toLowerCase();
+    const rsk = [...(req.selectedSkills||[])];
+    if (req.hrType?.includes("Recruitment")) rsk.push("Recruitment","Talent","Hiring","Sourcing");
+    if (req.hrType?.includes("Payroll")) rsk.push("Payroll","PF","ESIC","Salary");
+    if (req.hrType?.includes("Compliance")) rsk.push("Compliance","Labour","Policy");
+    if (req.hrType?.includes("HRBP")) rsk.push("HRBP","HR Business","Generalist");
+    if (req.hrType?.includes("Training")||req.hrType?.includes("L&D")) rsk.push("L&D","Training","Learning");
+    if (req.hrType?.includes("Policy")) rsk.push("Policy","Compliance","Documentation");
+    const uniqueRsk = [...new Set(rsk)];
+    let skillHits = 0;
+    uniqueRsk.forEach(sk => {
+      if (allSk.includes(sk.toLowerCase())) { skillHits++; ms.push(sk); }
+    });
+    score += Math.min(Math.round((skillHits / Math.max(uniqueRsk.length,1)) * 25), 25);
+
+    // ── EXPERIENCE MATCH (25pts) ──
+    const expMap = {"Junior (0–3 years)":[0,3],"Mid-level (3–6 years)":[3,6],"Senior (6–10 years)":[6,10],"Leadership (10+ years)":[10,99]};
+    const range = expMap[req.experience] || [0,99];
+    if (p.experienceNum >= range[0] && p.experienceNum <= range[1]) score += 25;
+    else if (p.experienceNum >= range[0]-1 && p.experienceNum <= range[1]+2) score += 15;
+    else score += 5;
+
+    // ── AVAILABILITY (15pts) ──
+    score += p.availability === "Available Now" ? 15 : 8;
+    score = Math.min(score, 100);
+
+    // ── BUILD SPECIFIC REASONING ──
+    const cleanCos = (p.resumeCompanies||[]).filter(c => c && c.length > 4 && !NOISE.some(n => c.toLowerCase().includes(n)));
+    const topCos = cleanCos.slice(0,2);
+    const indList = [...new Set([...(p.industriesRaw||"").split(",").map(s=>s.trim()), ...(p.resumeSectors||[]).map(s=>s.split("/")[0].trim())])].filter(s=>s&&s.length>1).slice(0,4).join(", ");
+    const topSk = [...new Set(ms)].slice(0,3);
+    const allKeySkills = (p.keySkillsRaw||"").split(",").map(s=>s.trim()).filter(Boolean);
+    const displaySkills = topSk.length > 0 ? topSk : allKeySkills.slice(0,3);
+    const tools = p.toolsUsed ? p.toolsUsed.split(",").map(s=>s.trim()).slice(0,3).join(", ") : "";
+
+    let reason = "";
+
+    // Part 1 — Industry + company
+    if (indSc >= 30) {
+      if (topCos.length > 0) {
+        reason += `${p.name.split(" ")[0]} previously worked at ${topCos.join(" and ")}, bringing direct ${req.industry} experience to this role.`;
+      } else {
+        reason += `${p.name.split(" ")[0]} has worked across ${indList}, making them a strong industry match for your ${req.industry} requirement.`;
+      }
+    } else if (indSc >= 15) {
+      reason += `${p.name.split(" ")[0]}'s background spans ${indList}${topCos.length > 0 ? `, including work at ${topCos[0]}` : ""}, with transferable skills applicable to ${req.industry}.`;
+    } else {
+      reason += `${p.name.split(" ")[0]}'s background is primarily in ${indList}${topCos.length > 0 ? ` (${topCos[0]})` : ""}, but brings strong ${displaySkills.slice(0,2).join(" and ")} skills that transfer well.`;
+    }
+
+    // Part 2 — Skills
+    if (displaySkills.length > 0) {
+      reason += ` Covers ${displaySkills.join(", ")}`;
+      if (tools) reason += ` using ${tools}`;
+      reason += ".";
+    }
+
+    // Part 3 — Availability
+    reason += ` ${p.availability === "Available Now" ? "Available immediately." : "Available within 1 week."}`;
+
+    return {...p, score, matchedSkills:[...new Set(ms)], reasoning:reason.trim()};
+  });
+
+  return scored.sort((a,b) => b.score - a.score).slice(0,3);
+}
+
+// ── MAIN RUN ──
+async function runMatching() {
+  const hrType = document.getElementById('hrType').value;
+  const industry = document.getElementById('industry').value;
+  const experience = document.getElementById('experience').value;
+  const duration = document.getElementById('duration').value;
+  const notes = document.getElementById('notes').value;
+  const errEl = document.getElementById('errMsg');
+
+  if (!hrType || !industry) {
+    errEl.textContent = 'Please select HR Type and Industry.';
+    errEl.style.display = 'block'; return;
+  }
+  errEl.style.display = 'none';
+
+  // Show loading
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('loadingState').style.display = 'block';
+  document.getElementById('resultsHeader').style.display = 'none';
+  document.getElementById('matchCards').innerHTML = '';
+  document.getElementById('matchBtn').disabled = true;
+
+  // Animate dots
+  const dots = [1,2,3,4,5];
+  for (let i = 0; i < dots.length; i++) {
+    await new Promise(r => setTimeout(r, 600));
+    if (i > 0) { document.getElementById(`dot${i}`).classList.remove('active'); document.getElementById(`dot${i}`).classList.add('done'); }
+    document.getElementById(`dot${dots[i]}`).classList.add('active');
+  }
+
+  const req = {hrType, industry, experience, duration, notes, selectedSkills:[...selectedSkills]};
+  try {
+    const matches = await getAIMatches(req);
+    showResults(matches);
+  } catch(e) {
+    console.error('AI error:', e);
+    showResults(localScore(req));
+  }
+  document.getElementById('matchBtn').disabled = false;
+}
+
+// ── RENDER CARDS ──
+function showResults(matches) {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('resultsHeader').style.display = 'flex';
+  document.getElementById('resultsBadge').textContent = `${matches.length} matched`;
+
+  const container = document.getElementById('matchCards');
+  container.innerHTML = '';
+
+  matches.forEach((m, idx) => {
+    const isTop = idx === 0;
+    const scoreColor = m.score >= 80 ? '#BEFF00' : m.score >= 65 ? '#00F5FF' : '#6B7280';
+    const barColor = m.score >= 80 ? 'linear-gradient(90deg,#BEFF00,#00F5FF)' : 'linear-gradient(90deg,#00F5FF,#60A5FA)';
+    const availClass = m.availability === 'Available Now' ? 'c-avail-now' : 'c-avail-soon';
+
+    const tagsHTML = (m.skills||[]).map(sk => {
+      const hit = (m.matchedSkills||[]).some(ms => ms.toLowerCase().includes(sk.toLowerCase()) || sk.toLowerCase().includes(ms.toLowerCase()));
+      return `<span class="c-tag ${hit?'matched':''}">${sk}</span>`;
+    }).join('');
+
+    const card = document.createElement('div');
+    card.className = `match-card ${isTop?'top':''}`;
+    card.style.animationDelay = `${idx*0.12}s`;
+    card.innerHTML = `
+      <div class="card-bar" style="width:${m.score}%;background:${barColor}"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-left">
+            <div class="c-avatar" style="background:${m.avatarBg};color:${m.avatarColor}">${m.initials}</div>
+            <div>
+              <div class="c-name">${m.name}</div>
+              <div class="c-role">${m.role} · ${m.experience}</div>
+              <div class="c-meta">
+                <span>🌐 ${m.workMode}</span>
+                <span class="${availClass}">${m.availability}</span>
+              </div>
+            </div>
+          </div>
+          <div class="c-score">
+            <div class="c-score-num" style="color:${scoreColor}">${m.score}%</div>
+            <div class="c-score-lbl">match</div>
+            ${isTop ? '<div class="c-best">BEST MATCH</div>' : ''}
+          </div>
+        </div>
+        <div class="c-tags">${tagsHTML}</div>
+        <div class="c-reasoning">
+          <div class="c-ai-lbl">✦ AI Match Reasoning</div>
+          <div class="c-ai-txt">${m.reasoning}</div>
+        </div>
+        <div class="c-bottom">
+          <span class="c-verified">✓ verQ Verified</span>
+          <a href="mailto:info@verq.in?subject=Interested in ${encodeURIComponent(m.name)}" class="c-connect">Connect →</a>
+        </div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function resetUI() {
+  document.getElementById('emptyState').style.display = 'block';
+  document.getElementById('resultsHeader').style.display = 'none';
+  document.getElementById('matchCards').innerHTML = '';
+}
+
+// ── URL PARAM AUTO-RUN ──
+document.addEventListener('DOMContentLoaded', function() {
+  const q = new URLSearchParams(window.location.search).get('q');
+  if (!q) return;
+  const ql = q.toLowerCase();
+  const el = document.getElementById('hrType');
+  if (ql.includes('recruit')||ql.includes('talent')||ql.includes('hiring')) el.value='Recruitment — Single Role';
+  else if (ql.includes('payroll')) el.value='Payroll Setup & Management';
+  else if (ql.includes('compliance')) el.value='HR Compliance & Audit';
+  else if (ql.includes('hrbp')||ql.includes('generalist')) el.value='HRBP Support';
+  else if (ql.includes('training')||ql.includes('l&d')) el.value='Training & L&D';
+  else if (ql.includes('policy')) el.value='Policy Writing & Documentation';
+  document.querySelectorAll('.chip-btn').forEach(btn => {
+    const skill = btn.getAttribute('onclick').match(/'([^']+)'\)$/)?.[1];
+    if (skill && ql.includes(skill.toLowerCase())) { btn.classList.add('active'); if (!selectedSkills.includes(skill)) selectedSkills.push(skill); }
+  });
+  const sub = document.getElementById('heroSub');
+  if (sub) sub.innerHTML = `Showing matches for <strong style="color:var(--accent)">"${q}"</strong> — add more details or click Find My AI Match now.`;
+  if (el.value) setTimeout(() => runMatching(), 800);
+});
+</script>
+
+<script>
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  const burger = document.getElementById('hamburger');
+  if (!links||!burger) return;
+  const open = links.classList.contains('open');
+  if (open) { links.classList.remove('open'); burger.classList.remove('open'); document.body.style.overflow=''; }
+  else { links.classList.add('open'); burger.classList.add('open'); document.body.style.overflow='hidden'; }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-links')?.classList.remove('open');
+      document.getElementById('hamburger')?.classList.remove('open');
+      document.body.style.overflow='';
+    });
+  });
+  document.addEventListener('click', function(e) {
+    const nav = document.querySelector('nav');
+    const links = document.querySelector('.nav-links');
+    if (nav&&!nav.contains(e.target)&&links?.classList.contains('open')) {
+      links.classList.remove('open');
+      document.getElementById('hamburger')?.classList.remove('open');
+      document.body.style.overflow='';
+    }
+  });
+});
+</script>
+</body>
+</html>
