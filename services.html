@@ -69,6 +69,17 @@
 
 @media (max-width: 900px) { .svc-grid { grid-template-columns: 1fr; } .compare-wrap { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .svc-cta-card { flex-direction:column; align-items:flex-start; padding:32px 24px; } }
+
+/* Services hover glow */
+.svc-card { position:relative; overflow:hidden; transition:border-color 0.3s,box-shadow 0.3s,transform 0.25s; }
+.svc-card:hover { transform:translateY(-3px); }
+.svc-card.svc-recruit:hover { border-color:rgba(190,255,0,0.35) !important; box-shadow:0 0 28px rgba(190,255,0,0.1),0 12px 32px rgba(0,0,0,0.4); }
+.svc-card.svc-payroll:hover { border-color:rgba(0,245,255,0.35) !important; box-shadow:0 0 28px rgba(0,245,255,0.1),0 12px 32px rgba(0,0,0,0.4); }
+.svc-card.svc-ops:hover { border-color:rgba(168,85,247,0.35) !important; box-shadow:0 0 28px rgba(168,85,247,0.1),0 12px 32px rgba(0,0,0,0.4); }
+.svc-card.svc-ld:hover { border-color:rgba(249,115,22,0.35) !important; box-shadow:0 0 28px rgba(249,115,22,0.1),0 12px 32px rgba(0,0,0,0.4); }
+.svc-wm { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+.svc-card > *:not(.svc-wm) { position:relative;z-index:1; }
+
 </style>
 </head>
 <body>
@@ -111,7 +122,8 @@
   <h2 class="section-title" style="margin-bottom:36px;">Four ways we help you grow.</h2>
   <div class="svc-grid">
 
-    <div class="svc-card reveal">
+    <div class="svc-card svc-recruit reveal">
+      <svg class="svc-wm" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="490" cy="50" r="14" fill="none" stroke="rgba(190,255,0,0.07)" stroke-width="1.5"/><circle cx="550" cy="90" r="10" fill="none" stroke="rgba(190,255,0,0.07)" stroke-width="1.5"/><circle cx="510" cy="150" r="13" fill="none" stroke="rgba(190,255,0,0.07)" stroke-width="1.5"/><circle cx="565" cy="170" r="8" fill="none" stroke="rgba(190,255,0,0.06)" stroke-width="1.5"/><circle cx="440" cy="110" r="10" fill="none" stroke="rgba(190,255,0,0.06)" stroke-width="1.5"/><circle cx="575" cy="50" r="7" fill="none" stroke="rgba(190,255,0,0.05)" stroke-width="1"/><line x1="490" y1="50" x2="550" y2="90" stroke="rgba(190,255,0,0.05)" stroke-width="1"/><line x1="550" y1="90" x2="510" y2="150" stroke="rgba(190,255,0,0.05)" stroke-width="1"/><line x1="510" y1="150" x2="565" y2="170" stroke="rgba(190,255,0,0.04)" stroke-width="1"/><line x1="440" y1="110" x2="490" y2="50" stroke="rgba(190,255,0,0.04)" stroke-width="1"/><line x1="440" y1="110" x2="510" y2="150" stroke="rgba(190,255,0,0.04)" stroke-width="1"/><line x1="550" y1="90" x2="575" y2="50" stroke="rgba(190,255,0,0.04)" stroke-width="1"/><circle cx="490" cy="50" r="3.5" fill="rgba(190,255,0,0.14)"/><circle cx="510" cy="150" r="4" fill="rgba(190,255,0,0.16)"/><circle cx="440" cy="110" r="3" fill="rgba(190,255,0,0.12)"/></svg>
       <div class="svc-header">
         <div class="svc-icon-wrap">🎯</div>
         <div class="svc-header-text">
@@ -133,7 +145,8 @@
       </div>
     </div>
 
-    <div class="svc-card reveal">
+    <div class="svc-card svc-payroll reveal">
+      <svg class="svc-wm" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="430" y="180" width="20" height="100" rx="2" fill="rgba(0,245,255,0.07)"/><rect x="458" y="148" width="20" height="132" rx="2" fill="rgba(0,245,255,0.09)"/><rect x="486" y="110" width="20" height="170" rx="2" fill="rgba(0,245,255,0.11)"/><rect x="514" y="136" width="20" height="144" rx="2" fill="rgba(0,245,255,0.08)"/><rect x="542" y="80" width="20" height="200" rx="2" fill="rgba(0,245,255,0.12)"/><polyline points="440,180 468,148 496,110 524,136 552,80" fill="none" stroke="rgba(0,245,255,0.14)" stroke-width="1.5" stroke-linecap="round"/><circle cx="496" cy="110" r="3.5" fill="rgba(0,245,255,0.24)"/><circle cx="552" cy="80" r="4" fill="rgba(0,245,255,0.28)"/><text x="420" y="70" font-size="32" fill="rgba(0,245,255,0.05)" font-family="serif" font-weight="bold">₹</text><text x="490" y="55" font-size="24" fill="rgba(0,245,255,0.04)" font-family="serif">₹</text><text x="555" y="65" font-size="20" fill="rgba(0,245,255,0.05)" font-family="serif">₹</text></svg>
       <div class="svc-header">
         <div class="svc-icon-wrap">💰</div>
         <div class="svc-header-text">
@@ -155,7 +168,8 @@
       </div>
     </div>
 
-    <div class="svc-card reveal">
+    <div class="svc-card svc-ops reveal">
+      <svg class="svc-wm" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M490 30 L570 30 L570 115 Q570 148 530 162 Q490 148 490 115 Z" fill="rgba(168,85,247,0.05)" stroke="rgba(168,85,247,0.09)" stroke-width="1.5"/><path d="M506 92 L525 111 L562 74" fill="none" stroke="rgba(168,85,247,0.18)" stroke-width="2" stroke-linecap="round"/><line x1="415" y1="48" x2="475" y2="48" stroke="rgba(168,85,247,0.05)" stroke-width="0.8"/><line x1="415" y1="68" x2="472" y2="68" stroke="rgba(168,85,247,0.04)" stroke-width="0.8"/><line x1="415" y1="88" x2="475" y2="88" stroke="rgba(168,85,247,0.04)" stroke-width="0.8"/><line x1="415" y1="108" x2="470" y2="108" stroke="rgba(168,85,247,0.04)" stroke-width="0.8"/><line x1="415" y1="128" x2="474" y2="128" stroke="rgba(168,85,247,0.03)" stroke-width="0.8"/><line x1="415" y1="148" x2="468" y2="148" stroke="rgba(168,85,247,0.03)" stroke-width="0.8"/><rect x="415" y="165" width="58" height="12" rx="2" fill="rgba(168,85,247,0.05)"/><rect x="415" y="182" width="44" height="12" rx="2" fill="rgba(168,85,247,0.04)"/></svg>
       <div class="svc-header">
         <div class="svc-icon-wrap">📋</div>
         <div class="svc-header-text">
@@ -177,7 +191,8 @@
       </div>
     </div>
 
-    <div class="svc-card reveal">
+    <div class="svc-card svc-ld reveal">
+      <svg class="svc-wm" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="420" y="200" width="24" height="78" rx="2" fill="rgba(249,115,22,0.09)"/><rect x="450" y="168" width="24" height="110" rx="2" fill="rgba(249,115,22,0.08)"/><rect x="480" y="128" width="24" height="150" rx="2" fill="rgba(249,115,22,0.08)"/><rect x="510" y="155" width="24" height="123" rx="2" fill="rgba(249,115,22,0.07)"/><rect x="540" y="95" width="24" height="183" rx="2" fill="rgba(249,115,22,0.09)"/><polyline points="432,200 462,168 492,128 522,155 552,95" fill="none" stroke="rgba(249,115,22,0.16)" stroke-width="1.5" stroke-linecap="round"/><circle cx="552" cy="95" r="4" fill="rgba(249,115,22,0.26)"/><text x="415" y="58" font-size="16" fill="rgba(249,115,22,0.1)">★</text><text x="452" y="42" font-size="20" fill="rgba(249,115,22,0.08)">★</text><text x="488" y="52" font-size="14" fill="rgba(249,115,22,0.09)">★</text><text x="528" y="44" font-size="18" fill="rgba(249,115,22,0.1)">★</text></svg>
       <div class="svc-header">
         <div class="svc-icon-wrap">⚙️</div>
         <div class="svc-header-text">
@@ -260,6 +275,21 @@
 
 
 
+
+
+<script>
+(function(){
+  const c=document.getElementById('svc-canvas');
+  if(!c) return;
+  const ctx=c.getContext('2d');
+  let W,H,nodes=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  class N{constructor(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;const t=Math.random();this.r=t<.5?Math.random()*1.5+1.5:t<.85?Math.random()*2+3:Math.random()*2+5;this.ba=Math.random()*.38+.18;this.a=this.ba;this.pt=Math.random()*Math.PI*2;this.ps=Math.random()*.022+.008;this.cyan=Math.random()>.88;}}
+  function init(){nodes=[];const n=Math.min(Math.floor(W*H/14000), 55);for(let i=0;i<n;i++)nodes.push(new N());}
+  function draw(){ctx.clearRect(0,0,W,H);nodes.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;if(p.y<-10)p.y=H+10;if(p.y>H+10)p.y=-10;p.pt+=p.ps;const pf=(Math.sin(p.pt)+1)*.5;p.a=p.ba+pf*.2;const r=p.r+pf*1.3;const col=p.cyan?'0,245,255':'190,255,0';const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*4);g.addColorStop(0,`rgba(${col},${p.a*.3})`);g.addColorStop(1,`rgba(${col},0)`);ctx.beginPath();ctx.arc(p.x,p.y,r*4,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle=`rgba(${col},${p.a})`;ctx.fill();});for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;const d=Math.sqrt(dx*dx+dy*dy);if(d<100){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(190,255,0,${.1*(1-d/100)})`;ctx.lineWidth=.7;ctx.stroke();}}}requestAnimationFrame(draw);}
+  resize();init();draw();window.addEventListener('resize',()=>{resize();init();});
+})();
+</script>
 
 </body>
 </html>

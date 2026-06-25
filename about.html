@@ -131,6 +131,18 @@
   .stats4 { grid-template-columns: repeat(2, 1fr); }
   .page-hero { padding: 120px 5% 40px; }
 }
+
+/* About page card styles */
+.val-card { position:relative; overflow:hidden; transition:all 0.25s; }
+.val-card:hover { transform:translateY(-3px); }
+.val-card.vc1:hover { border-color:rgba(190,255,0,0.28) !important; box-shadow:0 0 18px rgba(190,255,0,0.07); }
+.val-card.vc2:hover { border-color:rgba(0,245,255,0.28) !important; box-shadow:0 0 18px rgba(0,245,255,0.07); }
+.val-card.vc3:hover { border-color:rgba(168,85,247,0.28) !important; box-shadow:0 0 18px rgba(168,85,247,0.07); }
+.about-wm { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+.val-card > *:not(.about-wm), .founder-card > *:not(.about-wm) { position:relative;z-index:1; }
+.founder-card { position:relative; overflow:hidden; transition:box-shadow 0.3s; }
+.founder-card:hover { box-shadow:0 0 24px rgba(190,255,0,0.08); }
+
 </style>
 </head>
 <body>
@@ -236,17 +248,20 @@
   <span class="eyebrow">What We Stand For</span>
   <h2 class="section-title">Three things we<br/>never compromise on.</h2>
   <div class="values-grid">
-    <div class="val-card reveal">
+    <div class="val-card vc1 reveal">
+  <svg class="about-wm" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M228 20 L280 20 L280 85 Q280 110 254 122 Q228 110 228 85 Z" fill="rgba(190,255,0,0.05)" stroke="rgba(190,255,0,0.09)" stroke-width="1.2"/><path d="M240 62 L252 74 L273 52" fill="none" stroke="rgba(190,255,0,0.2)" stroke-width="1.8" stroke-linecap="round"/><line x1="200" y1="35" x2="222" y2="35" stroke="rgba(190,255,0,0.05)" stroke-width="0.8"/><line x1="200" y1="50" x2="222" y2="50" stroke="rgba(190,255,0,0.04)" stroke-width="0.8"/><line x1="200" y1="65" x2="222" y2="65" stroke="rgba(190,255,0,0.04)" stroke-width="0.8"/><line x1="200" y1="80" x2="222" y2="80" stroke="rgba(190,255,0,0.04)" stroke-width="0.8"/></svg>
       <span class="val-icon">🎯</span>
       <div class="val-title">Accountability over promises</div>
       <div class="val-desc">We guarantee a first shortlist in 7 days and a free replacement in 60 days. If we don't deliver, we don't charge. Simple.</div>
     </div>
-    <div class="val-card reveal">
+    <div class="val-card vc2 reveal">
+  <svg class="about-wm" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="248" cy="72" r="36" fill="none" stroke="rgba(0,245,255,0.07)" stroke-width="1.5"/><circle cx="248" cy="72" r="22" fill="none" stroke="rgba(0,245,255,0.09)" stroke-width="1.5"/><circle cx="248" cy="72" r="6" fill="rgba(0,245,255,0.18)"/><line x1="248" y1="36" x2="248" y2="24" stroke="rgba(0,245,255,0.1)" stroke-width="1.2"/><line x1="248" y1="108" x2="248" y2="120" stroke="rgba(0,245,255,0.1)" stroke-width="1.2"/><line x1="212" y1="72" x2="200" y2="72" stroke="rgba(0,245,255,0.1)" stroke-width="1.2"/><line x1="284" y1="72" x2="296" y2="72" stroke="rgba(0,245,255,0.1)" stroke-width="1.2"/><line x1="248" y1="72" x2="268" y2="56" stroke="rgba(0,245,255,0.18)" stroke-width="1.5" stroke-linecap="round"/></svg>
       <span class="val-icon">⚖️</span>
       <div class="val-title">Fair pricing, no surprises</div>
       <div class="val-desc">Flat fee per hire. Known upfront. Never a percentage of CTC that punishes you for making a good offer. Transparent from day one.</div>
     </div>
-    <div class="val-card reveal">
+    <div class="val-card vc3 reveal">
+  <svg class="about-wm" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="225" cy="55" r="10" fill="none" stroke="rgba(168,85,247,0.12)" stroke-width="1.2"/><circle cx="268" cy="78" r="8" fill="none" stroke="rgba(168,85,247,0.1)" stroke-width="1.2"/><circle cx="248" cy="108" r="11" fill="rgba(168,85,247,0.06)" stroke="rgba(168,85,247,0.14)" stroke-width="1.2"/><circle cx="285" cy="58" r="7" fill="none" stroke="rgba(168,85,247,0.09)" stroke-width="1"/><line x1="225" y1="55" x2="268" y2="78" stroke="rgba(168,85,247,0.09)" stroke-width="0.8"/><line x1="268" y1="78" x2="248" y2="108" stroke="rgba(168,85,247,0.09)" stroke-width="0.8"/><line x1="225" y1="55" x2="285" y2="58" stroke="rgba(168,85,247,0.08)" stroke-width="0.8"/><circle cx="248" cy="108" r="3.5" fill="rgba(168,85,247,0.28)"/></svg>
       <span class="val-icon">🤝</span>
       <div class="val-title">Both sides win</div>
       <div class="val-desc">Startups get quality HR support. HR professionals get fair pay, flexibility, and a professional platform. A marketplace only works when both sides genuinely benefit.</div>
@@ -294,6 +309,61 @@
 
 <script src="js/main.js"></script>
 
+
+
+<script>
+(function(){
+  const c=document.getElementById('about-canvas');
+  if(!c) return;
+  const ctx=c.getContext('2d');
+  let W,H,nodes=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  class N{
+    constructor(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      // Very slow — quarter speed
+      this.vx=(Math.random()-.5)*.1;this.vy=(Math.random()-.5)*.1;
+      this.r=Math.random()*2.5+1.5;
+      this.a=Math.random()*.25+.1;
+      this.pulseTimer=Math.random()*400+100;
+      this.pulsing=false;this.pulseA=0;
+    }
+  }
+  function init(){nodes=[];const n=Math.min(Math.floor(W*H/14000), 35);for(let i=0;i<n;i++)nodes.push(new N());}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;
+      if(p.y<-10)p.y=H+10;if(p.y>H+10)p.y=-10;
+      p.pulseTimer--;
+      if(p.pulseTimer<=0){p.pulseTimer=Math.random()*500+200;if(Math.random()<.14){p.pulsing=true;p.pulseA=0;}}
+      let dr=p.r,da=p.a;
+      if(p.pulsing){
+        p.pulseA+=0.055;
+        const pf=Math.sin(p.pulseA);
+        if(p.pulseA>Math.PI)p.pulsing=false;
+        dr=p.r+pf*7;da=p.a+pf*.28;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r+pf*11,0,Math.PI*2);
+        ctx.strokeStyle=`rgba(190,255,0,${Math.max(0,(1-p.pulseA/Math.PI)*.1)})`;ctx.lineWidth=1;ctx.stroke();
+      }
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,dr*4);
+      g.addColorStop(0,`rgba(190,255,0,${da*.28})`);g.addColorStop(1,`rgba(190,255,0,0)`);
+      ctx.beginPath();ctx.arc(p.x,p.y,dr*4,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,dr,0,Math.PI*2);ctx.fillStyle=`rgba(190,255,0,${da})`;ctx.fill();
+    });
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<85){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=`rgba(190,255,0,${.06*(1-d/85)})`;ctx.lineWidth=.5;ctx.stroke();}
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  resize();init();draw();window.addEventListener('resize',()=>{resize();init();});
+})();
+</script>
 
 </body>
 </html>
