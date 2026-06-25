@@ -133,13 +133,13 @@ nav {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 40px !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
     z-index: 999;
     border-top: 1px solid var(--border);
     overflow-y: auto;
-    padding: 40px 24px;
+    padding: 0;
     animation: slideDown 0.3s ease;
   }
 
@@ -154,14 +154,15 @@ nav {
     font-weight: 600 !important;
     color: var(--white) !important;
     text-decoration: none;
-    text-align: center;
+    text-align: left;
     width: 100%;
-    padding: 8px 0 !important;
+    padding: 18px 24px !important;
     border-radius: 0 !important;
     background: transparent !important;
     border-bottom: 1px solid var(--border);
     white-space: normal !important;
     transition: all 0.2s;
+    display: block;
   }
 
   .nav-links a:last-child {
@@ -176,14 +177,15 @@ nav {
   .nav-links .nav-cta {
     background: var(--accent) !important;
     color: #0A0A0F !important;
-    padding: 16px 40px !important;
-    border-radius: 8px !important;
+    padding: 16px 24px !important;
+    border-radius: 6px !important;
     font-size: 16px !important;
     font-weight: 700 !important;
-    margin-top: 8px;
+    margin: 16px 24px 24px !important;
     border-bottom: none !important;
     box-shadow: 0 0 24px rgba(168,230,0,0.3);
     width: auto !important;
+    text-align: center;
   }
 
   @keyframes slideDown {
