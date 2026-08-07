@@ -104,16 +104,15 @@ nav {
     display: none !important;
     position: fixed;
     top: 64px; left: 0; right: 0; height: calc(100vh - 64px);
-    background: rgba(10,10,15,0.98);
+    background: #0A0A0F;
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: clamp(12px, 3vh, 40px) !important;
+    gap: 0 !important;
     z-index: 999;
     border-top: 1px solid var(--border);
     overflow-y: auto;
-    padding: clamp(16px, 4vh, 40px) 24px;
+    padding: 0 !important;
   }
   .nav-links.open {
     display: flex !important;
@@ -121,31 +120,35 @@ nav {
   }
   .nav-links a {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 24px !important;
+    font-size: 18px !important;
     font-weight: 600 !important;
     color: var(--white) !important;
     text-decoration: none;
-    text-align: center;
-    width: 100%;
-    padding: 8px 0 !important;
+    text-align: left;
+    width: 100% !important;
+    padding: 18px 24px !important;
     border-radius: 0 !important;
     background: transparent !important;
     border-bottom: 1px solid var(--border);
     white-space: normal !important;
+    transition: all 0.2s;
+    display: block !important;
+    line-height: 1.4;
   }
   .nav-links a:last-child { border-bottom: none !important; }
-  .nav-links a:hover { color: var(--accent) !important; background: transparent !important; }
+  .nav-links a:hover { color: var(--accent) !important; background: rgba(255,255,255,0.05) !important; }
   .nav-links .nav-cta {
     background: var(--accent) !important;
     color: #0A0A0F !important;
-    padding: 16px 40px !important;
-    border-radius: 8px !important;
+    padding: 16px 24px !important;
+    border-radius: 6px !important;
     font-size: 16px !important;
     font-weight: 700 !important;
-    margin-top: 8px;
+    margin: 16px 24px 24px 24px !important;
     border-bottom: none !important;
     box-shadow: 0 0 24px rgba(190,255,0,0.3);
     width: auto !important;
+    text-align: center;
   }
   .nav-hamburger { display: flex; }
 }
