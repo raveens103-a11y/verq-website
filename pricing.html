@@ -100,6 +100,52 @@
 .price-wm { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0; }
 .pf-card > *:not(.price-wm), .ret-card > *:not(.price-wm) { position:relative;z-index:1; }
 
+/* Per-tier color treatment — matches homepage pricing cards */
+.pf-card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; z-index:2; }
+.pf-card.pc-junior::after { background:linear-gradient(90deg,#6366F1,#818CF8); }
+.pf-card.pc-mid::after { background:linear-gradient(90deg,#14B8A6,#06B6D4); }
+.pf-card.pc-senior::after { background:linear-gradient(90deg,#A8E600,#00DDF0); }
+.pf-card.pc-lead::after { background:linear-gradient(90deg,#F97316,#EF4444); }
+
+.pf-card.pc-junior { background:linear-gradient(160deg,rgba(99,102,241,0.06) 0%,var(--surface) 60%); }
+.pf-card.pc-mid { background:linear-gradient(160deg,rgba(20,184,166,0.06) 0%,var(--surface) 60%); }
+.pf-card.pc-senior { background:linear-gradient(160deg,rgba(168,230,0,0.07) 0%,var(--surface) 60%); }
+.pf-card.pc-lead { background:linear-gradient(160deg,rgba(249,115,22,0.06) 0%,var(--surface) 60%); }
+
+.pf-card.pc-junior .pf-amount { color:#818CF8; text-shadow:0 0 16px rgba(99,102,241,0.4); }
+.pf-card.pc-mid .pf-amount { color:#2DD4BF; text-shadow:0 0 16px rgba(20,184,166,0.4); }
+.pf-card.pc-senior .pf-amount { color:var(--accent); text-shadow:0 0 18px rgba(168,230,0,0.45); }
+.pf-card.pc-lead .pf-amount { color:#FB923C; text-shadow:0 0 16px rgba(249,115,22,0.4); }
+
+.pf-band { display:inline-block; padding:3px 10px; border-radius:5px; }
+.pf-card.pc-junior .pf-band { color:#818CF8; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.22); }
+.pf-card.pc-mid .pf-band { color:#2DD4BF; background:rgba(20,184,166,0.1); border:1px solid rgba(20,184,166,0.22); }
+.pf-card.pc-senior .pf-band.hot { color:var(--accent); background:rgba(168,230,0,0.1); border:1px solid rgba(168,230,0,0.25); }
+.pf-card.pc-lead .pf-band { color:#FB923C; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.22); }
+
+/* Per-tier color treatment — Monthly Retainer cards */
+.ret-card::after { content:''; position:absolute; top:0; left:0; right:0; height:4px; z-index:2; }
+.ret-card.ret-starter::after { background:linear-gradient(90deg,#6366F1,#818CF8); }
+.ret-card.ret-scale::after { background:linear-gradient(90deg,#A8E600,#00DDF0); }
+.ret-card.ret-studio::after { background:linear-gradient(90deg,#F97316,#EF4444); }
+
+.ret-card.ret-starter { background:linear-gradient(160deg,rgba(99,102,241,0.06) 0%,var(--surface) 60%); }
+.ret-card.ret-scale { background:linear-gradient(160deg,rgba(168,230,0,0.07) 0%,var(--surface) 60%); }
+.ret-card.ret-studio { background:linear-gradient(160deg,rgba(249,115,22,0.06) 0%,var(--surface) 60%); }
+
+.ret-card.ret-starter .ret-price { color:#818CF8; text-shadow:0 0 16px rgba(99,102,241,0.4); }
+.ret-card.ret-scale .ret-price { color:var(--accent); text-shadow:0 0 18px rgba(168,230,0,0.45); }
+.ret-card.ret-studio .ret-price { color:#FB923C; text-shadow:0 0 16px rgba(249,115,22,0.4); }
+
+.ret-popular { display:inline-block; padding:3px 10px; border-radius:5px; }
+.ret-card.ret-starter .ret-popular { color:#818CF8; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.22); }
+.ret-card.ret-scale .ret-popular { color:var(--accent); background:rgba(168,230,0,0.1); border:1px solid rgba(168,230,0,0.25); }
+.ret-card.ret-studio .ret-popular { color:#FB923C; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.22); }
+
+.ret-card.ret-starter:hover { border-color:rgba(99,102,241,0.4) !important; box-shadow:0 0 24px rgba(99,102,241,0.14),0 10px 28px rgba(0,0,0,0.4) !important; }
+.ret-card.ret-scale:hover { border-color:rgba(190,255,0,0.45) !important; box-shadow:0 0 32px rgba(190,255,0,0.18),0 10px 28px rgba(0,0,0,0.4) !important; }
+.ret-card.ret-studio:hover { border-color:rgba(239,68,68,0.4) !important; box-shadow:0 0 24px rgba(239,68,68,0.14),0 10px 28px rgba(0,0,0,0.4) !important; }
+
 </style>
 </head>
 <body>
@@ -135,7 +181,7 @@
   <span class="eyebrow">Flat Fee Per Hire</span>
   <h2 class="section-title">One role. One fixed price.<br/>No hidden anything.</h2>
   <div class="pricing-full-grid">
-    <div class="pf-card reveal">
+    <div class="pf-card pc-junior reveal">
       <div class="pf-band">Entry Level</div>
       <div class="pf-role">Up to ₹5 LPA</div>
       <div class="pf-ctc">Annual CTC up to ₹5 LPA</div>
@@ -150,7 +196,7 @@
         <li>30-day replacement</li>
       </ul>
     </div>
-    <div class="pf-card reveal">
+    <div class="pf-card pc-mid reveal">
       <div class="pf-band">Mid Level</div>
       <div class="pf-role">₹5L – ₹12 LPA</div>
       <div class="pf-ctc">Annual CTC ₹5L–₹12 LPA</div>
@@ -165,7 +211,7 @@
         <li>60-day replacement</li>
       </ul>
     </div>
-    <div class="pf-card featured reveal">
+    <div class="pf-card pc-senior featured reveal">
       <div class="pf-band hot">Most Popular</div>
       <div class="pf-role">₹12L – ₹25 LPA</div>
       <div class="pf-ctc">Annual CTC ₹12L–₹25 LPA</div>
@@ -181,7 +227,7 @@
         <li>Offer negotiation support</li>
       </ul>
     </div>
-    <div class="pf-card reveal">
+    <div class="pf-card pc-lead reveal">
       <div class="pf-band">Leadership</div>
       <div class="pf-role">₹25L+ LPA</div>
       <div class="pf-ctc">Annual CTC ₹25L+ LPA</div>
@@ -206,8 +252,8 @@
   <span class="eyebrow">Monthly Retainer</span>
   <h2 class="section-title">For ongoing hiring.<br/>Predictable cost. Unlimited hires.</h2>
   <div class="retainer-grid">
-    <div class="ret-card reveal">
-      <span class="ret-popular" style="color:var(--muted);">Starter</span>
+    <div class="ret-card ret-starter reveal">
+      <span class="ret-popular">Starter</span>
       <div class="ret-name">Essentials</div>
       <div class="ret-tagline">For startups hiring 1 role at a time over 2–3 months.</div>
       <div class="ret-price">₹25,000</div>
@@ -221,7 +267,7 @@
       </ul>
       <a href="/post-requirement.html" class="btn-outline" style="width:100%;justify-content:center;">Get Started →</a>
     </div>
-    <div class="ret-card featured reveal">
+    <div class="ret-card ret-scale featured reveal">
       <span class="ret-popular">Most Popular</span>
       <div class="ret-name">Scale</div>
       <div class="ret-tagline">For post-seed or Series A startups building teams across multiple functions.</div>
@@ -237,8 +283,8 @@
       </ul>
       <a href="/post-requirement.html" class="btn-primary" style="width:100%;justify-content:center;">Get Started →</a>
     </div>
-    <div class="ret-card reveal">
-      <span class="ret-popular" style="color:var(--muted);">High Volume</span>
+    <div class="ret-card ret-studio reveal">
+      <span class="ret-popular">High Volume</span>
       <div class="ret-name">Studio</div>
       <div class="ret-tagline">For startups in aggressive expansion mode needing a dedicated hiring partner.</div>
       <div class="ret-price">₹75,000</div>
