@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="css/theme.css"/>
 <style>
 .page-hero { padding: 140px 5% 72px; position: relative; z-index: 1; text-align: center; }
-.page-hero::before { content: ''; position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(190,255,0,0.06) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+.page-hero::before { content: ''; position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: min(600px, 92vw); height: 400px; background: radial-gradient(ellipse, rgba(190,255,0,0.06) 0%, transparent 70%); pointer-events: none; z-index: 0; }
 
 /* TOGGLE */
 .toggle-wrap { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 48px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px; width: fit-content; margin-left: auto; margin-right: auto; animation: fadeUp 0.5s 0.2s ease both; }
@@ -108,17 +108,14 @@
   <a href="/" class="nav-logo">ver<span>Q</span></a>
   <div class="nav-links">
     <a href="/">Home</a>
-    <a href="/about.html">About</a>
     <a href="/services.html">Services</a>
     <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
+    <a href="/pricing.html" class="active">Pricing</a>
+    <a href="/about.html">About Us</a>
     <a href="/contact.html">Contact</a>
-    </div>
-  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
-</nav>
-
-<!-- temp -->
-<a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
+    <a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
   </div>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
 
 <div class="page-hero">

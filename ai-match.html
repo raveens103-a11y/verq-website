@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/theme.css"/>
 <style>
 .page-hero{padding:60px 5% 40px;text-align:center;position:relative;z-index:1;}
-.page-hero::before{content:'';position:absolute;top:10%;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(190,255,0,0.07) 0%,transparent 70%);pointer-events:none;}
+.page-hero::before{content:'';position:absolute;top:10%;left:50%;transform:translateX(-50%);width:min(600px, 92vw);height:400px;background:radial-gradient(ellipse,rgba(190,255,0,0.07) 0%,transparent 70%);pointer-events:none;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(190,255,0,0.25);background:rgba(190,255,0,0.04);color:var(--accent);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px;animation:fadeUp 0.5s ease both;}
 .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.5)}}
