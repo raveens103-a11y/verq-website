@@ -103,17 +103,17 @@ nav {
   .nav-links {
     display: none !important;
     position: fixed;
-    top: 64px; left: 0; right: 0; bottom: 0;
+    top: 64px; left: 0; right: 0; height: calc(100vh - 64px);
     background: rgba(10,10,15,0.98);
     backdrop-filter: blur(20px);
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 40px !important;
+    gap: clamp(12px, 3vh, 40px) !important;
     z-index: 999;
     border-top: 1px solid var(--border);
     overflow-y: auto;
-    padding: 40px 24px;
+    padding: clamp(16px, 4vh, 40px) 24px;
   }
   .nav-links.open {
     display: flex !important;

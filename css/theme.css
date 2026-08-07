@@ -143,7 +143,7 @@ nav {
     top: 64px;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: calc(100vh - 64px);
     background: rgba(10,10,15,0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
