@@ -2,15 +2,66 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<link rel="icon" type="image/png" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Join as HR Partner | verQ</title>
 <meta name="description" content="Join verQ as an HR Partner — work flexible, get matched with funded startups, transparent on-time payments, and build a verified portfolio."/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/theme.css"/>
 <style>
-.perks-strip { background: rgba(190,255,0,0.04); border-bottom: 1px solid rgba(190,255,0,0.1); padding: 12px 40px; display: flex; gap: 20px; overflow-x: auto; }
-.perk { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--accent); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.page-layout { display: grid; grid-template-columns: 380px 1fr; max-width: 1180px; margin: 0 auto; position: relative; }
+
+.req-sidebar { position: sticky; top: 64px; align-self: start; padding: 44px 44px 64px 5%; border-right: 1px solid var(--border); min-height: 100vh; grid-column: 1; }
+.rs-label { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 22px; }
+.rs-label::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+.rs-title { font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -1.2px; line-height: 1.16; margin-bottom: 16px; }
+.rs-title span { color: var(--cyan); }
+.rs-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; }
+.rs-rows { display: flex; flex-direction: column; gap: 2px; margin-bottom: 36px; }
+.rs-row { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--border); }
+.rs-row:last-child { border-bottom: none; }
+.rs-row-icon { width: 24px; height: 24px; border-radius: 7px; background: rgba(0,221,240,0.1); border: 1px solid rgba(0,221,240,0.25);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rs-row-icon svg { width: 11px; height: 11px; }
+.rs-row-text { font-size: 13px; color: var(--white); font-weight: 500; }
+.rs-footnote { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.rs-footnote a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+
+.req-form-col { padding: 44px 6% 100px 56px; grid-column: 2; }
+.f-section { margin-bottom: 44px; }
+.f-section-label { display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; }
+.f-section-num { width: 20px; height: 20px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--white); flex-shrink: 0; }
+
+/* Quiet focus choreography — cyan accent for this page */
+.req-form-col .form-field label.form-label {
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16,1,0.3,1); transform-origin: left center;
+}
+.req-form-col .form-field.focused label.form-label { color: var(--cyan); transform: translateY(-2px); }
+.req-form-col .form-input:focus, .req-form-col .form-select:focus, .req-form-col .form-textarea:focus {
+  border-color: rgba(0,221,240,0.45); box-shadow: 0 0 0 3px rgba(0,221,240,0.1);
+}
+.req-form-col .form-input, .req-form-col .form-select, .req-form-col .form-textarea {
+  transition: border-color 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.req-form-col .chip label { transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.15s ease; }
+.req-form-col .chip label:hover { border-color: rgba(0,221,240,0.3); }
+.req-form-col .chip input:checked + label { border-color: var(--cyan) !important; background: rgba(0,221,240,0.08) !important; color: var(--cyan) !important; }
+.req-form-col .chip label:active { transform: scale(0.96); }
+.req-form-col .submit-btn { transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, box-shadow 0.2s ease; }
+.req-form-col .submit-btn:active:not(:disabled) { transform: scale(0.98); }
+
+.perks-strip { margin-top: 64px; background: rgba(0,221,240,0.04); border-bottom: 1px solid rgba(0,221,240,0.12); padding: 12px 6%; display: flex; gap: 20px; overflow-x: auto; }
+.perk { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
 .perk::before { content: '✓'; }
+
+@media (max-width: 960px) {
+  .page-layout { grid-template-columns: 1fr; }
+  .req-sidebar { position: static; min-height: 0; border-right: none; border-bottom: 1px solid var(--border); padding: 44px 6%; }
+  .req-form-col { padding: 44px 6% 64px; }
+}
 </style>
 </head>
 <body>
@@ -28,7 +79,6 @@
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="/services.html">Services</a>
-    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
     <a href="/pricing.html">Pricing</a>
     <a href="/about.html">About Us</a>
     <a href="/contact.html">Contact</a>
@@ -37,102 +87,161 @@
   <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
 
-<div class="form-page">
-  <div class="form-card-wrap">
-    <div class="form-card">
-      <div class="perks-strip">
-        <div class="perk">Flexible hours</div>
-        <div class="perk">Pan-India opportunities</div>
-        <div class="perk">Transparent payments</div>
-        <div class="perk">Work from anywhere</div>
-      </div>
-      <div class="form-card-header">
-        <div class="form-card-badge">For HR Professionals</div>
-        <div class="form-card-title">Join as an HR Partner</div>
-        <div class="form-card-sub">Get matched with funded startups. Work flexible. Earn well.</div>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+<div class="perks-strip">
+  <div class="perk">Flexible hours</div>
+  <div class="perk">Pan-India opportunities</div>
+  <div class="perk">Transparent payments</div>
+  <div class="perk">Work from anywhere</div>
+</div>
 
-      <div class="form-card-body">
-        <form id="partnerForm" name="hr-partner" method="POST" action="/success-partner.html" data-netlify="true">
-          <input type="hidden" name="form-name" value="hr-partner"/>
-          <p hidden><input name="bot-field"/></p>
+<div class="page-layout">
+  <aside class="req-sidebar">
+    <div class="rs-label">For HR Professionals</div>
+    <div class="rs-title">Work flexible. <span>Earn well.</span></div>
+    <div class="rs-desc">Get matched with funded startups. Choose your projects, set your availability, grow your portfolio.</div>
+    <div class="rs-rows">
+      <div class="rs-row"><div class="rs-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rs-row-text">Access 500+ startup mandates</div></div>
+      <div class="rs-row"><div class="rs-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rs-row-text">Transparent on-time payments</div></div>
+      <div class="rs-row"><div class="rs-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rs-row-text">Work from anywhere in India</div></div>
+      <div class="rs-row"><div class="rs-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="rs-row-text">Build a verified portfolio</div></div>
+    </div>
+    <div class="rs-footnote">Questions? <a href="mailto:info@verq.in">info@verq.in</a> · +91 7703897083</div>
+  </aside>
 
-          <span class="eyebrow" style="margin-bottom:16px;">Personal Details</span>
-          <div class="form-grid">
-            <div class="form-field"><label class="form-label">Full Name <span class="req">*</span></label><input class="form-input" name="name" placeholder="Priya Sharma" required/></div>
-            <div class="form-field"><label class="form-label">Current City <span class="req">*</span></label><input class="form-input" name="city" placeholder="Mumbai" required/></div>
-            <div class="form-field"><label class="form-label">Email <span class="req">*</span></label><input class="form-input" type="email" name="email" placeholder="priya@email.com" required/></div>
-            <div class="form-field"><label class="form-label">Phone <span class="req">*</span></label><input class="form-input" type="tel" name="phone" placeholder="+91 98765 43210" required/></div>
-            <div class="form-field full"><label class="form-label">LinkedIn Profile URL</label><input class="form-input" type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile"/></div>
-          </div>
+  <div class="req-form-col">
+    <form id="partnerForm" name="hr-partner" method="POST" action="/success-partner.html" data-netlify="true">
+      <input type="hidden" name="form-name" value="hr-partner"/>
+      <p hidden><input name="bot-field"/></p>
 
-          <div class="form-divider"></div>
-          <span class="eyebrow" style="margin-bottom:16px;">Your HR Experience</span>
-          <div class="form-grid">
-            <div class="form-field"><label class="form-label">Total Experience <span class="req">*</span></label>
-              <select class="form-select" name="experience" required><option value="" disabled selected>Select years</option><option>0–2 years</option><option>2–5 years</option><option>5–8 years</option><option>8–12 years</option><option>12+ years</option></select>
-            </div>
-            <div class="form-field"><label class="form-label">Current / Last Role</label><input class="form-input" name="role" placeholder="HR Manager / Recruiter"/></div>
-            <div class="form-field full"><label class="form-label">Industries Worked In</label><input class="form-input" name="industries" placeholder="E.g. Fintech, E-commerce, SaaS, Healthcare"/></div>
-          </div>
-
-          <div class="form-divider"></div>
-          <span class="eyebrow" style="margin-bottom:14px;">Skill Areas — Select All That Apply</span>
-          <div class="chips">
-            <div class="chip"><input type="checkbox" name="skills" id="s1" value="Recruitment"/><label for="s1">Recruitment</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s2" value="Payroll"/><label for="s2">Payroll</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s3" value="Compliance"/><label for="s3">Compliance</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s4" value="HR Ops"/><label for="s4">HR Ops</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s5" value="Policy Writing"/><label for="s5">Policy Writing</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s6" value="Employee Engagement"/><label for="s6">Engagement</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s7" value="Training & L&D"/><label for="s7">Training & L&D</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s8" value="HRBP"/><label for="s8">HRBP</label></div>
-            <div class="chip"><input type="checkbox" name="skills" id="s9" value="PF / ESIC"/><label for="s9">PF / ESIC</label></div>
-          </div>
-
-          <div class="form-divider"></div>
-          <span class="eyebrow" style="margin-bottom:14px;">Availability</span>
-          <div class="avail-grid">
-            <div class="avail-chip"><input type="radio" name="availability" id="a1" value="Available Now"/><label for="a1">Available Now</label></div>
-            <div class="avail-chip"><input type="radio" name="availability" id="a2" value="Part-Time Only"/><label for="a2">Part-Time Only</label></div>
-            <div class="avail-chip"><input type="radio" name="availability" id="a3" value="Weekends Only"/><label for="a3">Weekends Only</label></div>
-            <div class="avail-chip"><input type="radio" name="availability" id="a4" value="In 2 Weeks"/><label for="a4">In 2 Weeks</label></div>
-            <div class="avail-chip"><input type="radio" name="availability" id="a5" value="Next Month"/><label for="a5">Next Month</label></div>
-            <div class="avail-chip"><input type="radio" name="availability" id="a6" value="Open to Discuss"/><label for="a6">Open to Discuss</label></div>
-          </div>
-
-          <div class="form-divider"></div>
-          <div class="form-grid">
-            <div class="form-field full"><label class="form-label">Expected Monthly Earnings from verQ</label>
-              <select class="form-select" name="earnings"><option value="" disabled selected>Select expected range</option><option>₹5,000 – ₹10,000/month</option><option>₹10,000 – ₹25,000/month</option><option>₹25,000 – ₹50,000/month</option><option>₹50,000+/month</option><option>Open to discuss</option></select>
-            </div>
-            <div class="form-field full"><label class="form-label">Anything Else You'd Like Us to Know?</label><textarea class="form-textarea" name="notes" placeholder="E.g. I specialise in tech hiring, worked with 5 funded startups, currently freelancing..."></textarea></div>
-          </div>
-
-          <button type="submit" class="submit-btn" id="partnerBtn">Apply to Join verQ</button>
-          <p class="form-note">We review every application personally. You'll hear from us within 48 hours.</p>
-        </form>
-
-        <div class="success-state" id="partnerSuccess">
-          <div class="success-icon">✓</div>
-          <div class="success-title">Application Received!</div>
-          <div class="success-sub">Naveen from verQ will personally review your profile and reach out within 48 hours to discuss next steps.</div>
+      <div class="f-section">
+        <div class="f-section-label"><div class="f-section-num">1</div>Personal Details</div>
+        <div class="form-grid">
+          <div class="form-field" data-field><label class="form-label">Full Name <span class="req">*</span></label><input class="form-input" name="name" placeholder="Priya Sharma" required/></div>
+          <div class="form-field" data-field><label class="form-label">Current City <span class="req">*</span></label><input class="form-input" name="city" placeholder="Mumbai" required/></div>
+          <div class="form-field" data-field><label class="form-label">Email <span class="req">*</span></label><input class="form-input" type="email" name="email" placeholder="priya@email.com" required/></div>
+          <div class="form-field" data-field><label class="form-label">Phone <span class="req">*</span></label><input class="form-input" type="tel" name="phone" placeholder="+91 98765 43210" required/></div>
+          <div class="form-field full" data-field><label class="form-label">LinkedIn Profile URL</label><input class="form-input" type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile"/></div>
         </div>
       </div>
-      <div class="form-card-footer">Questions? <a href="mailto:info@verq.in">info@verq.in</a> · <a href="tel:+917703897083">+91 7703897083</a></div>
-    </div>
+
+      <div class="form-divider"></div>
+
+      <div class="f-section">
+        <div class="f-section-label"><div class="f-section-num">2</div>Your HR Experience</div>
+        <div class="form-grid">
+          <div class="form-field" data-field><label class="form-label">Total Experience <span class="req">*</span></label>
+            <select class="form-select" name="experience" required><option value="" disabled selected>Select years</option><option>0–2 years</option><option>2–5 years</option><option>5–8 years</option><option>8–12 years</option><option>12+ years</option></select>
+          </div>
+          <div class="form-field" data-field><label class="form-label">Current / Last Role</label><input class="form-input" name="role" placeholder="HR Manager / Recruiter"/></div>
+          <div class="form-field full" data-field><label class="form-label">Industries Worked In</label><input class="form-input" name="industries" placeholder="E.g. Fintech, E-commerce, SaaS, Healthcare"/></div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="f-section">
+        <div class="f-section-label"><div class="f-section-num">3</div>Skill Areas — Select All That Apply</div>
+        <div class="chips">
+          <div class="chip"><input type="checkbox" name="skills" id="s1" value="Recruitment"/><label for="s1">Recruitment</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s2" value="Payroll"/><label for="s2">Payroll</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s3" value="Compliance"/><label for="s3">Compliance</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s4" value="HR Ops"/><label for="s4">HR Ops</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s5" value="Policy Writing"/><label for="s5">Policy Writing</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s6" value="Employee Engagement"/><label for="s6">Engagement</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s7" value="Training & L&D"/><label for="s7">Training &amp; L&amp;D</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s8" value="HRBP"/><label for="s8">HRBP</label></div>
+          <div class="chip"><input type="checkbox" name="skills" id="s9" value="PF / ESIC"/><label for="s9">PF / ESIC</label></div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="f-section">
+        <div class="f-section-label"><div class="f-section-num">4</div>Availability</div>
+        <div class="chips">
+          <div class="chip"><input type="radio" name="availability" id="a1" value="Available Now"/><label for="a1">Available Now</label></div>
+          <div class="chip"><input type="radio" name="availability" id="a2" value="Part-Time Only"/><label for="a2">Part-Time Only</label></div>
+          <div class="chip"><input type="radio" name="availability" id="a3" value="Weekends Only"/><label for="a3">Weekends Only</label></div>
+          <div class="chip"><input type="radio" name="availability" id="a4" value="In 2 Weeks"/><label for="a4">In 2 Weeks</label></div>
+          <div class="chip"><input type="radio" name="availability" id="a5" value="Next Month"/><label for="a5">Next Month</label></div>
+          <div class="chip"><input type="radio" name="availability" id="a6" value="Open to Discuss"/><label for="a6">Open to Discuss</label></div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="f-section">
+        <div class="form-grid">
+          <div class="form-field full" data-field><label class="form-label">Expected Monthly Earnings from verQ</label>
+            <select class="form-select" name="earnings"><option value="" disabled selected>Select expected range</option><option>₹5,000 – ₹10,000/month</option><option>₹10,000 – ₹25,000/month</option><option>₹25,000 – ₹50,000/month</option><option>₹50,000+/month</option><option>Open to discuss</option></select>
+          </div>
+          <div class="form-field full" data-field><label class="form-label">Anything Else You'd Like Us to Know?</label><textarea class="form-textarea" name="notes" placeholder="E.g. I specialise in tech hiring, worked with 5 funded startups, currently freelancing..."></textarea></div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="partnerBtn">Apply to Join verQ</button>
+      <p class="form-note">We review every application personally. You'll hear from us within 48 hours.</p>
+    </form>
   </div>
 </div>
 
 <script src="js/main.js"></script>
 <script>
-  initFormProgress('partnerForm', 'fill');
-  // form uses native POST redirect
+(function(){
+  document.querySelectorAll('.req-form-col [data-field]').forEach(field => {
+    const control = field.querySelector('.form-input, .form-select, .form-textarea');
+    if (!control) return;
+    control.addEventListener('focus', () => field.classList.add('focused'));
+    control.addEventListener('blur', () => { if (!control.value) field.classList.remove('focused'); });
+    if (control.value) field.classList.add('focused');
+  });
+})();
 </script>
 
+<script>
+// JS-based sticky sidebar — see post-requirement.html for the reasoning
+// (native position:sticky is broken by the sitewide overflow-x:hidden fix).
+(function(){
+  const layout = document.querySelector('.page-layout');
+  const sidebar = document.querySelector('.req-sidebar');
+  if (!layout || !sidebar) return;
+  const NAV_HEIGHT = 64;
 
+  function update(){
+    if (window.innerWidth <= 960) {
+      sidebar.style.position = '';
+      sidebar.style.top = '';
+      sidebar.style.left = '';
+      sidebar.style.width = '';
+      return;
+    }
+    const layoutRect = layout.getBoundingClientRect();
+    const sidebarWidth = sidebar.offsetWidth || sidebar.getBoundingClientRect().width;
+    const sidebarHeight = sidebar.offsetHeight;
 
+    if (layoutRect.top >= NAV_HEIGHT) {
+      sidebar.style.position = '';
+      sidebar.style.top = '';
+      sidebar.style.left = '';
+      sidebar.style.width = '';
+    } else if (layoutRect.bottom - sidebarHeight > NAV_HEIGHT) {
+      sidebar.style.position = 'fixed';
+      sidebar.style.top = NAV_HEIGHT + 'px';
+      sidebar.style.left = layoutRect.left + 'px';
+      sidebar.style.width = sidebarWidth + 'px';
+    } else {
+      sidebar.style.position = 'absolute';
+      sidebar.style.top = (layout.offsetHeight - sidebarHeight) + 'px';
+      sidebar.style.left = '0px';
+      sidebar.style.width = sidebarWidth + 'px';
+    }
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
 
 </body>
 </html>

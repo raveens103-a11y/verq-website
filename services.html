@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<link rel="icon" type="image/png" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Services | verQ</title>
 <meta name="description" content="verQ Services — Recruitment, payroll management, HR compliance & audit, and HR ops support. Flat fee, no % of CTC, verified HR professionals matched within 48 hours."/>
@@ -9,6 +10,7 @@
 <link rel="stylesheet" href="css/theme.css"/>
 <style>
 .page-hero { padding: 140px 5% 64px; position: relative; z-index: 1; text-align: center; }
+#svc-canvas { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.6; pointer-events:none; }
 .page-hero::before { content:''; position:fixed; top:0; left:50%; transform:translateX(-50%); width:min(600px, 92vw); height:400px; background:radial-gradient(ellipse,rgba(168,230,0,0.05) 0%,transparent 70%); pointer-events:none; z-index:0; }
 
 /* OUTCOME PILLS */
@@ -90,7 +92,6 @@
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="/services.html" class="active">Services</a>
-    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
     <a href="/pricing.html">Pricing</a>
     <a href="/about.html">About Us</a>
     <a href="/contact.html">Contact</a>
@@ -100,6 +101,7 @@
 </nav>
 
 <div class="page-hero">
+  <canvas id="svc-canvas"></canvas>
   <span class="eyebrow" style="animation:fadeUp 0.5s ease both;">What We Do</span>
   <h1 class="section-title" style="font-size:clamp(38px,5.5vw,64px);letter-spacing:-2.5px;line-height:1.0;margin-bottom:14px;animation:fadeUp 0.5s 0.1s ease both;">Every HR service.<br/><span style="color:var(--accent);">On demand.</span></h1>
   <p class="section-sub" style="max-width:480px;margin:0 auto;font-size:16px;animation:fadeUp 0.5s 0.2s ease both;">Verified professionals matched to your need within 48 hours. No full-time hire required.</p>
@@ -265,8 +267,8 @@
 <footer>
   <div class="footer-grid">
     <div><span class="footer-logo">ver<span>Q</span></span><p class="footer-tagline">India's On-Demand HR Marketplace.</p></div>
-    <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
-    <a href="/pricing.html">Pricing</a></li></ul></div>
+    <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li>
+    <li><a href="/pricing.html">Pricing</a></li></ul></div>
     <div><div class="footer-col-title">For HR Pros</div><ul class="footer-links"><li><a href="/join-hr-partner.html">Join as Partner</a></li><li><a href="/referral.html">Referral Program</a></li></ul></div>
     <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
   </div>

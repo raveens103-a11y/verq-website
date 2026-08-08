@@ -6,7 +6,7 @@
 <meta name="description" content="verQ — India's on-demand HR marketplace. Browse 150+ verified HR professionals. Hire in 48 hours. Fixed fee. No mandate."/>
 <title>verQ | India's On-Demand HR Marketplace</title>
 <link rel="icon" type="image/png" href="/favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 /* ── verQ THEME v2 — Refined ── */
 :root {
@@ -372,30 +372,110 @@ footer {
 .hero::before { content: ''; position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: min(600px, 92vw); height: 400px; background: radial-gradient(ellipse, rgba(168,230,0,0.06) 0%, transparent 70%); pointer-events: none; }
 .hero::after { content: ''; position: absolute; bottom: 10%; right: 5%; width: 400px; height: 400px; background: radial-gradient(ellipse, rgba(0,221,240,0.04) 0%, transparent 70%); pointer-events: none; }
 
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(168,230,0,0.25); background: rgba(168,230,0,0.04); color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 32px; animation: fadeUp 0.6s ease both; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(168,230,0,0.25); background: rgba(168,230,0,0.04); color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; animation: fadeUp 0.6s ease both; }
 .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: pulse 2s infinite; }
 
-.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(46px, 6.5vw, 84px); font-weight: 700; letter-spacing: -3px; line-height: 1.0; margin-bottom: 24px; animation: fadeUp 0.6s 0.1s ease both; }
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(34px, 5vw, 58px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 36px; animation: fadeUp 0.6s 0.1s ease both; }
 .gradient-text { background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .dim { color: var(--muted); }
-.hero-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 540px; margin: 0 auto 44px; animation: fadeUp 0.6s 0.2s ease both; }
-.hero-sub span { color: var(--white); font-weight: 500; }
 
-/* SEARCH */
-.search-wrap { width: 100%; max-width: 660px; margin-bottom: 36px; animation: fadeUp 0.6s 0.3s ease both; }
-.search-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 8px 8px 8px 20px; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s, box-shadow 0.2s; }
-.search-bar:focus-within { border-color: rgba(168,230,0,0.35); box-shadow: var(--glow); }
-.search-icon { font-size: 18px; opacity: 0.35; flex-shrink: 0; }
-.search-input { flex: 1; min-width: 0; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--white); background: transparent; }
-.search-input::placeholder { color: var(--muted); }
-.search-btn { background: var(--accent); color: var(--accent-text); padding: 12px 22px; border-radius: 8px; border: none; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-.search-btn:hover { background: var(--accent-dark); }
-.search-tags { display: flex; align-items: center; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
-.tag-label { font-size: 12px; color: var(--muted); }
-.stag { border: 1px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; cursor: pointer; text-decoration: none; transition: all 0.15s; }
-.stag:hover { border-color: var(--accent); color: var(--accent); background: rgba(168,230,0,0.04); }
+/* SEARCH — the search bar IS the hero. It wraps long queries onto multiple
+   lines instead of hiding them, so the full prompt stays visible and
+   models good prompt-writing for the person typing it. */
+.search-shell { position: relative; width: 100%; max-width: 860px; margin: 0 auto 8px; animation: fadeUp 0.6s 0.2s ease both; }
+.search-bar { position: relative; display: flex; align-items: center; gap: 16px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 24px; min-height: 132px; padding: 20px 14px 20px 34px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+.search-bar.active, .search-bar:focus-within { border-color: rgba(168,230,0,0.5); box-shadow: 0 0 0 4px rgba(168,230,0,0.1), 0 24px 60px rgba(0,0,0,0.45); }
+.search-text-wrap { flex: 1; min-width: 0; position: relative; display: flex; align-items: center; }
+.search-input { width: 100%; background: transparent; border: none; outline: none; resize: none; overflow: hidden;
+  text-align: left; font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; color: var(--white); padding: 0; display: block; }
+.search-input::placeholder { color: #4B5364; }
+.search-mirror { position: absolute; top: 0; left: 0; visibility: hidden; white-space: pre-wrap; word-wrap: break-word;
+  font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; padding: 0; pointer-events: none; }
+.search-caret { position: absolute; width: 2px; height: 22px; background: var(--accent);
+  animation: caretBlink 0.9s step-end infinite; pointer-events: none; }
+@keyframes caretBlink { 0%,45%{opacity:1;} 50%,100%{opacity:0;} }
+.search-btn { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 0 26px; height: 64px; border-radius: 16px; background: var(--accent); border: none;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: var(--space); white-space: nowrap;
+  cursor: pointer; transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 0 22px rgba(168,230,0,0.28); }
+.search-btn:hover { background: var(--accent-dark); box-shadow: 0 0 32px rgba(168,230,0,0.45); }
+.search-btn:active { transform: scale(0.96); }
 
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.35s ease both; margin-bottom: 52px; }
+.helper-line { margin-top: 14px; font-size: 12px; color: #5A6272; animation: fadeUp 0.6s 0.3s ease both; }
+
+.chip-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; animation: fadeUp 0.6s 0.35s ease both; }
+.example-chip { font-size: 12.5px; color: var(--muted); background: var(--surface); border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: 100px; cursor: pointer; text-decoration: none; display: inline-block;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease; font-family: 'DM Sans', sans-serif; }
+.example-chip:hover { border-color: rgba(168,230,0,0.4); color: var(--white); background: rgba(168,230,0,0.05); }
+
+.cat-line { margin-top: 24px; font-size: 13.5px; color: var(--muted); animation: fadeUp 0.6s 0.4s ease both; }
+.cat-line b { color: var(--white); font-weight: 600; }
+.cat-line .dot { color: #3A4152; margin: 0 8px; }
+
+/* ── Searching → parsing → matching → results sequence ── */
+.status-zone { max-width: 680px; margin: 26px auto 0; min-height: 20px; position: relative; z-index: 1; }
+.status-line { display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; color: var(--muted); opacity: 0; transition: opacity 0.3s ease; }
+.status-line.show { opacity: 1; }
+.spinner-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: sdot 1s ease-in-out infinite; }
+.spinner-dot:nth-child(2) { animation-delay: 0.15s; }
+.spinner-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes sdot { 0%,100%{opacity:.25;} 50%{opacity:1;} }
+
+.parse-grid { max-width: 520px; margin: 18px auto 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 22px; }
+.parse-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted);
+  opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.parse-item.show { opacity: 1; transform: translateY(0); }
+.parse-check { width: 15px; height: 15px; border-radius: 50%; background: rgba(168,230,0,0.12); border: 1px solid rgba(168,230,0,0.4);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.parse-check svg { width: 8px; height: 8px; }
+.parse-item b { color: var(--white); font-weight: 600; }
+
+.found-line { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px;
+  font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--accent);
+  opacity: 0; transform: translateY(4px); transition: opacity 0.35s ease, transform 0.35s ease; }
+.found-line.show { opacity: 1; transform: translateY(0); }
+.found-check { width: 20px; height: 20px; border-radius: 50%; background: rgba(168,230,0,0.14); border: 1px solid rgba(168,230,0,0.45);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.found-check svg { width: 11px; height: 11px; }
+
+.results { max-width: 920px; margin: 36px auto 0; padding: 0 6px; display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
+  position: relative; z-index: 1; }
+.rcard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 18px 16px;
+  opacity: 0; transform: translateY(10px); transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+.rcard.show { opacity: 1; transform: translateY(0); }
+.rcard-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.rcard-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0F; flex-shrink: 0; }
+.rcard-avail { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--accent);
+  background: rgba(168,230,0,0.1); border: 1px solid rgba(168,230,0,0.25); padding: 3px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+.rcard-rating { font-size: 12px; color: #FFC94A; font-weight: 600; display: flex; align-items: center; gap: 3px; margin-bottom: 2px; }
+.rcard-name { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 1px; }
+.rcard-role { font-size: 12.5px; color: var(--cyan); }
+.rcard-trust { font-size: 12px; color: var(--white); font-weight: 600; margin: 10px 0; padding-top: 10px; border-top: 1px solid var(--border); }
+.rcard-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.rcard-tag { font-size: 10.5px; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  padding: 3px 9px; border-radius: 100px; }
+.results-more { text-align: center; margin-top: 20px; font-size: 13px; }
+.results-more a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.results-more a:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+  .parse-grid { max-width: 340px; }
+  .results { grid-template-columns: 1fr; max-width: 420px; }
+}
+
+@media (max-width: 760px) {
+  .search-bar { min-height: 110px; padding: 20px 10px 20px 22px; }
+  .search-input, .search-mirror { font-size: 15px; }
+  .search-btn { padding: 0 18px; height: 52px; border-radius: 14px; font-size: 13px; }
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.35s ease both; margin: 40px 0 88px; }
 
 .stats-bar { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); overflow: hidden; animation: fadeUp 0.6s 0.4s ease both; width: 100%; max-width: 680px; }
 .stat-item { flex: 1; text-align: center; padding: 18px 16px; border-right: 1px solid var(--border); }
@@ -473,41 +553,67 @@ footer {
 .price-save { display: inline-block; background: rgba(0,221,240,0.08); color: var(--cyan); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0,221,240,0.18); }
 
 /* SPLIT — FIXED CONTRAST ON LIME CARD */
-.split-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.split-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1180px; margin: 0 auto; }
 
-/* Lime card — darkened background for better text readability */
-.split-lime {
-  background: #7DB800;   /* Darker, richer green for contrast */
-  border-radius: 20px; padding: 48px 44px;
-  position: relative; overflow: hidden;
-}
-.split-lime::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,0,0,0.1); }
-.split-dark-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 48px 44px; transition: border-color 0.2s; }
-.split-dark-card:hover { border-color: rgba(0,221,240,0.25); box-shadow: var(--glow-cyan); }
+/* Redesigned CTA panels — unified dark surface, differentiated by accent
+   color only (lime vs cyan), inspired by Linear/Mercury restraint,
+   Ashby-style feature rows, and Arc-style hover lift + glow. */
+.panel { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  padding: 52px 46px; overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease; }
+.panel:hover { transform: translateY(-4px); }
+.panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.panel-a::before { background: linear-gradient(90deg, var(--accent), transparent); }
+.panel-b::before { background: linear-gradient(90deg, var(--cyan), transparent); }
+.panel::after { content: ''; position: absolute; top: -80px; right: -80px; width: 260px; height: 260px; border-radius: 50%;
+  pointer-events: none; filter: blur(10px); }
+.panel-a::after { background: radial-gradient(circle, rgba(168,230,0,0.1) 0%, transparent 70%); }
+.panel-b::after { background: radial-gradient(circle, rgba(0,221,240,0.1) 0%, transparent 70%); }
+.panel-a:hover { border-color: rgba(168,230,0,0.35); box-shadow: var(--glow-strong); }
+.panel-b:hover { border-color: rgba(0,221,240,0.35); box-shadow: var(--glow-cyan); }
 
-.s-eyebrow-lime { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,0,0,0.55); margin-bottom: 12px; display: block; }
-.s-eyebrow-dark { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: block; }
-.s-title-lime { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 800; color: #000000; letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
-.s-title-dark { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); letter-spacing: -1px; line-height: 1.1; margin-bottom: 12px; }
-.s-title-dark span { color: var(--cyan); }
-.s-desc-lime { font-size: 14px; color: rgba(0,0,0,0.72); line-height: 1.65; margin-bottom: 24px; font-weight: 500; }
-.s-desc-dark { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
-.s-list { list-style: none; margin-bottom: 28px; }
-.s-list li { font-size: 13px; padding: 8px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(0,0,0,0.12); font-weight: 600; color: #000; }
-.split-dark-card .s-list li { border-bottom-color: var(--border); color: var(--white); font-weight: 400; }
-.s-list li::before { content: '→'; font-weight: 900; flex-shrink: 0; color: rgba(0,0,0,0.7); }
-.split-dark-card .s-list li::before { color: var(--accent); }
+.p-label { position: relative; display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.5px; margin-bottom: 22px; text-transform: uppercase; }
+.p-label::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+.panel-a .p-label { color: var(--accent); }
+.panel-a .p-label::before { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.panel-b .p-label { color: var(--cyan); }
+.panel-b .p-label::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+
+.p-title { position: relative; font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -1.3px;
+  line-height: 1.12; margin-bottom: 16px; color: var(--white); }
+.p-title span.p-accent-a { color: var(--accent); }
+.p-title span.p-accent-b { color: var(--cyan); }
+
+.p-desc { position: relative; font-size: 14.5px; color: var(--muted); line-height: 1.7; max-width: 400px; margin-bottom: 34px; }
+
+.p-rows { position: relative; display: flex; flex-direction: column; gap: 2px; margin-bottom: 36px; }
+.p-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.p-row:last-child { border-bottom: none; }
+.p-row-icon { width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.panel-a .p-row-icon { background: rgba(168,230,0,0.1); border: 1px solid rgba(168,230,0,0.25); }
+.panel-b .p-row-icon { background: rgba(0,221,240,0.1); border: 1px solid rgba(0,221,240,0.25); }
+.p-row-icon svg { width: 12px; height: 12px; }
+.p-row-text { font-size: 14px; color: var(--white); font-weight: 500; }
+
+.p-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 10px;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14.5px; text-decoration: none;
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, gap 0.2s ease, background 0.2s ease; }
+.panel-a .p-btn { background: var(--accent); color: var(--ink); box-shadow: 0 0 24px rgba(168,230,0,0.2); }
+.panel-a .p-btn:hover { background: var(--accent-dark); box-shadow: 0 0 32px rgba(168,230,0,0.35); gap: 12px; }
+.panel-b .p-btn { background: transparent; color: var(--cyan); border: 1.5px solid rgba(0,221,240,0.4); }
+.panel-b .p-btn:hover { background: rgba(0,221,240,0.08); border-color: var(--cyan); gap: 12px; }
+.p-btn:active { transform: scale(0.97); }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) { .profiles-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .pricing-grid { grid-template-columns: repeat(2, 1fr); } .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } .steps-grid::before { display: none; } }
-@media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } .stats-bar { flex-wrap: wrap; max-width: 100%; } .stat-item { width: 33.33%; border-right: none; border-bottom: 1px solid var(--border); padding: 14px 8px; } }
+@media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } .stats-bar { flex-wrap: wrap; max-width: 100%; } .stat-item { width: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 14px 8px; } }
 @media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } .stat-item { width: 100%; } }
 
 /* CANVAS BACKGROUND */
-#hero-canvas { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.6; pointer-events:none; }
 
 /* FLOATING ACTIVITY CARDS */
-.activity-feed { position:absolute; right:4%; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:2; animation:fadeUp 0.8s 0.6s ease both; }
+.activity-feed { position:absolute; right:4%; top:480px; display:flex; flex-direction:column; gap:10px; z-index:2; animation:fadeUp 0.8s 0.6s ease both; }
 .activity-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 14px; display:flex; align-items:center; gap:10px; min-width:220px; box-shadow:0 4px 24px rgba(0,0,0,0.3); animation:slideIn 0.5s ease both; }
 .activity-card:nth-child(2) { animation-delay:0.15s; }
 .activity-card:nth-child(3) { animation-delay:0.3s; }
@@ -549,7 +655,7 @@ footer {
 .eyebrow::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-right:8px; animation:pulse 2s infinite; vertical-align:middle; }
 
 /* HERO MOBILE: hide activity feed on small screens */
-@media(max-width:1100px) { .activity-feed { display:none; } }
+@media(max-width:1500px) { .activity-feed { display:none; } }
 
 
 /* Card watermark shared */
@@ -609,11 +715,10 @@ footer {
   <div class="nav-links">
     <a href="/" class="active">Home</a>
     <a href="/services.html">Services</a>
-    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
     <a href="/pricing.html">Pricing</a>
     <a href="/about.html">About Us</a>
     <a href="/contact.html">Contact</a>
-    <a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
+    <a href="/join-hr-partner.html" class="nav-cta">Join as HR Partner</a>
   </div>
   <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -621,38 +726,54 @@ footer {
 </nav>
 
 <section class="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-badge"><div class="badge-dot"></div>India's First HR-Only Marketplace · 150+ Verified Professionals</div>
-  <h1 class="hero-title"><span class="dim">The</span> <span class="gradient-text">smarter way</span><br/>to hire HR talent.</h1>
-  <p class="hero-sub">Browse <span>150+ verified HR professionals</span> — recruiters, payroll specialists, compliance experts. Matched to your startup in <span>48 hours</span>. Fixed fee. No mandate.</p>
+  <div class="hero-badge"><div class="badge-dot"></div>The HR Marketplace</div>
+  <h1 class="hero-title">Find the right <span class="gradient-text">HR expert</span> in minutes.</h1>
 
-  <div class="search-wrap">
-    <div class="search-bar">
-      <div class="search-icon">⌕</div>
-      <input class="search-input" id="homeSearch" type="text" placeholder="Search — Recruiter, Payroll, Compliance, HRBP..." onkeydown="if(event.key==='Enter') goToMatch()"/>
-      <button class="search-btn" onclick="goToMatch()">Find HR Partner</button>
-    </div>
-    <div class="search-tags">
-      <span class="tag-label">Popular:</span>
-      <a href="/ai-match.html?q=Recruiter" class="stag">Recruiter</a>
-      <a href="/ai-match.html?q=Payroll" class="stag">Payroll</a>
-      <a href="/ai-match.html?q=Compliance" class="stag">Compliance</a>
-      <a href="/ai-match.html?q=HR+Generalist" class="stag">HR Generalist</a>
-      <a href="/ai-match.html?q=HRBP" class="stag">HRBP</a>
+  <div class="search-shell">
+    <div class="search-bar" id="searchBar">
+      <div class="search-text-wrap" id="searchTextWrap">
+        <textarea class="search-input" id="homeSearch" rows="1" placeholder="Describe what you need help with..." autocomplete="off"></textarea>
+        <span class="search-caret" id="fakeCaret"></span>
+        <div class="search-mirror" id="mirrorDiv"></div>
+      </div>
+      <button class="search-btn">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/><path d="M13.5 13.5L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Find Experts
+      </button>
     </div>
   </div>
+
+  <div class="helper-line">Describe your hiring or HR requirement in a sentence. We'll find the right expert.</div>
+  <div class="chip-row">
+    <button type="button" class="example-chip" data-query="Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore">Recruit a backend engineer</button>
+    <button type="button" class="example-chip" data-query="Need someone to set up payroll for 25 employees">Set up payroll</button>
+    <button type="button" class="example-chip" data-query="Looking for a fractional HRBP for a Series A startup">Hire a fractional HRBP</button>
+    <button type="button" class="example-chip" data-query="Need a POSH compliance audit for our office in Mumbai">Conduct a POSH audit</button>
+  </div>
+
+  <div class="cat-line"><b>150+ verified HR experts.</b><span class="dot">•</span>Recruitment<span class="dot">•</span>Payroll<span class="dot">•</span>Compliance<span class="dot">•</span>HRBP</div>
+
+  <div class="status-zone">
+    <div class="status-line" id="statusSearching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Searching...</div>
+    <div class="parse-grid" id="parseGrid"></div>
+    <div class="status-line" id="statusMatching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Matching experts...</div>
+    <div class="found-line" id="foundLine">
+      <div class="found-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span id="foundText"></span>
+    </div>
+  </div>
+
+  <div class="results" id="resultsGrid"></div>
 
   <div class="hero-actions">
     <a href="/post-requirement.html" class="btn-primary">Post a Requirement →</a>
-    <a href="/join-hr-partner.html" class="btn-outline">Join as HR Partner</a>
   </div>
 
   <div class="stats-bar">
-    <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">HR Partners</div></div>
-    <div class="stat-item"><div class="stat-num">48H</div><div class="stat-label">First Match</div></div>
-    <div class="stat-item"><div class="stat-num">0%</div><div class="stat-label">CTC Commission</div></div>
-    <div class="stat-item"><div class="stat-num">60D</div><div class="stat-label">Replacement</div></div>
-    <div class="stat-item"><div class="stat-num">7D</div><div class="stat-label">First Shortlist</div></div>
+    <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">Verified HR experts</div></div>
+    <div class="stat-item"><div class="stat-num">32</div><div class="stat-label">Requirements posted this week</div></div>
+    <div class="stat-item"><div class="stat-num">18 min</div><div class="stat-label">Average expert response</div></div>
+    <div class="stat-item"><div class="stat-num">4.9/5</div><div class="stat-label">Average client rating</div></div>
   </div>
 
   <!-- FLOATING ACTIVITY FEED -->
@@ -722,7 +843,7 @@ footer {
 <section class="profiles-section" id="browse">
   <div class="section-header">
     <div><span class="eyebrow">Featured HR Professionals</span><h2 class="section-title">Ready to work. Right now.</h2></div>
-    <a href="/ai-match.html" class="view-all">AI Match →</a>
+    <a href="#" class="view-all" onclick="searchFor(''); return false;">Search Experts →</a>
   </div>
   <div class="profiles-grid">
     <div class="profile-card pc-rec reveal">
@@ -797,10 +918,10 @@ footer {
   <span class="eyebrow">Browse by Category</span>
   <h2 class="section-title">Every HR need. One platform.</h2>
   <div class="cats-grid">
-    <a href="/ai-match.html?q=Recruiter" class="cat-card cc1 reveal"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="30" cy="40" r="16" fill="none" stroke="rgba(190,255,0,0.03)" stroke-width="1"/><circle cx="90" cy="20" r="12" fill="none" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><circle cx="65" cy="95" r="18" fill="none" stroke="rgba(190,255,0,0.032)" stroke-width="1"/><circle cx="148" cy="60" r="14" fill="none" stroke="rgba(190,255,0,0.025)" stroke-width="1"/><circle cx="30" cy="130" r="10" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><circle cx="118" cy="128" r="12" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><line x1="30" y1="40" x2="90" y2="20" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="90" y1="20" x2="148" y2="60" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="65" y1="95" x2="148" y2="60" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="30" y1="40" x2="65" y2="95" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="65" y1="95" x2="30" y2="130" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><line x1="65" y1="95" x2="118" y2="128" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><circle cx="220" cy="35" r="9" fill="none" stroke="rgba(190,255,0,0.1)" stroke-width="1"/><circle cx="255" cy="20" r="7" fill="none" stroke="rgba(190,255,0,0.09)" stroke-width="1"/><circle cx="245" cy="70" r="10" fill="rgba(190,255,0,0.07)" stroke="rgba(190,255,0,0.13)" stroke-width="1"/><circle cx="265" cy="85" r="6" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><circle cx="200" cy="60" r="7" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><line x1="220" y1="35" x2="255" y2="20" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="255" y1="20" x2="245" y2="70" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="245" y1="70" x2="265" y2="85" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><line x1="200" y1="60" x2="220" y2="35" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><circle cx="245" cy="70" r="3" fill="rgba(190,255,0,0.22)"/></svg><span class="cat-arr">→</span><span class="cat-icon">🎯</span><div class="cat-name">Recruitment</div><div class="cat-count">68 professionals</div><div class="cat-tags"><span class="ctag">Tech</span><span class="ctag">Volume</span><span class="ctag">Leadership</span></div></a>
-    <a href="/ai-match.html?q=Payroll" class="cat-card cc2 reveal"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="10" y="105" width="15" height="45" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="30" y="88" width="15" height="62" rx="1.5" fill="rgba(0,245,255,0.036)"/><rect x="50" y="68" width="15" height="82" rx="1.5" fill="rgba(0,245,255,0.04)"/><rect x="70" y="80" width="15" height="70" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="90" y="52" width="15" height="98" rx="1.5" fill="rgba(0,245,255,0.038)"/><rect x="110" y="65" width="15" height="85" rx="1.5" fill="rgba(0,245,255,0.032)"/><polyline points="17,105 37,88 57,68 77,80 97,52 117,65" fill="none" stroke="rgba(0,245,255,0.036)" stroke-width="0.9" stroke-linecap="round"/><text x="140" y="45" font-size="22" fill="rgba(0,245,255,0.022)" font-family="serif">₹</text><text x="170" y="32" font-size="16" fill="rgba(0,245,255,0.02)" font-family="serif">₹</text><text x="155" y="95" font-size="14" fill="rgba(0,245,255,0.018)" font-family="serif">₹</text><rect x="195" y="80" width="12" height="60" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="211" y="65" width="12" height="75" rx="1.5" fill="rgba(0,245,255,0.12)"/><rect x="227" y="48" width="12" height="92" rx="1.5" fill="rgba(0,245,255,0.14)"/><rect x="243" y="60" width="12" height="80" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="259" y="35" width="12" height="105" rx="1.5" fill="rgba(0,245,255,0.15)"/><polyline points="201,80 217,65 233,48 249,60 265,35" fill="none" stroke="rgba(0,245,255,0.2)" stroke-width="1.3" stroke-linecap="round"/><circle cx="265" cy="35" r="3" fill="rgba(0,245,255,0.32)"/><text x="196" y="32" font-size="18" fill="rgba(0,245,255,0.07)" font-family="serif">₹</text></svg><span class="cat-arr">→</span><span class="cat-icon">💰</span><div class="cat-name">Payroll & Compliance</div><div class="cat-count">34 professionals</div><div class="cat-tags"><span class="ctag">PF/ESIC</span><span class="ctag">TDS</span><span class="ctag">Labour Law</span></div></a>
-    <a href="/ai-match.html?q=Compliance" class="cat-card cc3 reveal"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="15" width="62" height="80" rx="3" fill="rgba(249,115,22,0.025)" stroke="rgba(249,115,22,0.038)" stroke-width="1"/><rect x="20" y="26" width="46" height="5" rx="1" fill="rgba(249,115,22,0.04)"/><rect x="20" y="35" width="36" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="20" y="43" width="40" height="4" rx="1" fill="rgba(249,115,22,0.028)"/><rect x="20" y="51" width="30" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="20" y="59" width="38" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="85" y="25" width="55" height="68" rx="3" fill="rgba(249,115,22,0.02)" stroke="rgba(249,115,22,0.03)" stroke-width="1"/><rect x="92" y="35" width="40" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="92" y="43" width="32" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="92" y="51" width="36" height="4" rx="1" fill="rgba(249,115,22,0.022)"/><rect x="155" y="15" width="48" height="60" rx="3" fill="rgba(249,115,22,0.018)" stroke="rgba(249,115,22,0.026)" stroke-width="1"/><rect x="205" y="18" width="50" height="65" rx="3" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><rect x="212" y="28" width="36" height="4" rx="1" fill="rgba(249,115,22,0.2)"/><rect x="212" y="36" width="28" height="3" rx="1" fill="rgba(249,115,22,0.14)"/><rect x="212" y="43" width="32" height="3" rx="1" fill="rgba(249,115,22,0.12)"/><rect x="212" y="50" width="24" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><rect x="212" y="57" width="30" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><circle cx="242" cy="72" r="8" fill="rgba(249,115,22,0.14)" stroke="rgba(249,115,22,0.24)" stroke-width="1"/><path d="M238 72 L241 75 L247 69" stroke="rgba(249,115,22,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span class="cat-arr">→</span><span class="cat-icon">📋</span><div class="cat-name">HR Operations</div><div class="cat-count">28 professionals</div><div class="cat-tags"><span class="ctag">HRBP</span><span class="ctag">Policy</span><span class="ctag">Docs</span></div></a>
-    <a href="/ai-match.html?q=Training" class="cat-card cc4 reveal"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="120" width="20" height="28" rx="2" fill="rgba(168,85,247,0.032)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><rect x="12" y="96" width="20" height="22" rx="2" fill="rgba(168,85,247,0.028)" stroke="rgba(168,85,247,0.035)" stroke-width="1"/><rect x="12" y="70" width="20" height="24" rx="2" fill="rgba(168,85,247,0.025)" stroke="rgba(168,85,247,0.032)" stroke-width="1"/><rect x="12" y="45" width="20" height="23" rx="2" fill="rgba(168,85,247,0.03)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><line x1="32" y1="130" x2="32" y2="20" stroke="rgba(168,85,247,0.04)" stroke-width="1.2"/><path d="M27 26 L32 18 L37 26" fill="none" stroke="rgba(168,85,247,0.055)" stroke-width="1.2" stroke-linecap="round"/><path d="M55 110 Q80 90 105 95 Q130 100 155 80 Q180 62 205 72 Q230 82 255 60" fill="none" stroke="rgba(168,85,247,0.03)" stroke-width="0.9" stroke-dasharray="4,3"/><circle cx="105" cy="95" r="5" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><circle cx="205" cy="72" r="6" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><text x="102" y="94" font-size="9" fill="rgba(168,85,247,0.08)">★</text><text x="201" y="71" font-size="11" fill="rgba(168,85,247,0.09)">★</text><rect x="198" y="105" width="18" height="30" rx="2" fill="rgba(168,85,247,0.13)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><rect x="198" y="82" width="18" height="21" rx="2" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.17)" stroke-width="1"/><rect x="198" y="56" width="18" height="24" rx="2" fill="rgba(168,85,247,0.09)" stroke="rgba(168,85,247,0.16)" stroke-width="1"/><rect x="198" y="32" width="18" height="22" rx="2" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.22)" stroke-width="1"/><line x1="216" y1="96" x2="216" y2="20" stroke="rgba(168,85,247,0.16)" stroke-width="1.2"/><path d="M211 26 L216 18 L221 26" fill="none" stroke="rgba(168,85,247,0.28)" stroke-width="1.2" stroke-linecap="round"/><circle cx="248" cy="52" r="6" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="244" y="56" font-size="10" fill="rgba(168,85,247,0.35)">★</text><circle cx="268" cy="78" r="7" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="263" y="83" font-size="12" fill="rgba(168,85,247,0.35)">★</text></svg><span class="cat-arr">→</span><span class="cat-icon">🎓</span><div class="cat-name">Training & L&D</div><div class="cat-count">21 professionals</div><div class="cat-tags"><span class="ctag">Onboarding</span><span class="ctag">L&D</span><span class="ctag">Culture</span></div></a>
+    <a href="#" class="cat-card cc1 reveal" onclick="searchFor('Need a recruiter for a new hire'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="30" cy="40" r="16" fill="none" stroke="rgba(190,255,0,0.03)" stroke-width="1"/><circle cx="90" cy="20" r="12" fill="none" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><circle cx="65" cy="95" r="18" fill="none" stroke="rgba(190,255,0,0.032)" stroke-width="1"/><circle cx="148" cy="60" r="14" fill="none" stroke="rgba(190,255,0,0.025)" stroke-width="1"/><circle cx="30" cy="130" r="10" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><circle cx="118" cy="128" r="12" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><line x1="30" y1="40" x2="90" y2="20" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="90" y1="20" x2="148" y2="60" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="65" y1="95" x2="148" y2="60" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="30" y1="40" x2="65" y2="95" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="65" y1="95" x2="30" y2="130" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><line x1="65" y1="95" x2="118" y2="128" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><circle cx="220" cy="35" r="9" fill="none" stroke="rgba(190,255,0,0.1)" stroke-width="1"/><circle cx="255" cy="20" r="7" fill="none" stroke="rgba(190,255,0,0.09)" stroke-width="1"/><circle cx="245" cy="70" r="10" fill="rgba(190,255,0,0.07)" stroke="rgba(190,255,0,0.13)" stroke-width="1"/><circle cx="265" cy="85" r="6" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><circle cx="200" cy="60" r="7" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><line x1="220" y1="35" x2="255" y2="20" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="255" y1="20" x2="245" y2="70" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="245" y1="70" x2="265" y2="85" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><line x1="200" y1="60" x2="220" y2="35" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><circle cx="245" cy="70" r="3" fill="rgba(190,255,0,0.22)"/></svg><span class="cat-arr">→</span><span class="cat-icon">🎯</span><div class="cat-name">Recruitment</div><div class="cat-count">68 professionals</div><div class="cat-tags"><span class="ctag">Tech</span><span class="ctag">Volume</span><span class="ctag">Leadership</span></div></a>
+    <a href="#" class="cat-card cc2 reveal" onclick="searchFor('Need help with payroll and compliance'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="10" y="105" width="15" height="45" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="30" y="88" width="15" height="62" rx="1.5" fill="rgba(0,245,255,0.036)"/><rect x="50" y="68" width="15" height="82" rx="1.5" fill="rgba(0,245,255,0.04)"/><rect x="70" y="80" width="15" height="70" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="90" y="52" width="15" height="98" rx="1.5" fill="rgba(0,245,255,0.038)"/><rect x="110" y="65" width="15" height="85" rx="1.5" fill="rgba(0,245,255,0.032)"/><polyline points="17,105 37,88 57,68 77,80 97,52 117,65" fill="none" stroke="rgba(0,245,255,0.036)" stroke-width="0.9" stroke-linecap="round"/><text x="140" y="45" font-size="22" fill="rgba(0,245,255,0.022)" font-family="serif">₹</text><text x="170" y="32" font-size="16" fill="rgba(0,245,255,0.02)" font-family="serif">₹</text><text x="155" y="95" font-size="14" fill="rgba(0,245,255,0.018)" font-family="serif">₹</text><rect x="195" y="80" width="12" height="60" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="211" y="65" width="12" height="75" rx="1.5" fill="rgba(0,245,255,0.12)"/><rect x="227" y="48" width="12" height="92" rx="1.5" fill="rgba(0,245,255,0.14)"/><rect x="243" y="60" width="12" height="80" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="259" y="35" width="12" height="105" rx="1.5" fill="rgba(0,245,255,0.15)"/><polyline points="201,80 217,65 233,48 249,60 265,35" fill="none" stroke="rgba(0,245,255,0.2)" stroke-width="1.3" stroke-linecap="round"/><circle cx="265" cy="35" r="3" fill="rgba(0,245,255,0.32)"/><text x="196" y="32" font-size="18" fill="rgba(0,245,255,0.07)" font-family="serif">₹</text></svg><span class="cat-arr">→</span><span class="cat-icon">💰</span><div class="cat-name">Payroll & Compliance</div><div class="cat-count">34 professionals</div><div class="cat-tags"><span class="ctag">PF/ESIC</span><span class="ctag">TDS</span><span class="ctag">Labour Law</span></div></a>
+    <a href="#" class="cat-card cc3 reveal" onclick="searchFor('Need an HRBP for HR operations support'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="15" width="62" height="80" rx="3" fill="rgba(249,115,22,0.025)" stroke="rgba(249,115,22,0.038)" stroke-width="1"/><rect x="20" y="26" width="46" height="5" rx="1" fill="rgba(249,115,22,0.04)"/><rect x="20" y="35" width="36" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="20" y="43" width="40" height="4" rx="1" fill="rgba(249,115,22,0.028)"/><rect x="20" y="51" width="30" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="20" y="59" width="38" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="85" y="25" width="55" height="68" rx="3" fill="rgba(249,115,22,0.02)" stroke="rgba(249,115,22,0.03)" stroke-width="1"/><rect x="92" y="35" width="40" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="92" y="43" width="32" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="92" y="51" width="36" height="4" rx="1" fill="rgba(249,115,22,0.022)"/><rect x="155" y="15" width="48" height="60" rx="3" fill="rgba(249,115,22,0.018)" stroke="rgba(249,115,22,0.026)" stroke-width="1"/><rect x="205" y="18" width="50" height="65" rx="3" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><rect x="212" y="28" width="36" height="4" rx="1" fill="rgba(249,115,22,0.2)"/><rect x="212" y="36" width="28" height="3" rx="1" fill="rgba(249,115,22,0.14)"/><rect x="212" y="43" width="32" height="3" rx="1" fill="rgba(249,115,22,0.12)"/><rect x="212" y="50" width="24" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><rect x="212" y="57" width="30" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><circle cx="242" cy="72" r="8" fill="rgba(249,115,22,0.14)" stroke="rgba(249,115,22,0.24)" stroke-width="1"/><path d="M238 72 L241 75 L247 69" stroke="rgba(249,115,22,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span class="cat-arr">→</span><span class="cat-icon">📋</span><div class="cat-name">HR Operations</div><div class="cat-count">28 professionals</div><div class="cat-tags"><span class="ctag">HRBP</span><span class="ctag">Policy</span><span class="ctag">Docs</span></div></a>
+    <a href="#" class="cat-card cc4 reveal" onclick="searchFor('Need an HR generalist for training and development'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="120" width="20" height="28" rx="2" fill="rgba(168,85,247,0.032)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><rect x="12" y="96" width="20" height="22" rx="2" fill="rgba(168,85,247,0.028)" stroke="rgba(168,85,247,0.035)" stroke-width="1"/><rect x="12" y="70" width="20" height="24" rx="2" fill="rgba(168,85,247,0.025)" stroke="rgba(168,85,247,0.032)" stroke-width="1"/><rect x="12" y="45" width="20" height="23" rx="2" fill="rgba(168,85,247,0.03)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><line x1="32" y1="130" x2="32" y2="20" stroke="rgba(168,85,247,0.04)" stroke-width="1.2"/><path d="M27 26 L32 18 L37 26" fill="none" stroke="rgba(168,85,247,0.055)" stroke-width="1.2" stroke-linecap="round"/><path d="M55 110 Q80 90 105 95 Q130 100 155 80 Q180 62 205 72 Q230 82 255 60" fill="none" stroke="rgba(168,85,247,0.03)" stroke-width="0.9" stroke-dasharray="4,3"/><circle cx="105" cy="95" r="5" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><circle cx="205" cy="72" r="6" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><text x="102" y="94" font-size="9" fill="rgba(168,85,247,0.08)">★</text><text x="201" y="71" font-size="11" fill="rgba(168,85,247,0.09)">★</text><rect x="198" y="105" width="18" height="30" rx="2" fill="rgba(168,85,247,0.13)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><rect x="198" y="82" width="18" height="21" rx="2" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.17)" stroke-width="1"/><rect x="198" y="56" width="18" height="24" rx="2" fill="rgba(168,85,247,0.09)" stroke="rgba(168,85,247,0.16)" stroke-width="1"/><rect x="198" y="32" width="18" height="22" rx="2" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.22)" stroke-width="1"/><line x1="216" y1="96" x2="216" y2="20" stroke="rgba(168,85,247,0.16)" stroke-width="1.2"/><path d="M211 26 L216 18 L221 26" fill="none" stroke="rgba(168,85,247,0.28)" stroke-width="1.2" stroke-linecap="round"/><circle cx="248" cy="52" r="6" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="244" y="56" font-size="10" fill="rgba(168,85,247,0.35)">★</text><circle cx="268" cy="78" r="7" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="263" y="83" font-size="12" fill="rgba(168,85,247,0.35)">★</text></svg><span class="cat-arr">→</span><span class="cat-icon">🎓</span><div class="cat-name">Training & L&D</div><div class="cat-count">21 professionals</div><div class="cat-tags"><span class="ctag">Onboarding</span><span class="ctag">L&D</span><span class="ctag">Culture</span></div></a>
   </div>
 </section>
 
@@ -864,29 +985,29 @@ footer {
 
 <!-- SPLIT CTA — FIXED CONTRAST -->
 <div class="split-section">
-  <div class="split-lime reveal">
-    <span class="s-eyebrow-lime">For Startups & Companies</span>
-    <div class="s-title-lime">Hire HR talent on your terms.</div>
-    <div class="s-desc-lime">No retainers. No mandate. No % of CTC. Get verified HR professionals exactly when you need them.</div>
-    <ul class="s-list">
-      <li>First shortlist in 7 working days</li>
-      <li>Flat fee — never % of CTC</li>
-      <li>60-day free replacement</li>
-      <li>No exclusive mandate</li>
-    </ul>
-    <a href="/post-requirement.html" class="btn-dark-lime">Post a Requirement →</a>
+  <div class="panel panel-a reveal">
+    <div class="p-label">For Startups &amp; Companies</div>
+    <div class="p-title">Hire HR talent on <span class="p-accent-a">your terms.</span></div>
+    <div class="p-desc">No retainers. No mandate. No % of CTC. Get verified HR professionals exactly when you need them.</div>
+    <div class="p-rows">
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">First shortlist in 7 working days</div></div>
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">Flat fee — never % of CTC</div></div>
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">60-day free replacement</div></div>
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">No exclusive mandate</div></div>
+    </div>
+    <a href="/post-requirement.html" class="p-btn">Post a Requirement →</a>
   </div>
-  <div class="split-dark-card reveal">
-    <span class="s-eyebrow-dark">For HR Professionals</span>
-    <div class="s-title-dark">Work flexible. <span>Earn well.</span></div>
-    <div class="s-desc-dark">Get matched with funded startups. Choose your projects, set your availability, grow your portfolio.</div>
-    <ul class="s-list">
-      <li>Access 500+ startup mandates</li>
-      <li>Transparent on-time payments</li>
-      <li>Work from anywhere in India</li>
-      <li>Build a verified portfolio</li>
-    </ul>
-    <a href="/join-hr-partner.html" class="btn-lime-dark">Join as HR Partner →</a>
+  <div class="panel panel-b reveal">
+    <div class="p-label">For HR Professionals</div>
+    <div class="p-title">Work flexible. <span class="p-accent-b">Earn well.</span></div>
+    <div class="p-desc">Get matched with funded startups. Choose your projects, set your availability, grow your portfolio.</div>
+    <div class="p-rows">
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">Access 500+ startup mandates</div></div>
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">Transparent on-time payments</div></div>
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">Work from anywhere in India</div></div>
+      <div class="p-row"><div class="p-row-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="p-row-text">Build a verified portfolio</div></div>
+    </div>
+    <a href="/join-hr-partner.html" class="p-btn">Join as HR Partner →</a>
   </div>
 </div>
 
@@ -896,7 +1017,7 @@ footer {
     <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/#browse">Browse HR Partners</a></li><li><a href="/pricing.html">Pricing</a></li></ul></div>
     <div><div class="footer-col-title">For HR Pros</div><ul class="footer-links"><li><a href="/join-hr-partner.html">Join as Partner</a></li><li><a href="/referral.html">Referral Program</a></li></ul></div>
     <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li><a href="/services.html">Services</a>
-    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
+    </li><li><a href="/contact.html">Contact</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2026 verQ. All rights reserved. Gurugram, Haryana.</div><div class="footer-email"><a href="mailto:info@verq.in">info@verq.in</a></div></div>
 </footer>
@@ -907,84 +1028,243 @@ footer {
 
 
 <script>
-function goToMatch() {
-  const query = document.getElementById('homeSearch').value.trim();
-  if (query) {
-    window.location = '/ai-match.html?q=' + encodeURIComponent(query);
-  } else {
-    window.location = '/ai-match.html';
-  }
-}
-</script>
-
-<script>
-// ── HERO CANVAS — moving particles + network nodes + parallax ──
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, nodes = [], mouse = {x: 0, y: 0};
-
-  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-
-  class Node {
-    constructor() { this.reset(); }
-    reset() {
-      this.x = Math.random()*W; this.y = Math.random()*H;
-      this.vx = (Math.random()-.5)*.45; this.vy = (Math.random()-.5)*.45;
-      const t = Math.random();
-      this.r = t<.5 ? Math.random()*1.5+1.5 : t<.85 ? Math.random()*2+3 : Math.random()*2+5;
-      this.ba = Math.random()*.4+.2; this.a = this.ba;
-      this.pt = Math.random()*Math.PI*2; this.ps = Math.random()*.022+.008;
-      this.cyan = Math.random() > .88;
+// Homepage search — same behavior finalized in the search-hero demo:
+// typing an example, then a real Searching → Parsing → Matching → Results
+// sequence. This search box IS the AI Match feature now — no separate page.
+(function(){
+  const cycles = [
+    {
+      keywords: ["recruit","engineer","backend","node","aws","microservices","bangalore","developer","tech","d2c"],
+      query: "Need a recruiter for a D2C brand hiring a senior backend engineer with Node.js, AWS, and microservices experience in Bangalore within 3 weeks.",
+      parse: [
+        { label: "Role", value: "Technical Recruiter" },
+        { label: "Industry", value: "D2C / E-commerce" },
+        { label: "Skills", value: "Node.js, AWS, Microservices" }
+      ],
+      count: 24,
+      experts: [
+        { name: "Priya Sharma", role: "Recruiter · Technical Hiring", rating: "4.9", trust: "Placed 40+ engineering hires", tags: ["D2C","Node.js"], avail: "Available Today", initials: "PS", color: "#6366F1" },
+        { name: "Karan Mehta", role: "Recruiter · Backend & Infra", rating: "4.8", trust: "94 startup hires", tags: ["AWS","Microservices"], avail: "Available Today", initials: "KM", color: "#00DDF0" },
+        { name: "Sonal Iyer", role: "Recruiter · D2C Hiring", rating: "4.9", trust: "Worked with 14 startups", tags: ["Backend Hiring"], avail: "This Week", initials: "SI", color: "#F97316" }
+      ]
+    },
+    {
+      keywords: ["payroll","salary","pf","esic"],
+      query: "Need someone to set up payroll for 25 employees.",
+      parse: [
+        { label: "Role", value: "Payroll Specialist" },
+        { label: "Industry", value: "Any" },
+        { label: "Skills", value: "PF, ESIC, Payroll Processing" }
+      ],
+      count: 18,
+      experts: [
+        { name: "Rahul Verma", role: "Payroll Expert", rating: "5.0", trust: "200+ payrolls processed", tags: ["PF / ESIC"], avail: "Available Today", initials: "RV", color: "#6366F1" },
+        { name: "Deepa Nair", role: "Payroll & Compliance", rating: "4.9", trust: "Worked with 30+ startups", tags: ["PF / ESIC Specialist"], avail: "Available Today", initials: "DN", color: "#00DDF0" },
+        { name: "Vikram Rao", role: "Payroll Specialist", rating: "4.7", trust: "60+ payrolls processed", tags: ["Startup Payroll"], avail: "This Week", initials: "VR", color: "#F97316" }
+      ]
+    },
+    {
+      keywords: ["hrbp","business partner","series a","fractional","startup","generalist"],
+      query: "Looking for a fractional HRBP for a Series A startup.",
+      parse: [
+        { label: "Role", value: "HRBP" },
+        { label: "Industry", value: "Startup / SaaS" },
+        { label: "Skills", value: "People Ops, Series A Scaling" }
+      ],
+      count: 12,
+      experts: [
+        { name: "Anjali Kapoor", role: "HRBP", rating: "4.8", trust: "Worked with 9 startups", tags: ["Startup Specialist"], avail: "Available Today", initials: "AK", color: "#6366F1" },
+        { name: "Suhani Mishra", role: "HR Compliance · HRBP", rating: "4.9", trust: "40+ policy audits", tags: ["1–2 Yrs Exp"], avail: "This Week", initials: "SM", color: "#00DDF0" },
+        { name: "Ravi Prakash", role: "HR Generalist", rating: "4.7", trust: "Worked with 6 startups", tags: ["0–1 Yrs Exp"], avail: "Available Today", initials: "RP", color: "#F97316" }
+      ]
+    },
+    {
+      keywords: ["posh","compliance","audit","policy","labour law","mumbai"],
+      query: "Need a POSH compliance audit for our office in Mumbai.",
+      parse: [
+        { label: "Role", value: "Compliance Consultant" },
+        { label: "Industry", value: "Any" },
+        { label: "Skills", value: "POSH Audit, Labour Law" }
+      ],
+      count: 9,
+      experts: [
+        { name: "Ritika Malhotra", role: "Compliance Consultant", rating: "4.9", trust: "50+ POSH audits", tags: ["Labour Law","Policy Drafting"], avail: "Available Today", initials: "RM", color: "#6366F1" },
+        { name: "Arjun Nair", role: "HR Compliance", rating: "4.7", trust: "Worked with 20+ companies", tags: ["Statutory Compliance"], avail: "This Week", initials: "AN", color: "#00DDF0" },
+        { name: "Meera Iyer", role: "Compliance & Audit", rating: "4.8", trust: "35+ policy audits", tags: ["POSH Certified"], avail: "Available Today", initials: "MI", color: "#F97316" }
+      ]
     }
+  ];
+
+  const searchInput = document.getElementById('homeSearch');
+  const fakeCaret = document.getElementById('fakeCaret');
+  const mirrorDiv = document.getElementById('mirrorDiv');
+  const searchTextWrap = document.getElementById('searchTextWrap');
+  const searchBar = document.getElementById('searchBar');
+  const searchBtn = document.querySelector('.search-btn');
+  const statusSearching = document.getElementById('statusSearching');
+  const parseGrid = document.getElementById('parseGrid');
+  const statusMatching = document.getElementById('statusMatching');
+  const foundLine = document.getElementById('foundLine');
+  const foundText = document.getElementById('foundText');
+  const resultsGrid = document.getElementById('resultsGrid');
+  if (!searchInput || !fakeCaret || !mirrorDiv || !searchTextWrap || !searchBar) return;
+
+  let userTookOver = false;
+  let hasSearched = false;
+
+  function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+  function autoGrow(){
+    searchInput.style.height = 'auto';
+    searchInput.style.height = searchInput.scrollHeight + 'px';
   }
 
-  function init() { nodes = []; const n = Math.min(Math.floor(W*H/14000), 55); for(let i=0;i<n;i++) nodes.push(new Node()); }
+  function positionFakeCaret(){
+    mirrorDiv.style.width = searchInput.clientWidth + 'px';
+    mirrorDiv.textContent = '';
+    mirrorDiv.appendChild(document.createTextNode(searchInput.value));
+    const marker = document.createElement('span');
+    marker.textContent = '\u200b';
+    mirrorDiv.appendChild(marker);
+    const mRect = marker.getBoundingClientRect();
+    const wrapRect = searchTextWrap.getBoundingClientRect();
+    fakeCaret.style.left = (mRect.left - wrapRect.left) + 'px';
+    fakeCaret.style.top = (mRect.top - wrapRect.top) + 'px';
+  }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    nodes.forEach(p => {
-      const dx = (mouse.x - p.x) * .00015;
-      const dy = (mouse.y - p.y) * .00015;
-      p.x += p.vx + dx; p.y += p.vy + dy;
-      if(p.x<-10) p.x=W+10; if(p.x>W+10) p.x=-10;
-      if(p.y<-10) p.y=H+10; if(p.y>H+10) p.y=-10;
-      p.pt += p.ps;
-      const pf = (Math.sin(p.pt)+1)*.5;
-      p.a = p.ba + pf*.22;
-      const r = p.r + pf*1.4;
-      const col = p.cyan ? '0,245,255' : '190,255,0';
-      const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*4);
-      g.addColorStop(0, `rgba(${col},${p.a*.35})`);
-      g.addColorStop(.6, `rgba(${col},${p.a*.1})`);
-      g.addColorStop(1, `rgba(${col},0)`);
-      ctx.beginPath(); ctx.arc(p.x,p.y,r*4,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
-      ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2); ctx.fillStyle=`rgba(${col},${p.a})`; ctx.fill();
+  function stopAutoplay(){
+    if (userTookOver) return;
+    userTookOver = true;
+    fakeCaret.style.display = 'none';
+  }
+
+  function pickCycle(query){
+    const q = query.toLowerCase();
+    for (const c of cycles){
+      if (c.keywords.some(k => q.includes(k))) return c;
+    }
+    return cycles[0];
+  }
+
+  function resetResultsZone(){
+    statusSearching.classList.remove('show');
+    statusMatching.classList.remove('show');
+    foundLine.classList.remove('show');
+    parseGrid.innerHTML = '';
+    resultsGrid.innerHTML = '';
+  }
+
+  async function triggerSearch(query){
+    if (!query || !query.trim()) return;
+    hasSearched = true;
+    const cycle = pickCycle(query);
+    resetResultsZone();
+    searchBar.classList.add('active');
+
+    statusSearching.classList.add('show');
+    await sleep(500);
+    statusSearching.classList.remove('show');
+
+    cycle.parse.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'parse-item';
+      el.innerHTML = `<div class="parse-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4.2L3 6.2L7 2" stroke="#A8E600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>${p.label}: <b>${p.value}</b>`;
+      parseGrid.appendChild(el);
     });
-    for(let i=0;i<nodes.length;i++) {
-      for(let j=i+1;j<nodes.length;j++) {
-        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<100) {
-          ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y);
-          ctx.strokeStyle=`rgba(190,255,0,${.1*(1-d/100)})`; ctx.lineWidth=.6; ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
+    const items = parseGrid.querySelectorAll('.parse-item');
+    for (const item of items){ item.classList.add('show'); await sleep(140); }
+    await sleep(300);
+
+    statusMatching.classList.add('show');
+    await sleep(500);
+    statusMatching.classList.remove('show');
+
+    foundText.textContent = `${cycle.count} HR experts found`;
+    foundLine.classList.add('show');
+    await sleep(400);
+    foundLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    cycle.experts.forEach(e => {
+      const card = document.createElement('div');
+      card.className = 'rcard';
+      card.innerHTML = `
+        <div class="rcard-top">
+          <div class="rcard-avatar" style="background:${e.color}">${e.initials}</div>
+          <span class="rcard-avail">${e.avail}</span>
+        </div>
+        <div class="rcard-rating">★ ${e.rating}</div>
+        <div class="rcard-name">${e.name}</div>
+        <div class="rcard-role">${e.role}</div>
+        <div class="rcard-trust">${e.trust}</div>
+        <div class="rcard-tags">${e.tags.map(t => `<span class="rcard-tag">${t}</span>`).join('')}</div>
+      `;
+      resultsGrid.appendChild(card);
+    });
+    const cards = resultsGrid.querySelectorAll('.rcard');
+    for (const card of cards){ card.classList.add('show'); await sleep(90); }
   }
 
-  const hero = document.querySelector('.hero');
-  if(hero) hero.addEventListener('mousemove', e => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  // Exposed globally so category cards and other on-page links can jump
+  // straight to a live search instead of navigating to a separate page.
+  window.searchFor = function(query){
+    stopAutoplay();
+    document.querySelector('.hero').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    searchInput.value = query;
+    autoGrow();
+    searchBar.classList.add('active');
+    triggerSearch(query);
+  };
+
+  searchInput.addEventListener('focus', () => { stopAutoplay(); searchBar.classList.add('active'); });
+  searchInput.addEventListener('blur', () => { if (!searchInput.value) searchBar.classList.remove('active'); });
+  searchInput.addEventListener('input', () => { stopAutoplay(); autoGrow(); });
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); stopAutoplay(); triggerSearch(searchInput.value); }
+  });
+  if (searchBtn) searchBtn.addEventListener('click', () => { stopAutoplay(); triggerSearch(searchInput.value); });
+
+  document.querySelectorAll('.example-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      stopAutoplay();
+      const q = chip.dataset.query || chip.textContent.trim();
+      searchInput.value = q;
+      autoGrow();
+      triggerSearch(q);
+    });
   });
 
-  resize(); init(); draw();
-  window.addEventListener('resize', () => { resize(); init(); });
-})();
+  async function typeString(str, msPerChar){
+    searchInput.value = '';
+    autoGrow();
+    for (let i = 0; i < str.length; i++){
+      if (userTookOver) return false;
+      searchInput.value += str[i];
+      autoGrow();
+      positionFakeCaret();
+      await sleep(msPerChar);
+    }
+    return true;
+  }
 
+  async function autoplay(){
+    const cycle = cycles[0];
+    searchBar.classList.add('active');
+    const perChar = Math.max(20, Math.min(38, 1700 / cycle.query.length));
+    const finishedTyping = await typeString(cycle.query, perChar);
+    if (!finishedTyping || userTookOver) return;
+    fakeCaret.style.display = 'none';
+    await sleep(900);
+    if (userTookOver) return;
+    await triggerSearch(cycle.query);
+  }
+
+  positionFakeCaret();
+  autoplay();
+})();
+</script>
+
+
+<script>
 // ── ANIMATED COUNTERS ──
 function animateCounter(el, target, suffix) {
   let start = 0;
@@ -1004,8 +1284,8 @@ const statsObs = new IntersectionObserver(entries => {
     if (e.isIntersecting) {
       const counters = [
         {el: document.querySelector('.stat-item:nth-child(1) .stat-num'), val: 150, suffix: '+'},
-        {el: document.querySelector('.stat-item:nth-child(3) .stat-num'), val: 0, suffix: '%'},
-        {el: document.querySelector('.stat-item:nth-child(4) .stat-num'), val: 60, suffix: 'D'},
+        {el: document.querySelector('.stat-item:nth-child(2) .stat-num'), val: 32, suffix: ''},
+        {el: document.querySelector('.stat-item:nth-child(3) .stat-num'), val: 18, suffix: ' min'},
       ];
       counters.forEach(c => { if (c.el) animateCounter(c.el, c.val, c.suffix); });
       statsObs.disconnect();

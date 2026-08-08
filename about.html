@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<link rel="icon" type="image/png" href="/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content="About verQ — India's on-demand HR marketplace. Built by Naveen Singh, an 8+ year HR veteran who saw startups struggle and decided to fix it."/>
 <title>About Us | verQ</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/theme.css"/>
 <style>
+.hero-canvas-wrap { position:relative; overflow:hidden; }
+#about-canvas { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.6; pointer-events:none; }
 .page-hero {
   padding: 140px 5% 80px;
   position: relative; z-index: 1;
@@ -152,7 +155,6 @@
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="/services.html">Services</a>
-    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a>
     <a href="/pricing.html">Pricing</a>
     <a href="/about.html" class="active">About Us</a>
     <a href="/contact.html">Contact</a>
@@ -162,12 +164,15 @@
 </nav>
 
 <!-- HERO -->
-<div class="page-hero">
-  <span class="eyebrow" style="animation: fadeUp 0.5s ease both;">Our Story</span>
-  <h1 class="section-title" style="font-size:clamp(40px,5.5vw,72px);letter-spacing:-2.5px;line-height:1.0;margin-bottom:16px;animation: fadeUp 0.5s 0.1s ease both;">
-    Built by an HR veteran<br/>who got tired of<br/><span style="color:var(--accent);">broken consultancies.</span>
-  </h1>
-  <p class="section-sub" style="font-size:17px;max-width:580px;animation: fadeUp 0.5s 0.2s ease both;">After 8+ years in recruitment across tech, FMCG, and mobility — Naveen Singh built the platform he always wished existed.</p>
+<div class="hero-canvas-wrap">
+  <canvas id="about-canvas"></canvas>
+  <div class="page-hero">
+    <span class="eyebrow" style="animation: fadeUp 0.5s ease both;">Our Story</span>
+    <h1 class="section-title" style="font-size:clamp(40px,5.5vw,72px);letter-spacing:-2.5px;line-height:1.0;margin-bottom:16px;animation: fadeUp 0.5s 0.1s ease both;">
+      Built by an HR veteran<br/>who got tired of<br/><span style="color:var(--accent);">broken consultancies.</span>
+    </h1>
+    <p class="section-sub" style="font-size:17px;max-width:580px;animation: fadeUp 0.5s 0.2s ease both;">After 8+ years in recruitment across tech, FMCG, and mobility — Naveen Singh built the platform he always wished existed.</p>
+  </div>
 </div>
 
 <!-- INTRO -->
@@ -299,7 +304,7 @@
     <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/#browse">Browse HR Partners</a></li><li><a href="/pricing.html">Pricing</a></li></ul></div>
     <div><div class="footer-col-title">For HR Pros</div><ul class="footer-links"><li><a href="/join-hr-partner.html">Join as Partner</a></li><li><a href="/referral.html">Referral Program</a></li></ul></div>
     <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li><a href="/services.html">Services</a>
-    <a href="/ai-match.html" style="color:var(--accent);font-weight:600;">✦ AI Match</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
+    </li><li><a href="/contact.html">Contact</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2026 verQ. All rights reserved. Gurugram, Haryana.</div><div class="footer-email"><a href="mailto:info@verq.in">info@verq.in</a></div></div>
 </footer>
