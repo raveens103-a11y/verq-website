@@ -489,6 +489,11 @@ footer {
 .view-all { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
 .view-all:hover { opacity: 0.75; }
 .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.partners-empty { grid-column: 1 / -1; text-align: center; padding: 56px 24px; border: 1px dashed var(--border); border-radius: 14px; }
+.partners-empty-icon { font-size: 28px; margin-bottom: 12px; }
+.partners-empty-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.partners-empty-sub { font-size: 13px; color: var(--muted); }
+.partners-empty-sub a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
 .profile-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
 .profile-card:hover { border-color: rgba(168,230,0,0.22); box-shadow: var(--glow); transform: translateY(-4px); }
@@ -845,71 +850,11 @@ footer {
     <div><span class="eyebrow">Featured HR Professionals</span><h2 class="section-title">Ready to work. Right now.</h2></div>
     <a href="#" class="view-all" onclick="searchFor(''); return false;">Search Experts →</a>
   </div>
-  <div class="profiles-grid">
-    <div class="profile-card pc-rec reveal">
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="210" cy="30" r="10" fill="none" stroke="rgba(190,255,0,0.1)" stroke-width="1.2"/><circle cx="255" cy="60" r="8" fill="none" stroke="rgba(190,255,0,0.09)" stroke-width="1.2"/><circle cx="235" cy="100" r="11" fill="rgba(190,255,0,0.06)" stroke="rgba(190,255,0,0.12)" stroke-width="1.2"/><circle cx="265" cy="120" r="7" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><circle cx="195" cy="80" r="8" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><line x1="210" y1="30" x2="255" y2="60" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="255" y1="60" x2="235" y2="100" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="235" y1="100" x2="265" y2="120" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><line x1="195" y1="80" x2="210" y2="30" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><line x1="195" y1="80" x2="235" y2="100" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><circle cx="210" cy="30" r="2.5" fill="rgba(190,255,0,0.2)"/><circle cx="235" cy="100" r="3" fill="rgba(190,255,0,0.22)"/></svg>
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="35" cy="50" r="18" fill="none" stroke="rgba(190,255,0,0.04)" stroke-width="1.2"/><circle cx="110" cy="25" r="14" fill="none" stroke="rgba(190,255,0,0.035)" stroke-width="1.2"/><circle cx="75" cy="110" r="20" fill="none" stroke="rgba(190,255,0,0.038)" stroke-width="1.2"/><circle cx="160" cy="75" r="16" fill="none" stroke="rgba(190,255,0,0.032)" stroke-width="1.2"/><circle cx="40" cy="155" r="12" fill="none" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><circle cx="130" cy="160" r="10" fill="none" stroke="rgba(190,255,0,0.025)" stroke-width="1"/><line x1="35" y1="50" x2="110" y2="25" stroke="rgba(190,255,0,0.022)" stroke-width="0.8"/><line x1="110" y1="25" x2="160" y2="75" stroke="rgba(190,255,0,0.022)" stroke-width="0.8"/><line x1="75" y1="110" x2="160" y2="75" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="35" y1="50" x2="75" y2="110" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="75" y1="110" x2="40" y2="155" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="130" y1="160" x2="75" y2="110" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/></svg>
-      <div class="p-top">
-        <div class="p-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#0A0A0F">SK</div>
-        <div class="avail-now">Available Now</div>
-      </div>
-      <div class="p-name">Sejal Khandelwal</div>
-      <div class="p-role">Recruitment Specialist · 3-6 years</div>
-      <div class="p-tags"><span class="ptag">Recruitment</span><span class="ptag">L&D</span><span class="ptag">HR Ops</span></div>
-      <div class="p-meta">
-        <div class="p-loc">🌐 Remote</div>
-      </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:4px;">📋 AKM Global</div>
-      <div class="p-verified">verQ Verified</div>
-    </div>
-    <div class="profile-card pc-gen reveal">
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="215" y="18" width="48" height="18" rx="3" fill="rgba(249,115,22,0.09)" stroke="rgba(249,115,22,0.18)" stroke-width="1"/><rect x="198" y="56" width="38" height="15" rx="2" fill="rgba(249,115,22,0.07)" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><rect x="245" y="56" width="32" height="15" rx="2" fill="rgba(249,115,22,0.07)" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><line x1="239" y1="36" x2="239" y2="46" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><line x1="217" y1="46" x2="261" y2="46" stroke="rgba(249,115,22,0.12)" stroke-width="1"/><line x1="217" y1="46" x2="217" y2="56" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><line x1="261" y1="46" x2="261" y2="56" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><circle cx="204" cy="90" r="6" fill="none" stroke="rgba(249,115,22,0.1)" stroke-width="1"/><circle cx="218" cy="90" r="6" fill="none" stroke="rgba(249,115,22,0.09)" stroke-width="1"/><circle cx="248" cy="90" r="6" fill="none" stroke="rgba(249,115,22,0.1)" stroke-width="1"/><line x1="217" y1="71" x2="204" y2="84" stroke="rgba(249,115,22,0.08)" stroke-width="0.8"/><line x1="217" y1="71" x2="218" y2="84" stroke="rgba(249,115,22,0.08)" stroke-width="0.8"/><line x1="261" y1="71" x2="248" y2="84" stroke="rgba(249,115,22,0.08)" stroke-width="0.8"/></svg>
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="100" y="12" width="80" height="26" rx="3" fill="none" stroke="rgba(249,115,22,0.04)" stroke-width="1"/><rect x="20" y="58" width="62" height="20" rx="2" fill="none" stroke="rgba(249,115,22,0.035)" stroke-width="1"/><rect x="100" y="58" width="62" height="20" rx="2" fill="none" stroke="rgba(249,115,22,0.035)" stroke-width="1"/><rect x="180" y="58" width="62" height="20" rx="2" fill="none" stroke="rgba(249,115,22,0.03)" stroke-width="1"/><line x1="140" y1="38" x2="140" y2="50" stroke="rgba(249,115,22,0.04)" stroke-width="1"/><line x1="51" y1="50" x2="211" y2="50" stroke="rgba(249,115,22,0.035)" stroke-width="1"/><line x1="51" y1="50" x2="51" y2="58" stroke="rgba(249,115,22,0.04)" stroke-width="1"/><line x1="131" y1="50" x2="131" y2="58" stroke="rgba(249,115,22,0.04)" stroke-width="1"/><line x1="211" y1="50" x2="211" y2="58" stroke="rgba(249,115,22,0.035)" stroke-width="1"/><circle cx="30" cy="110" r="10" fill="none" stroke="rgba(249,115,22,0.028)" stroke-width="1"/><circle cx="55" cy="110" r="10" fill="none" stroke="rgba(249,115,22,0.025)" stroke-width="1"/><circle cx="110" cy="110" r="10" fill="none" stroke="rgba(249,115,22,0.028)" stroke-width="1"/><circle cx="135" cy="110" r="10" fill="none" stroke="rgba(249,115,22,0.025)" stroke-width="1"/><circle cx="200" cy="110" r="10" fill="none" stroke="rgba(249,115,22,0.025)" stroke-width="1"/><line x1="51" y1="78" x2="30" y2="100" stroke="rgba(249,115,22,0.022)" stroke-width="0.8"/><line x1="51" y1="78" x2="55" y2="100" stroke="rgba(249,115,22,0.022)" stroke-width="0.8"/><line x1="131" y1="78" x2="110" y2="100" stroke="rgba(249,115,22,0.022)" stroke-width="0.8"/><line x1="131" y1="78" x2="135" y2="100" stroke="rgba(249,115,22,0.022)" stroke-width="0.8"/></svg>
-      <div class="p-top">
-        <div class="p-avatar" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);color:#fff">RP</div>
-        <div class="avail-now">Available Now</div>
-      </div>
-      <div class="p-name">Ravi Prakash Mahato</div>
-      <div class="p-role">HR Generalist · 0-1 year</div>
-      <div class="p-tags"><span class="ptag">Recruitment</span><span class="ptag">Compliance</span><span class="ptag">L&D</span></div>
-      <div class="p-meta">
-        <div class="p-loc">🌐 Remote</div>
-      </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:4px;">📋 National Aluminium Company Limited</div>
-      <div class="p-verified">verQ Verified</div>
-    </div>
-    <div class="profile-card pc-com reveal">
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M208 16 L256 16 L256 68 Q256 88 232 96 Q208 88 208 68 Z" fill="rgba(168,85,247,0.06)" stroke="rgba(168,85,247,0.14)" stroke-width="1.2"/><path d="M220 52 L230 62 L248 44" fill="none" stroke="rgba(168,85,247,0.28)" stroke-width="1.8" stroke-linecap="round"/><line x1="195" y1="28" x2="205" y2="28" stroke="rgba(168,85,247,0.07)" stroke-width="0.8"/><line x1="195" y1="40" x2="205" y2="40" stroke="rgba(168,85,247,0.06)" stroke-width="0.8"/><line x1="195" y1="52" x2="205" y2="52" stroke="rgba(168,85,247,0.06)" stroke-width="0.8"/><line x1="195" y1="64" x2="205" y2="64" stroke="rgba(168,85,247,0.05)" stroke-width="0.8"/><rect x="195" y="110" width="72" height="8" rx="1.5" fill="rgba(168,85,247,0.07)"/><rect x="195" y="124" width="56" height="8" rx="1.5" fill="rgba(168,85,247,0.06)"/><rect x="195" y="138" width="64" height="8" rx="1.5" fill="rgba(168,85,247,0.05)"/></svg>
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M25 8 L105 8 L105 95 Q105 128 65 142 Q25 128 25 95 Z" fill="rgba(168,85,247,0.025)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><path d="M42 68 L60 86 L90 55" fill="none" stroke="rgba(168,85,247,0.055)" stroke-width="1.5" stroke-linecap="round"/><path d="M135 18 L200 18 L200 78 Q200 100 167 112 Q135 100 135 78 Z" fill="none" stroke="rgba(168,85,247,0.028)" stroke-width="1"/><path d="M148 54 L160 66 L180 46" fill="none" stroke="rgba(168,85,247,0.04)" stroke-width="1.2" stroke-linecap="round"/><line x1="115" y1="28" x2="280" y2="28" stroke="rgba(168,85,247,0.022)" stroke-width="0.8"/><line x1="115" y1="50" x2="280" y2="50" stroke="rgba(168,85,247,0.02)" stroke-width="0.8"/><line x1="115" y1="72" x2="280" y2="72" stroke="rgba(168,85,247,0.018)" stroke-width="0.8"/><line x1="115" y1="94" x2="280" y2="94" stroke="rgba(168,85,247,0.016)" stroke-width="0.8"/><line x1="115" y1="116" x2="280" y2="116" stroke="rgba(168,85,247,0.015)" stroke-width="0.8"/><rect x="116" y="32" width="55" height="13" rx="1.5" fill="rgba(168,85,247,0.022)"/><rect x="180" y="55" width="55" height="13" rx="1.5" fill="rgba(168,85,247,0.018)"/><rect x="116" y="120" width="70" height="8" rx="1.5" fill="rgba(168,85,247,0.02)"/><rect x="116" y="134" width="50" height="8" rx="1.5" fill="rgba(168,85,247,0.018)"/></svg>
-      <div class="p-top">
-        <div class="p-avatar" style="background:linear-gradient(135deg,#14B8A6,#0D9488);color:#fff">SM</div>
-        <div class="avail-now">Available Now</div>
-      </div>
-      <div class="p-name">Suhani Mishra</div>
-      <div class="p-role">HR Compliance Specialist · 1-3 years</div>
-      <div class="p-tags"><span class="ptag">Compliance</span><span class="ptag">L&D</span><span class="ptag">HR Ops</span></div>
-      <div class="p-meta">
-        <div class="p-loc">🌐 On-Site</div>
-      </div>
-      <div style="font-size:10px;color:var(--muted);margin-top:4px;">📋 CEAT Limited</div>
-      <div class="p-verified">verQ Verified</div>
-    </div>
-    <div class="profile-card pc-hr reveal">
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="195" y="110" width="14" height="60" rx="2" fill="rgba(0,245,255,0.1)"/><rect x="213" y="90" width="14" height="80" rx="2" fill="rgba(0,245,255,0.12)"/><rect x="231" y="68" width="14" height="102" rx="2" fill="rgba(0,245,255,0.15)"/><rect x="249" y="82" width="14" height="88" rx="2" fill="rgba(0,245,255,0.11)"/><polyline points="202,110 220,90 238,68 256,82" fill="none" stroke="rgba(0,245,255,0.22)" stroke-width="1.5" stroke-linecap="round"/><circle cx="238" cy="68" r="3" fill="rgba(0,245,255,0.35)"/><text x="196" y="52" font-size="20" fill="rgba(0,245,255,0.08)" font-family="serif" font-weight="bold">₹</text><text x="236" y="42" font-size="14" fill="rgba(0,245,255,0.07)" font-family="serif">₹</text></svg>
-      <svg class="card-wm" viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="130" width="18" height="60" rx="2" fill="rgba(0,245,255,0.035)"/><rect x="34" y="108" width="18" height="82" rx="2" fill="rgba(0,245,255,0.04)"/><rect x="56" y="82" width="18" height="108" rx="2" fill="rgba(0,245,255,0.045)"/><rect x="78" y="98" width="18" height="92" rx="2" fill="rgba(0,245,255,0.035)"/><rect x="100" y="58" width="18" height="132" rx="2" fill="rgba(0,245,255,0.04)"/><rect x="122" y="76" width="18" height="114" rx="2" fill="rgba(0,245,255,0.035)"/><rect x="144" y="45" width="18" height="145" rx="2" fill="rgba(0,245,255,0.04)"/><rect x="166" y="62" width="18" height="128" rx="2" fill="rgba(0,245,255,0.032)"/><polyline points="21,130 43,108 65,82 87,98 109,58 131,76 153,45 175,62" fill="none" stroke="rgba(0,245,255,0.04)" stroke-width="1" stroke-linecap="round"/><text x="190" y="50" font-size="24" fill="rgba(0,245,255,0.025)" font-family="serif">₹</text><text x="230" y="38" font-size="18" fill="rgba(0,245,255,0.022)" font-family="serif">₹</text><text x="245" y="80" font-size="14" fill="rgba(0,245,255,0.02)" font-family="serif">₹</text></svg>
-      <div class="p-top">
-        <div class="p-avatar" style="background:linear-gradient(135deg,#EC4899,#BE185D);color:#fff">SG</div>
-        <div class="avail-now">Available Now</div>
-      </div>
-      <div class="p-name">Sanya Gupta</div>
-      <div class="p-role">HR Generalist · 3-6 years</div>
-      <div class="p-tags"><span class="ptag">Recruitment</span><span class="ptag">Compliance</span><span class="ptag">HR Ops</span></div>
-      <div class="p-meta">
-        <div class="p-loc">🌐 Hybrid</div>
-      </div>
-      
-      <div class="p-verified">verQ Verified</div>
-    </div>
+  <div class="profiles-grid" id="realPartnersGrid"></div>
+  <div class="partners-empty" id="partnersEmpty" style="display:none;">
+    <div class="partners-empty-icon">👋</div>
+    <div class="partners-empty-title">New HR partners join every week.</div>
+    <div class="partners-empty-sub">Be one of the first featured here — <a href="/join-hr-partner.html">apply as an HR partner</a>.</div>
   </div>
 </section>
 
@@ -1348,6 +1293,50 @@ document.querySelectorAll('.step-card').forEach(card => {
   card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 
+</script>
+
+<script>
+// ── REAL HR PARTNERS — fetched from consented Netlify Forms submissions ──
+// Falls back to a friendly empty state if the function isn't configured yet,
+// the request fails, or no one has consented to being featured yet. Never
+// falls back to fake/example people.
+(function(){
+  const grid = document.getElementById('realPartnersGrid');
+  const empty = document.getElementById('partnersEmpty');
+  if (!grid || !empty) return;
+
+  function cardHTML(p){
+    const tags = (p.skills || []).map(s => `<span class="ptag">${s}</span>`).join('');
+    const roleLine = [p.role, p.experience].filter(Boolean).join(' · ');
+    return `
+      <div class="profile-card reveal visible">
+        <div class="p-top">
+          <div class="p-avatar" style="background:${p.color};color:#0A0A0F">${p.initials}</div>
+          ${p.availability ? `<div class="avail-now">${p.availability}</div>` : ''}
+        </div>
+        <div class="p-name">${p.name}</div>
+        ${roleLine ? `<div class="p-role">${roleLine}</div>` : ''}
+        ${tags ? `<div class="p-tags">${tags}</div>` : ''}
+        ${p.city ? `<div class="p-meta"><div class="p-loc">📍 ${p.city}</div></div>` : ''}
+      </div>`;
+  }
+
+  fetch('/.netlify/functions/hr-partners')
+    .then(res => res.ok ? res.json() : Promise.reject(new Error('bad response')))
+    .then(data => {
+      const profiles = (data && data.profiles) || [];
+      if (profiles.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      grid.innerHTML = profiles.slice(0, 4).map(cardHTML).join('');
+    })
+    .catch(() => {
+      // Function not deployed yet, misconfigured, or network error —
+      // show the honest empty state rather than fake data.
+      empty.style.display = 'block';
+    });
+})();
 </script>
 
 </body>
