@@ -69,6 +69,7 @@ function corsHeaders(origin) {
 
 exports.handler = async function (event) {
   const origin = event.headers.origin || event.headers.Origin || '';
+  console.log(`[hr-partners] request received. origin="${origin}" method=${event.httpMethod}`);
 
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -79,26 +80,32 @@ exports.handler = async function (event) {
   }
 
   if (event.httpMethod !== 'GET') {
+    console.log('[hr-partners] rejected: method not allowed');
     return { statusCode: 405, headers: corsHeaders(origin), body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
   if (!ALLOWED_ORIGINS.has(origin)) {
+    console.log(`[hr-partners] rejected: origin "${origin}" not in allowlist`);
     return { statusCode: 403, headers: corsHeaders(origin), body: JSON.stringify({ error: 'Forbidden origin' }) };
   }
 
   const ip = event.headers['x-nf-client-connection-ip'] || event.headers['client-ip'] || 'unknown';
   if (isRateLimited(ip)) {
+    console.log(`[hr-partners] rejected: rate limited (ip=${ip})`);
     return { statusCode: 429, headers: corsHeaders(origin), body: JSON.stringify({ error: 'Too many requests, please slow down.' }) };
   }
 
   if (cache.data && Date.now() < cache.expiresAt) {
+    console.log(`[hr-partners] serving from cache: ${cache.data.profiles.length} profile(s)`);
     return { statusCode: 200, headers: corsHeaders(origin), body: JSON.stringify(cache.data) };
   }
 
   const token = process.env.NETLIFY_ACCESS_TOKEN;
   const siteId = process.env.NETLIFY_SITE_ID;
+  console.log(`[hr-partners] env check: token=${token ? 'present (' + token.length + ' chars)' : 'MISSING'} siteId=${siteId || 'MISSING'}`);
 
   if (!token || !siteId) {
+    console.log('[hr-partners] aborting: missing required environment variables');
     return {
       statusCode: 500,
       headers: corsHeaders(origin),
@@ -111,10 +118,13 @@ exports.handler = async function (event) {
     const formsRes = await fetch(`https://api.netlify.com/api/v1/sites/${siteId}/forms`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (!formsRes.ok) throw new Error(`forms lookup failed: ${formsRes.status}`);
+    console.log(`[hr-partners] forms lookup status: ${formsRes.status}`);
+    if (!formsRes.ok) throw new Error(`forms lookup failed: ${formsRes.status} ${await formsRes.text()}`);
     const forms = await formsRes.json();
+    console.log(`[hr-partners] found ${forms.length} form(s) on this site: ${forms.map(f => f.name).join(', ')}`);
     const form = forms.find(f => f.name === FORM_NAME);
     if (!form) {
+      console.log(`[hr-partners] no form named "${FORM_NAME}" found — returning empty`);
       const empty = { profiles: [] };
       cache = { data: empty, expiresAt: Date.now() + CACHE_TTL_MS };
       return { statusCode: 200, headers: corsHeaders(origin), body: JSON.stringify(empty) };
@@ -124,8 +134,10 @@ exports.handler = async function (event) {
     const subsRes = await fetch(`https://api.netlify.com/api/v1/forms/${form.id}/submissions`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (!subsRes.ok) throw new Error(`submissions lookup failed: ${subsRes.status}`);
+    console.log(`[hr-partners] submissions lookup status: ${subsRes.status}`);
+    if (!subsRes.ok) throw new Error(`submissions lookup failed: ${subsRes.status} ${await subsRes.text()}`);
     const submissions = await subsRes.json();
+    console.log(`[hr-partners] total submissions found: ${submissions.length}`);
 
     // 3. Only include submissions where the person explicitly consented to
     //    being publicly featured. Everything else is silently excluded.
@@ -133,6 +145,7 @@ exports.handler = async function (event) {
       const c = s.data && s.data.consent;
       return c === 'yes' || c === 'on' || c === true;
     });
+    console.log(`[hr-partners] submissions with consent=yes: ${consented.length}`);
 
     // 4. Most recent first, capped, mapped to safe public fields only.
     consented.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -141,11 +154,13 @@ exports.handler = async function (event) {
       return { ...p, initials: initialsOf(p.name || '??'), color: colorFor(p.name || 'x') };
     }).filter(p => p.name); // never show a profile with no name
 
+    console.log(`[hr-partners] returning ${profiles.length} public profile(s)`);
     const result = { profiles };
     cache = { data: result, expiresAt: Date.now() + CACHE_TTL_MS };
 
     return { statusCode: 200, headers: corsHeaders(origin), body: JSON.stringify(result) };
   } catch (err) {
+    console.log(`[hr-partners] ERROR: ${err.message || err}`);
     return {
       statusCode: 502,
       headers: corsHeaders(origin),
