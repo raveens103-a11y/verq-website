@@ -61,15 +61,32 @@ function isRateLimited(ip) {
 function corsHeaders(origin) {
   return {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': ALLOWED_ORIGINS.has(origin) ? origin : 'null',
+    'Access-Control-Allow-Origin': origin && ALLOWED_ORIGINS.has(origin) ? origin : '*',
     'Vary': 'Origin',
     'Cache-Control': 'public, max-age=30',
   };
 }
 
+// Same-origin fetch() calls (your own homepage calling this same-domain
+// endpoint) often don't send an Origin header at all — browsers mostly only
+// send it for genuinely cross-origin requests. So we accept a request if
+// EITHER the Origin header matches our allowlist, OR it's missing but the
+// Referer header shows the request came from one of our own pages.
+function isAllowedRequest(origin, referer) {
+  if (origin) return ALLOWED_ORIGINS.has(origin);
+  if (referer) {
+    return Array.from(ALLOWED_ORIGINS).some(o => referer.startsWith(o));
+  }
+  // No Origin and no Referer at all — allow it. This data is public,
+  // consent-gated read-only content, not a secret, so the worst case is
+  // someone else's server also being able to read it.
+  return true;
+}
+
 exports.handler = async function (event) {
   const origin = event.headers.origin || event.headers.Origin || '';
-  console.log(`[hr-partners] request received. origin="${origin}" method=${event.httpMethod}`);
+  const referer = event.headers.referer || event.headers.Referer || '';
+  console.log(`[hr-partners] request received. origin="${origin}" referer="${referer}" method=${event.httpMethod}`);
 
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -84,8 +101,8 @@ exports.handler = async function (event) {
     return { statusCode: 405, headers: corsHeaders(origin), body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
-  if (!ALLOWED_ORIGINS.has(origin)) {
-    console.log(`[hr-partners] rejected: origin "${origin}" not in allowlist`);
+  if (!isAllowedRequest(origin, referer)) {
+    console.log(`[hr-partners] rejected: origin "${origin}" / referer "${referer}" not allowed`);
     return { statusCode: 403, headers: corsHeaders(origin), body: JSON.stringify({ error: 'Forbidden origin' }) };
   }
 
