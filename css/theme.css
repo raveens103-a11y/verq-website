@@ -1,18 +1,23 @@
 /* ── verQ THEME v2 — FIXED MOBILE MENU ── */
 :root {
-  --space: #0A0A0F;
+  --space: #090A0D;
   --surface: #0F1117;
-  --surface2: #13151E;
+  --surface2: #151923;
   --accent: #A8E600;
   --accent-dark: #8CC400;
   --accent-text: #0A0A0F;
   --cyan: #00DDF0;
   --white: #F0F0F0;
   --muted: #6B7280;
-  --border: #1E2533;
+  --border: #1C212D;
   --glow: 0 0 24px rgba(168,230,0,0.12);
   --glow-strong: 0 0 36px rgba(168,230,0,0.28);
   --glow-cyan: 0 0 20px rgba(0,221,240,0.12);
+  /* spacing system: section / heading / card / tight */
+  --sp-section: 120px;
+  --sp-heading: 64px;
+  --sp-card: 24px;
+  --sp-tight: 12px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,7 +59,7 @@ nav {
   flex-shrink: 0;
 }
 
-.nav-logo span { color: var(--accent); text-shadow: 0 0 10px rgba(168,230,0,0.4); }
+.nav-logo span { color: var(--accent); text-shadow: 0 0 8px rgba(168,230,0,0.22); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DESKTOP NAVIGATION - VISIBLE ON LARGE SCREENS
@@ -161,6 +166,7 @@ nav {
   .nav-links.open {
     display: flex !important;
     flex-direction: column !important;
+    align-items: center !important;
   }
 
   /* Menu item styling */
@@ -170,7 +176,10 @@ nav {
     font-weight: 600 !important;
     color: var(--white) !important;
     text-decoration: none;
-    text-align: left;
+    text-align: center;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     width: 100% !important;
     padding: 18px 24px !important;
     border-radius: 0 !important;
@@ -178,7 +187,6 @@ nav {
     border-bottom: 1px solid var(--border);
     white-space: normal !important;
     transition: all 0.2s;
-    display: block !important;
     line-height: 1.4;
   }
 
@@ -239,7 +247,7 @@ nav {
 .eyebrow {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 11px; font-weight: 600; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: var(--cyan);
   margin-bottom: 12px; display: block;
 }
 
@@ -388,7 +396,7 @@ footer {
 }
 
 .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--white); display: block; margin-bottom: 10px; }
-.footer-logo span { color: var(--accent); text-shadow: 0 0 8px rgba(168,230,0,0.35); }
+.footer-logo span { color: var(--accent); text-shadow: 0 0 6px rgba(168,230,0,0.2); }
 .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 220px; }
 .footer-col-title { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
 .footer-links { list-style: none; }

@@ -3,26 +3,31 @@
 <head> 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="verQ — India's on-demand HR marketplace. Browse 150+ verified HR professionals. Hire in 48 hours. Fixed fee. No mandate."/>
-<title>verQ | India's On-Demand HR Marketplace</title>
-<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
+<title>verQ | The HR Marketplace</title>
+<link rel="icon" type="image/png" href="/favicon.png?v=2">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 /* ── verQ THEME v2 — Refined ── */
 :root {
-  --space: #0A0A0F;
-  --surface: #0F1117;
-  --surface2: #13151E;
+  --space: #090A0D;         /* page background */
+  --surface: #0F1117;       /* section background */
+  --surface2: #151923;      /* elevated surface — cards */
   --accent: #A8E600;        /* Toned down ~12% from #BEFF00 */
   --accent-dark: #8CC400;   /* Hover state */
   --accent-text: #0A0A0F;   /* Text on accent bg */
   --cyan: #00DDF0;          /* Slightly toned cyan */
   --white: #F0F0F0;
   --muted: #6B7280;
-  --border: #1E2533;
+  --border: #1C212D;        /* one unified border treatment */
   --glow: 0 0 24px rgba(168,230,0,0.12);
   --glow-strong: 0 0 36px rgba(168,230,0,0.28);
   --glow-cyan: 0 0 20px rgba(0,221,240,0.12);
+  /* spacing system: section / heading-to-content / card padding / tight gaps */
+  --sp-section: 120px;
+  --sp-heading: 64px;
+  --sp-card: 24px;
+  --sp-tight: 12px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,7 +64,7 @@ nav {
   color: var(--white); text-decoration: none; letter-spacing: -0.5px;
   flex-shrink: 0;
 }
-.nav-logo span { color: var(--accent); text-shadow: 0 0 10px rgba(168,230,0,0.4); }
+.nav-logo span { color: var(--accent); text-shadow: 0 0 8px rgba(168,230,0,0.22); }
 
 .nav-links {
   display: flex; align-items: center; gap: 6px;
@@ -117,6 +122,7 @@ nav {
   .nav-links.open {
     display: flex !important;
     flex-direction: column !important;
+    align-items: center !important;
   }
   .nav-links a {
     font-family: 'Space Grotesk', sans-serif;
@@ -124,7 +130,10 @@ nav {
     font-weight: 600 !important;
     color: var(--white) !important;
     text-decoration: none;
-    text-align: left;
+    text-align: center;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     width: 100% !important;
     padding: 18px 24px !important;
     border-radius: 0 !important;
@@ -132,7 +141,6 @@ nav {
     border-bottom: 1px solid var(--border);
     white-space: normal !important;
     transition: all 0.2s;
-    display: block !important;
     line-height: 1.4;
   }
   .nav-links a:last-child { border-bottom: none !important; }
@@ -200,7 +208,7 @@ nav {
 .eyebrow {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 11px; font-weight: 600; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: var(--cyan);
   margin-bottom: 12px; display: block;
 }
 .section-title {
@@ -336,7 +344,7 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--white); display: block; margin-bottom: 10px; }
-.footer-logo span { color: var(--accent); text-shadow: 0 0 8px rgba(168,230,0,0.35); }
+.footer-logo span { color: var(--accent); text-shadow: 0 0 6px rgba(168,230,0,0.2); }
 .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 220px; }
 .footer-col-title { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
 .footer-links { list-style: none; }
@@ -372,20 +380,35 @@ footer {
 .hero::before { content: ''; position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: min(600px, 92vw); height: 400px; background: radial-gradient(ellipse, rgba(168,230,0,0.06) 0%, transparent 70%); pointer-events: none; }
 .hero::after { content: ''; position: absolute; bottom: 10%; right: 5%; width: 400px; height: 400px; background: radial-gradient(ellipse, rgba(0,221,240,0.04) 0%, transparent 70%); pointer-events: none; }
 
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(168,230,0,0.25); background: rgba(168,230,0,0.04); color: var(--accent); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; animation: fadeUp 0.6s ease both; }
-.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: pulse 2s infinite; }
+/* signature motif: AI match network — subtle nodes + connecting lines,
+   faint, only in the hero and as a section divider elsewhere. */
+.match-net { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: min(1100px, 96vw); height: 100%; pointer-events: none; z-index: 0; opacity: 0.5; }
+.match-net circle.node { fill: var(--accent); }
+.match-net line { stroke: var(--accent); stroke-opacity: 0.13; stroke-width: 1; }
+.match-net .n1 { animation: netpulse 3.6s ease-in-out infinite; }
+.match-net .n2 { animation: netpulse 3.6s ease-in-out infinite 0.6s; }
+.match-net .n3 { animation: netpulse 3.6s ease-in-out infinite 1.2s; }
+.match-net .n4 { animation: netpulse 3.6s ease-in-out infinite 1.8s; }
+.match-net .n5 { animation: netpulse 3.6s ease-in-out infinite 2.4s; }
+.match-net .n6 { animation: netpulse 3.6s ease-in-out infinite 3s; }
+@keyframes netpulse { 0%,100%{opacity:0.35;r:2.2;} 50%{opacity:1;r:3.4;} }
 
-.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(34px, 5vw, 58px); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 36px; animation: fadeUp 0.6s 0.1s ease both; }
+.hero-badge { position: relative; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0,221,240,0.25); background: rgba(0,221,240,0.05); color: var(--cyan); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; animation: fadeUp 0.6s ease both; }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: pulse 2s infinite; }
+
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5.4vw, 58px); font-weight: 700; letter-spacing: -2px; line-height: 1.08; max-width: 680px; margin: 0 auto var(--sp-heading); animation: fadeUp 0.6s 0.1s ease both; }
 .gradient-text { background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .dim { color: var(--muted); }
 
 /* SEARCH — the search bar IS the hero. It wraps long queries onto multiple
    lines instead of hiding them, so the full prompt stays visible and
    models good prompt-writing for the person typing it. */
-.search-shell { position: relative; width: 100%; max-width: 860px; margin: 0 auto 8px; animation: fadeUp 0.6s 0.2s ease both; }
-.search-bar { position: relative; display: flex; align-items: center; gap: 16px; background: var(--surface);
-  border: 1.5px solid var(--border); border-radius: 24px; min-height: 132px; padding: 20px 14px 20px 34px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.4); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+.search-shell { position: relative; width: 100%; max-width: 780px; margin: 0 auto 8px; animation: fadeUp 0.6s 0.2s ease both; }
+.search-shell::before { content: ''; position: absolute; inset: -44px -24px; background: radial-gradient(ellipse at center, rgba(168,230,0,0.10) 0%, transparent 72%); filter: blur(4px); pointer-events: none; z-index: -1; }
+.search-bar { position: relative; display: flex; align-items: center; gap: 16px;
+  background: rgba(21,25,35,0.72); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid var(--border); border-radius: 28px; min-height: 120px; padding: 18px 16px 18px 34px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
 .search-bar.active, .search-bar:focus-within { border-color: rgba(168,230,0,0.5); box-shadow: 0 0 0 4px rgba(168,230,0,0.1), 0 24px 60px rgba(0,0,0,0.45); }
 .search-text-wrap { flex: 1; min-width: 0; position: relative; display: flex; align-items: center; }
 .search-input { width: 100%; background: transparent; border: none; outline: none; resize: none; overflow: hidden;
@@ -402,7 +425,7 @@ footer {
   cursor: pointer; transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
   box-shadow: 0 0 22px rgba(168,230,0,0.28); }
 .search-btn:hover { background: var(--accent-dark); box-shadow: 0 0 32px rgba(168,230,0,0.45); }
-.search-btn:active { transform: scale(0.96); }
+.search-btn:active, .search-btn.autoclick { transform: scale(0.96); box-shadow: 0 0 36px rgba(168,230,0,0.5); }
 
 .helper-line { margin-top: 14px; font-size: 12px; color: #5A6272; animation: fadeUp 0.6s 0.3s ease both; }
 
@@ -412,9 +435,7 @@ footer {
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease; font-family: 'DM Sans', sans-serif; }
 .example-chip:hover { border-color: rgba(168,230,0,0.4); color: var(--white); background: rgba(168,230,0,0.05); }
 
-.cat-line { margin-top: 24px; font-size: 13.5px; color: var(--muted); animation: fadeUp 0.6s 0.4s ease both; }
-.cat-line b { color: var(--white); font-weight: 600; }
-.cat-line .dot { color: #3A4152; margin: 0 8px; }
+/* (cat-line removed from hero) */
 
 /* ── Searching → parsing → matching → results sequence ── */
 .status-zone { max-width: 680px; margin: 26px auto 0; min-height: 20px; position: relative; z-index: 1; }
@@ -430,7 +451,7 @@ footer {
 .parse-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted);
   opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; }
 .parse-item.show { opacity: 1; transform: translateY(0); }
-.parse-check { width: 15px; height: 15px; border-radius: 50%; background: rgba(168,230,0,0.12); border: 1px solid rgba(168,230,0,0.4);
+.parse-check { width: 15px; height: 15px; border-radius: 50%; background: rgba(0,221,240,0.12); border: 1px solid rgba(0,221,240,0.4);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .parse-check svg { width: 8px; height: 8px; }
 .parse-item b { color: var(--white); font-weight: 600; }
@@ -477,52 +498,62 @@ footer {
 
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.35s ease both; margin: 40px 0 88px; }
 
-.stats-bar { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); overflow: hidden; animation: fadeUp 0.6s 0.4s ease both; width: 100%; max-width: 680px; }
-.stat-item { flex: 1; text-align: center; padding: 18px 16px; border-right: 1px solid var(--border); }
-.stat-item:last-child { border-right: none; }
-.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 34px; color: var(--accent); line-height: 1; letter-spacing: 1px; }
-.stat-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.stats-bar { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); align-items: baseline; column-gap: 28px; row-gap: 20px; background: transparent; animation: fadeUp 0.6s 0.4s ease both; width: 100%; max-width: 880px; margin: 24px auto 0; }
+.stat-item { display: flex; align-items: baseline; gap: 10px; text-align: left; padding-right: 28px; border-right: 1px solid var(--border); }
+.stat-item:nth-child(4) { border-right: none; padding-right: 0; }
+.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 34px; color: var(--cyan); line-height: 1; letter-spacing: 0.5px; white-space: nowrap; }
+.stat-label { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+@media (max-width: 900px) { .stats-bar { grid-template-columns: repeat(2, 1fr); row-gap: 22px; } .stat-item { border-right: none; } .stat-item:nth-child(odd) { border-right: 1px solid var(--border); } }
+@media (max-width: 480px) { .stats-bar { grid-template-columns: 1fr; } .stat-item { border-right: none !important; } }
 
 /* PROFILES */
-.profiles-section { padding: 80px 5%; position: relative; z-index: 1; }
-.section-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 36px; }
+.profiles-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; }
+.section-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: var(--sp-heading); }
 .view-all { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
 .view-all:hover { opacity: 0.75; }
-.profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(190px, auto); gap: var(--sp-card); }
+.profile-card:first-child { grid-column: span 2; grid-row: span 2; }
+.profile-card:first-child .p-avatar { width: 60px; height: 60px; font-size: 20px; }
+.profile-card:first-child .p-name { font-size: 20px; }
+.profile-card:first-child .p-role { font-size: 13px; }
+@media (max-width: 1024px) { .profile-card:first-child { grid-row: span 1; } }
 .partners-empty { grid-column: 1 / -1; text-align: center; padding: 56px 24px; border: 1px dashed var(--border); border-radius: 14px; }
 .partners-empty-icon { font-size: 28px; margin-bottom: 12px; }
 .partners-empty-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
 .partners-empty-sub { font-size: 13px; color: var(--muted); }
 .partners-empty-sub a { color: var(--accent); text-decoration: none; font-weight: 600; }
-.profile-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
+.profile-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .profile-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
-.profile-card:hover { border-color: rgba(168,230,0,0.22); box-shadow: var(--glow); transform: translateY(-4px); }
+.profile-card:hover { border-color: rgba(0,221,240,0.24); box-shadow: var(--glow-cyan); transform: translateY(-4px); }
 .profile-card:hover::before { transform: scaleX(1); }
-.p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
 .p-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; flex-shrink: 0; }
 .avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; flex-shrink: 0; }
 .p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
 .ptag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
 .p-loc { font-size: 11px; color: var(--muted); }
-.avail-now { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(168,230,0,0.1); color: var(--accent); border: 1px solid rgba(168,230,0,0.2); }
+.avail-now { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0,221,240,0.1); color: var(--cyan); border: 1px solid rgba(0,221,240,0.22); }
 .avail-soon { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0,221,240,0.08); color: var(--cyan); border: 1px solid rgba(0,221,240,0.2); }
-.p-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
-.p-role { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-.p-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
-.ptag { font-size: 10px; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
-.p-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+.p-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.p-role { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.p-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.ptag { font-size: 10px; padding: 3px 9px; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); }
+.p-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--border); margin-top: auto; }
 .p-loc { font-size: 11px; color: var(--muted); }
 
 
 .p-verified { font-size: 10px; font-weight: 700; color: var(--accent); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
 .p-verified::before { content: '✓'; }
 
+.motif-divider { display: flex; align-items: center; justify-content: center; padding: 0 5%; position: relative; z-index: 1; opacity: 0.6; }
+
 /* CATEGORIES */
-.cats-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
-.cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
+.cats-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.cats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-card); margin-top: var(--sp-heading); }
 .cat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; cursor: pointer; text-decoration: none; transition: all 0.25s; position: relative; display: block; }
 .cat-card:hover { border-color: rgba(0,221,240,0.25); box-shadow: var(--glow-cyan); transform: translateY(-3px); }
-.cat-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+.cat-icon { width: 30px; height: 30px; margin-bottom: 12px; display: block; transition: transform 0.25s ease; transform-origin: center; color: var(--white); }
+.cat-card:hover .cat-icon { transform: scale(1.08) rotate(-4deg); }
 .cat-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
 .cat-count { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
 .cat-tags { display: flex; flex-wrap: wrap; gap: 4px; }
@@ -531,8 +562,8 @@ footer {
 .cat-card:hover .cat-arr { color: var(--cyan); transform: translateX(3px); }
 
 /* HOW IT WORKS */
-.how-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
-.steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 48px; position: relative; }
+.how-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: var(--sp-heading); position: relative; }
 .steps-grid::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
 .step-item { text-align: center; padding: 0 12px; }
 .step-circle { width: 72px; height: 72px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; position: relative; z-index: 1; color: var(--muted); transition: all 0.25s; }
@@ -544,9 +575,9 @@ footer {
 .step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
 /* PRICING */
-.pricing-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
-.pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
-.price-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: all 0.25s; }
+.pricing-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-card); margin-top: var(--sp-heading); }
+.price-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease; }
 .price-card:hover { border-color: rgba(168,230,0,0.22); transform: translateY(-4px); box-shadow: var(--glow); }
 .price-card.featured { border-color: rgba(168,230,0,0.32); background: rgba(168,230,0,0.03); }
 .price-band { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
@@ -558,7 +589,7 @@ footer {
 .price-save { display: inline-block; background: rgba(0,221,240,0.08); color: var(--cyan); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(0,221,240,0.18); }
 
 /* SPLIT — FIXED CONTRAST ON LIME CARD */
-.split-section { padding: 80px 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1180px; margin: 0 auto; }
+.split-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 1180px; margin: 0 auto; }
 
 /* Redesigned CTA panels — unified dark surface, differentiated by accent
    color only (lime vs cyan), inspired by Linear/Mercury restraint,
@@ -612,59 +643,66 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 1024px) { .profiles-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .pricing-grid { grid-template-columns: repeat(2, 1fr); } .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } .steps-grid::before { display: none; } }
-@media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } .stats-bar { flex-wrap: wrap; max-width: 100%; } .stat-item { width: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 14px 8px; } }
-@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } .stat-item { width: 100%; } }
+@media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } }
 
 /* CANVAS BACKGROUND */
 
-/* FLOATING ACTIVITY CARDS */
-.activity-feed { position:absolute; right:4%; top:480px; display:flex; flex-direction:column; gap:10px; z-index:2; animation:fadeUp 0.8s 0.6s ease both; }
-.activity-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 14px; display:flex; align-items:center; gap:10px; min-width:220px; box-shadow:0 4px 24px rgba(0,0,0,0.3); animation:slideIn 0.5s ease both; }
-.activity-card:nth-child(2) { animation-delay:0.15s; }
-.activity-card:nth-child(3) { animation-delay:0.3s; }
-.activity-card:nth-child(4) { animation-delay:0.45s; }
-@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
-.ac-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; flex-shrink:0; }
-.ac-info { flex:1; }
-.ac-name { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--white); }
-.ac-detail { font-size:10px; color:var(--muted); margin-top:1px; }
-.ac-time { font-size:9px; color:var(--accent); font-weight:600; white-space:nowrap; }
-.ac-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); flex-shrink:0; animation:pulse 2s infinite; }
+/* MARKETPLACE METRICS — its own section, editorial layout */
+.metrics-section { padding: 64px 5% var(--sp-section); position: relative; z-index: 1; display: flex; justify-content: center; border-top: 1px solid var(--border); }
 
-/* ANIMATED COUNTER */
-.stat-num { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); line-height:1; }
+/* RECENTLY MATCHED — promoted from a floating widget (previously hidden
+   below 1500px viewport width) into a proper section visible everywhere */
+.recent-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.activity-feed { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-card); margin-top: var(--sp-heading); }
+.activity-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 18px; display: flex; align-items: center; gap: 12px; box-shadow: none; animation: slideIn 0.5s ease both; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
+.activity-card:hover { transform: translateY(-3px); border-color: rgba(168,230,0,0.2); box-shadow: var(--glow); }
+.activity-card:nth-child(2) { animation-delay:0.1s; }
+.activity-card:nth-child(3) { animation-delay:0.2s; }
+.activity-card:nth-child(4) { animation-delay:0.3s; }
+@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+.ac-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0; }
+.ac-info { flex:1; min-width:0; }
+.ac-name { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--white); }
+.ac-detail { font-size:12px; color:var(--muted); margin-top:2px; }
+.ac-time { font-size:11px; color:var(--accent); font-weight:600; white-space:nowrap; }
+.ac-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); flex-shrink:0; animation:pulse 2s infinite; }
+@media (max-width:1024px) { .activity-feed { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width:560px) { .activity-feed { grid-template-columns: 1fr; } }
+
+/* (stat-num sizing now lives with the editorial stats-bar rules above) */
 
 /* HOW IT WORKS — animated steps */
 .step-icon { width:56px; height:56px; border-radius:14px; background:rgba(190,255,0,0.08); border:1px solid rgba(190,255,0,0.15); display:flex; align-items:center; justify-content:center; font-size:24px; margin:0 auto 16px; transition:all 0.3s; }
 .step-card:hover .step-icon { background:rgba(190,255,0,0.15); box-shadow:0 0 20px rgba(190,255,0,0.15); transform:translateY(-3px); }
 
 /* TRUST LOGOS STRIP */
-.trust-section { padding:40px 5%; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; position:relative; z-index:1; }
+.trust-section { padding:40px 5%; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; position:relative; z-index:1; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .trust-label { text-align:center; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:20px; }
 .trust-scroll { display:flex; gap:40px; animation:scrollLeft 20s linear infinite; width:max-content; }
 .trust-scroll:hover { animation-play-state:paused; }
 @keyframes scrollLeft { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-.trust-item { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--muted); white-space:nowrap; opacity:0.5; letter-spacing:1px; transition:opacity 0.2s; }
-.trust-item:hover { opacity:1; color:var(--white); }
+.trust-item { font-family:'Space Grotesk',sans-serif; font-size:11.5px; font-weight:600; color:var(--muted); white-space:nowrap; opacity:0.38; letter-spacing:1px; transition:opacity 0.2s; }
+.trust-item:hover { opacity:0.85; color:var(--white); }
 
-/* PROFILE CARD HOVER ANIMATION */
-.profile-card { transition:all 0.25s; }
-.profile-card:hover { transform:translateY(-6px); border-color:rgba(190,255,0,0.3) !important; }
-.profile-card:hover .p-avatar { box-shadow:0 0 16px rgba(190,255,0,0.3); }
+/* (profile-card hover is defined once, near its other rules — see .profile-card:hover above) */
 
 /* REVEAL ANIMATION */
 .reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease, transform 0.6s ease; }
 .reveal.visible { opacity:1; transform:translateY(0); }
 
 /* SECTION EYEBROW ANIMATED DOT */
-.eyebrow::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-right:8px; animation:pulse 2s infinite; vertical-align:middle; }
+.eyebrow::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--cyan); margin-right:8px; animation:pulse 2s infinite; vertical-align:middle; }
 
-/* HERO MOBILE: hide activity feed on small screens */
-@media(max-width:1500px) { .activity-feed { display:none; } }
+/* (activity feed is now a normal in-flow section — no width-based hiding needed) */
 
 
 /* Card watermark shared */
 .card-wm { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+/* Pricing cards specifically: the decorative illustration used to sit directly
+   behind the price/consultancy text on the left, hurting readability. Fade it
+   out from under the text and let it live only in the empty space to the right. */
+.price-card .card-wm { -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 46%, #000 68%, #000 100%); mask-image: linear-gradient(90deg, transparent 0%, transparent 46%, #000 68%, #000 100%); }
 .profile-card > *:not(.card-wm),
 .cat-card > *:not(.card-wm),
 .price-card > *:not(.card-wm) { position:relative;z-index:1; }
@@ -695,10 +733,10 @@ footer {
 .price-card.pp3::after { background:linear-gradient(90deg,#A8E600,#00DDF0); }
 .price-card.pp4::after { background:linear-gradient(90deg,#F97316,#EF4444); }
 
-.price-card.pp1 { background:linear-gradient(160deg,rgba(99,102,241,0.06) 0%,var(--surface) 60%); }
-.price-card.pp2 { background:linear-gradient(160deg,rgba(20,184,166,0.06) 0%,var(--surface) 60%); }
-.price-card.pp3 { background:linear-gradient(160deg,rgba(168,230,0,0.07) 0%,var(--surface) 60%); }
-.price-card.pp4 { background:linear-gradient(160deg,rgba(249,115,22,0.06) 0%,var(--surface) 60%); }
+.price-card.pp1 { background:linear-gradient(160deg,rgba(99,102,241,0.06) 0%,var(--surface2) 60%); }
+.price-card.pp2 { background:linear-gradient(160deg,rgba(20,184,166,0.06) 0%,var(--surface2) 60%); }
+.price-card.pp3 { background:linear-gradient(160deg,rgba(168,230,0,0.07) 0%,var(--surface2) 60%); }
+.price-card.pp4 { background:linear-gradient(160deg,rgba(249,115,22,0.06) 0%,var(--surface2) 60%); }
 
 .price-card.pp1 .price-amount { color:#818CF8; text-shadow:0 0 16px rgba(99,102,241,0.4); }
 .price-card.pp2 .price-amount { color:#2DD4BF; text-shadow:0 0 16px rgba(20,184,166,0.4); }
@@ -719,8 +757,8 @@ footer {
   <a href="/" class="nav-logo">ver<span>Q</span></a>
   <div class="nav-links">
     <a href="/" class="active">Home</a>
-    <a href="/services.html">Services</a>
     <a href="/pricing.html">Pricing</a>
+    <a href="/partners.html">Partners</a>
     <a href="/about.html">About Us</a>
     <a href="/contact.html">Contact</a>
     <a href="/join-hr-partner.html" class="nav-cta">Join as HR Partner</a>
@@ -731,6 +769,20 @@ footer {
 </nav>
 
 <section class="hero">
+  <svg class="match-net" viewBox="0 0 1100 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="180" y1="120" x2="380" y2="230"/>
+    <line x1="380" y1="230" x2="620" y2="150"/>
+    <line x1="620" y1="150" x2="860" y2="240"/>
+    <line x1="380" y1="230" x2="500" y2="400"/>
+    <line x1="620" y1="150" x2="720" y2="420"/>
+    <line x1="500" y1="400" x2="720" y2="420"/>
+    <circle class="node n1" cx="180" cy="120" r="2.6"/>
+    <circle class="node n2" cx="380" cy="230" r="3"/>
+    <circle class="node n3" cx="620" cy="150" r="2.6"/>
+    <circle class="node n4" cx="860" cy="240" r="2.6"/>
+    <circle class="node n5" cx="500" cy="400" r="3"/>
+    <circle class="node n6" cx="720" cy="420" r="2.6"/>
+  </svg>
   <div class="hero-badge"><div class="badge-dot"></div>The HR Marketplace</div>
   <h1 class="hero-title">Find the right <span class="gradient-text">HR expert</span> in minutes.</h1>
 
@@ -756,8 +808,6 @@ footer {
     <button type="button" class="example-chip" data-query="Need a POSH compliance audit for our office in Mumbai">Conduct a POSH audit</button>
   </div>
 
-  <div class="cat-line"><b>150+ verified HR experts.</b><span class="dot">•</span>Recruitment<span class="dot">•</span>Payroll<span class="dot">•</span>Compliance<span class="dot">•</span>HRBP</div>
-
   <div class="status-zone">
     <div class="status-line" id="statusSearching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Searching...</div>
     <div class="parse-grid" id="parseGrid"></div>
@@ -772,41 +822,6 @@ footer {
 
   <div class="hero-actions">
     <a href="/post-requirement.html" class="btn-primary">Post a Requirement →</a>
-  </div>
-
-  <div class="stats-bar">
-    <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">Verified HR experts</div></div>
-    <div class="stat-item"><div class="stat-num">32</div><div class="stat-label">Requirements posted this week</div></div>
-    <div class="stat-item"><div class="stat-num">18 min</div><div class="stat-label">Average expert response</div></div>
-    <div class="stat-item"><div class="stat-num">4.9/5</div><div class="stat-label">Average client rating</div></div>
-  </div>
-
-  <!-- FLOATING ACTIVITY FEED -->
-  <div class="activity-feed">
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#BEFF00,#7EC800);color:#0A0A0F">SK</div>
-      <div class="ac-info"><div class="ac-name">Sejal Khandelwal</div><div class="ac-detail">Matched for E-commerce role</div></div>
-      <div class="ac-time">2m ago</div>
-      <div class="ac-dot"></div>
-    </div>
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff">RB</div>
-      <div class="ac-info"><div class="ac-name">Rohit Bhardwaj</div><div class="ac-detail">Shortlisted for IT startup</div></div>
-      <div class="ac-time">11m ago</div>
-      <div class="ac-dot"></div>
-    </div>
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#14B8A6,#0D9488);color:#fff">SM</div>
-      <div class="ac-info"><div class="ac-name">Suhani Mishra</div><div class="ac-detail">Compliance audit — CEAT</div></div>
-      <div class="ac-time">38m ago</div>
-      <div class="ac-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div>
-    </div>
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#F97316,#EA580C);color:#fff">AB</div>
-      <div class="ac-info"><div class="ac-name">Ankita Biswas</div><div class="ac-detail">Joined — D2C brand</div></div>
-      <div class="ac-time">1h ago</div>
-      <div class="ac-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div>
-    </div>
   </div>
 
 </section>
@@ -852,21 +867,67 @@ footer {
   </div>
   <div class="profiles-grid" id="realPartnersGrid"></div>
   <div class="partners-empty" id="partnersEmpty" style="display:none;">
-    <div class="partners-empty-icon">👋</div>
+    <svg class="partners-empty-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 12px;display:block;color:var(--muted)"><circle cx="12" cy="12" r="2.2" fill="var(--accent)"/><path d="M12 5.5a6.5 6.5 0 0 1 6.5 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/><path d="M12 2.5a9.5 9.5 0 0 1 9.5 9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.3"/></svg>
     <div class="partners-empty-title">New HR partners join every week.</div>
     <div class="partners-empty-sub">Be one of the first featured here — <a href="/join-hr-partner.html">apply as an HR partner</a>.</div>
   </div>
 </section>
+
+<!-- MARKETPLACE METRICS -->
+<section class="metrics-section">
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">68+</div><div class="stat-label">Verified HR experts</div></div>
+    <div class="stat-item"><div class="stat-num">32</div><div class="stat-label">Requirements posted this week</div></div>
+    <div class="stat-item"><div class="stat-num">18 min</div><div class="stat-label">Average expert response</div></div>
+    <div class="stat-item"><div class="stat-num">4.9/5</div><div class="stat-label">Average client rating</div></div>
+  </div>
+</section>
+
+<div class="motif-divider" aria-hidden="true">
+  <svg width="240" height="24" viewBox="0 0 240 24"><line x1="0" y1="12" x2="240" y2="12" stroke="#1C212D" stroke-width="1"/><circle cx="60" cy="12" r="2.5" fill="#A8E600" opacity="0.55"/><circle cx="120" cy="12" r="3" fill="#A8E600"/><circle cx="180" cy="12" r="2.5" fill="#A8E600" opacity="0.55"/></svg>
+</div>
 
 <!-- CATEGORIES -->
 <section class="cats-section">
   <span class="eyebrow">Browse by Category</span>
   <h2 class="section-title">Every HR need. One platform.</h2>
   <div class="cats-grid">
-    <a href="#" class="cat-card cc1 reveal" onclick="searchFor('Need a recruiter for a new hire'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="30" cy="40" r="16" fill="none" stroke="rgba(190,255,0,0.03)" stroke-width="1"/><circle cx="90" cy="20" r="12" fill="none" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><circle cx="65" cy="95" r="18" fill="none" stroke="rgba(190,255,0,0.032)" stroke-width="1"/><circle cx="148" cy="60" r="14" fill="none" stroke="rgba(190,255,0,0.025)" stroke-width="1"/><circle cx="30" cy="130" r="10" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><circle cx="118" cy="128" r="12" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><line x1="30" y1="40" x2="90" y2="20" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="90" y1="20" x2="148" y2="60" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="65" y1="95" x2="148" y2="60" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="30" y1="40" x2="65" y2="95" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="65" y1="95" x2="30" y2="130" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><line x1="65" y1="95" x2="118" y2="128" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><circle cx="220" cy="35" r="9" fill="none" stroke="rgba(190,255,0,0.1)" stroke-width="1"/><circle cx="255" cy="20" r="7" fill="none" stroke="rgba(190,255,0,0.09)" stroke-width="1"/><circle cx="245" cy="70" r="10" fill="rgba(190,255,0,0.07)" stroke="rgba(190,255,0,0.13)" stroke-width="1"/><circle cx="265" cy="85" r="6" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><circle cx="200" cy="60" r="7" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><line x1="220" y1="35" x2="255" y2="20" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="255" y1="20" x2="245" y2="70" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="245" y1="70" x2="265" y2="85" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><line x1="200" y1="60" x2="220" y2="35" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><circle cx="245" cy="70" r="3" fill="rgba(190,255,0,0.22)"/></svg><span class="cat-arr">→</span><span class="cat-icon">🎯</span><div class="cat-name">Recruitment</div><div class="cat-count">68 professionals</div><div class="cat-tags"><span class="ctag">Tech</span><span class="ctag">Volume</span><span class="ctag">Leadership</span></div></a>
-    <a href="#" class="cat-card cc2 reveal" onclick="searchFor('Need help with payroll and compliance'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="10" y="105" width="15" height="45" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="30" y="88" width="15" height="62" rx="1.5" fill="rgba(0,245,255,0.036)"/><rect x="50" y="68" width="15" height="82" rx="1.5" fill="rgba(0,245,255,0.04)"/><rect x="70" y="80" width="15" height="70" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="90" y="52" width="15" height="98" rx="1.5" fill="rgba(0,245,255,0.038)"/><rect x="110" y="65" width="15" height="85" rx="1.5" fill="rgba(0,245,255,0.032)"/><polyline points="17,105 37,88 57,68 77,80 97,52 117,65" fill="none" stroke="rgba(0,245,255,0.036)" stroke-width="0.9" stroke-linecap="round"/><text x="140" y="45" font-size="22" fill="rgba(0,245,255,0.022)" font-family="serif">₹</text><text x="170" y="32" font-size="16" fill="rgba(0,245,255,0.02)" font-family="serif">₹</text><text x="155" y="95" font-size="14" fill="rgba(0,245,255,0.018)" font-family="serif">₹</text><rect x="195" y="80" width="12" height="60" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="211" y="65" width="12" height="75" rx="1.5" fill="rgba(0,245,255,0.12)"/><rect x="227" y="48" width="12" height="92" rx="1.5" fill="rgba(0,245,255,0.14)"/><rect x="243" y="60" width="12" height="80" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="259" y="35" width="12" height="105" rx="1.5" fill="rgba(0,245,255,0.15)"/><polyline points="201,80 217,65 233,48 249,60 265,35" fill="none" stroke="rgba(0,245,255,0.2)" stroke-width="1.3" stroke-linecap="round"/><circle cx="265" cy="35" r="3" fill="rgba(0,245,255,0.32)"/><text x="196" y="32" font-size="18" fill="rgba(0,245,255,0.07)" font-family="serif">₹</text></svg><span class="cat-arr">→</span><span class="cat-icon">💰</span><div class="cat-name">Payroll & Compliance</div><div class="cat-count">34 professionals</div><div class="cat-tags"><span class="ctag">PF/ESIC</span><span class="ctag">TDS</span><span class="ctag">Labour Law</span></div></a>
-    <a href="#" class="cat-card cc3 reveal" onclick="searchFor('Need an HRBP for HR operations support'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="15" width="62" height="80" rx="3" fill="rgba(249,115,22,0.025)" stroke="rgba(249,115,22,0.038)" stroke-width="1"/><rect x="20" y="26" width="46" height="5" rx="1" fill="rgba(249,115,22,0.04)"/><rect x="20" y="35" width="36" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="20" y="43" width="40" height="4" rx="1" fill="rgba(249,115,22,0.028)"/><rect x="20" y="51" width="30" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="20" y="59" width="38" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="85" y="25" width="55" height="68" rx="3" fill="rgba(249,115,22,0.02)" stroke="rgba(249,115,22,0.03)" stroke-width="1"/><rect x="92" y="35" width="40" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="92" y="43" width="32" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="92" y="51" width="36" height="4" rx="1" fill="rgba(249,115,22,0.022)"/><rect x="155" y="15" width="48" height="60" rx="3" fill="rgba(249,115,22,0.018)" stroke="rgba(249,115,22,0.026)" stroke-width="1"/><rect x="205" y="18" width="50" height="65" rx="3" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><rect x="212" y="28" width="36" height="4" rx="1" fill="rgba(249,115,22,0.2)"/><rect x="212" y="36" width="28" height="3" rx="1" fill="rgba(249,115,22,0.14)"/><rect x="212" y="43" width="32" height="3" rx="1" fill="rgba(249,115,22,0.12)"/><rect x="212" y="50" width="24" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><rect x="212" y="57" width="30" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><circle cx="242" cy="72" r="8" fill="rgba(249,115,22,0.14)" stroke="rgba(249,115,22,0.24)" stroke-width="1"/><path d="M238 72 L241 75 L247 69" stroke="rgba(249,115,22,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span class="cat-arr">→</span><span class="cat-icon">📋</span><div class="cat-name">HR Operations</div><div class="cat-count">28 professionals</div><div class="cat-tags"><span class="ctag">HRBP</span><span class="ctag">Policy</span><span class="ctag">Docs</span></div></a>
-    <a href="#" class="cat-card cc4 reveal" onclick="searchFor('Need an HR generalist for training and development'); return false;"><svg class="card-wm" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="120" width="20" height="28" rx="2" fill="rgba(168,85,247,0.032)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><rect x="12" y="96" width="20" height="22" rx="2" fill="rgba(168,85,247,0.028)" stroke="rgba(168,85,247,0.035)" stroke-width="1"/><rect x="12" y="70" width="20" height="24" rx="2" fill="rgba(168,85,247,0.025)" stroke="rgba(168,85,247,0.032)" stroke-width="1"/><rect x="12" y="45" width="20" height="23" rx="2" fill="rgba(168,85,247,0.03)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><line x1="32" y1="130" x2="32" y2="20" stroke="rgba(168,85,247,0.04)" stroke-width="1.2"/><path d="M27 26 L32 18 L37 26" fill="none" stroke="rgba(168,85,247,0.055)" stroke-width="1.2" stroke-linecap="round"/><path d="M55 110 Q80 90 105 95 Q130 100 155 80 Q180 62 205 72 Q230 82 255 60" fill="none" stroke="rgba(168,85,247,0.03)" stroke-width="0.9" stroke-dasharray="4,3"/><circle cx="105" cy="95" r="5" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><circle cx="205" cy="72" r="6" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><text x="102" y="94" font-size="9" fill="rgba(168,85,247,0.08)">★</text><text x="201" y="71" font-size="11" fill="rgba(168,85,247,0.09)">★</text><rect x="198" y="105" width="18" height="30" rx="2" fill="rgba(168,85,247,0.13)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><rect x="198" y="82" width="18" height="21" rx="2" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.17)" stroke-width="1"/><rect x="198" y="56" width="18" height="24" rx="2" fill="rgba(168,85,247,0.09)" stroke="rgba(168,85,247,0.16)" stroke-width="1"/><rect x="198" y="32" width="18" height="22" rx="2" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.22)" stroke-width="1"/><line x1="216" y1="96" x2="216" y2="20" stroke="rgba(168,85,247,0.16)" stroke-width="1.2"/><path d="M211 26 L216 18 L221 26" fill="none" stroke="rgba(168,85,247,0.28)" stroke-width="1.2" stroke-linecap="round"/><circle cx="248" cy="52" r="6" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="244" y="56" font-size="10" fill="rgba(168,85,247,0.35)">★</text><circle cx="268" cy="78" r="7" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="263" y="83" font-size="12" fill="rgba(168,85,247,0.35)">★</text></svg><span class="cat-arr">→</span><span class="cat-icon">🎓</span><div class="cat-name">Training & L&D</div><div class="cat-count">21 professionals</div><div class="cat-tags"><span class="ctag">Onboarding</span><span class="ctag">L&D</span><span class="ctag">Culture</span></div></a>
+    <a href="/partners.html?q=Recruitment" class="cat-card cc1 reveal"><svg class="card-wm" aria-hidden="true" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><circle cx="30" cy="40" r="16" fill="none" stroke="rgba(190,255,0,0.03)" stroke-width="1"/><circle cx="90" cy="20" r="12" fill="none" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><circle cx="65" cy="95" r="18" fill="none" stroke="rgba(190,255,0,0.032)" stroke-width="1"/><circle cx="148" cy="60" r="14" fill="none" stroke="rgba(190,255,0,0.025)" stroke-width="1"/><circle cx="30" cy="130" r="10" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><circle cx="118" cy="128" r="12" fill="none" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><line x1="30" y1="40" x2="90" y2="20" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="90" y1="20" x2="148" y2="60" stroke="rgba(190,255,0,0.02)" stroke-width="0.8"/><line x1="65" y1="95" x2="148" y2="60" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="30" y1="40" x2="65" y2="95" stroke="rgba(190,255,0,0.018)" stroke-width="0.8"/><line x1="65" y1="95" x2="30" y2="130" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><line x1="65" y1="95" x2="118" y2="128" stroke="rgba(190,255,0,0.016)" stroke-width="0.8"/><circle cx="220" cy="35" r="9" fill="none" stroke="rgba(190,255,0,0.1)" stroke-width="1"/><circle cx="255" cy="20" r="7" fill="none" stroke="rgba(190,255,0,0.09)" stroke-width="1"/><circle cx="245" cy="70" r="10" fill="rgba(190,255,0,0.07)" stroke="rgba(190,255,0,0.13)" stroke-width="1"/><circle cx="265" cy="85" r="6" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><circle cx="200" cy="60" r="7" fill="none" stroke="rgba(190,255,0,0.08)" stroke-width="1"/><line x1="220" y1="35" x2="255" y2="20" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="255" y1="20" x2="245" y2="70" stroke="rgba(190,255,0,0.07)" stroke-width="0.8"/><line x1="245" y1="70" x2="265" y2="85" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><line x1="200" y1="60" x2="220" y2="35" stroke="rgba(190,255,0,0.06)" stroke-width="0.8"/><circle cx="245" cy="70" r="3" fill="rgba(190,255,0,0.22)"/></svg><span class="cat-arr">→</span><svg class="cat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="M7 12.5c0-1.8 1.3-3 3-3s3 1.2 3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10" cy="8.3" r="1.6" stroke="currentColor" stroke-width="1.6"/><line x1="14.8" y1="14.8" x2="19.5" y2="19.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="6" r="1.7" fill="var(--accent)"/></svg><div class="cat-name">Recruitment</div><div class="cat-count">62 professionals</div><div class="cat-tags"><span class="ctag">Tech</span><span class="ctag">Volume</span><span class="ctag">Leadership</span></div></a>
+    <a href="/partners.html?q=Payroll" class="cat-card cc2 reveal"><svg class="card-wm" aria-hidden="true" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="10" y="105" width="15" height="45" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="30" y="88" width="15" height="62" rx="1.5" fill="rgba(0,245,255,0.036)"/><rect x="50" y="68" width="15" height="82" rx="1.5" fill="rgba(0,245,255,0.04)"/><rect x="70" y="80" width="15" height="70" rx="1.5" fill="rgba(0,245,255,0.032)"/><rect x="90" y="52" width="15" height="98" rx="1.5" fill="rgba(0,245,255,0.038)"/><rect x="110" y="65" width="15" height="85" rx="1.5" fill="rgba(0,245,255,0.032)"/><polyline points="17,105 37,88 57,68 77,80 97,52 117,65" fill="none" stroke="rgba(0,245,255,0.036)" stroke-width="0.9" stroke-linecap="round"/><text x="140" y="45" font-size="22" fill="rgba(0,245,255,0.022)" font-family="serif">₹</text><text x="170" y="32" font-size="16" fill="rgba(0,245,255,0.02)" font-family="serif">₹</text><text x="155" y="95" font-size="14" fill="rgba(0,245,255,0.018)" font-family="serif">₹</text><rect x="195" y="80" width="12" height="60" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="211" y="65" width="12" height="75" rx="1.5" fill="rgba(0,245,255,0.12)"/><rect x="227" y="48" width="12" height="92" rx="1.5" fill="rgba(0,245,255,0.14)"/><rect x="243" y="60" width="12" height="80" rx="1.5" fill="rgba(0,245,255,0.1)"/><rect x="259" y="35" width="12" height="105" rx="1.5" fill="rgba(0,245,255,0.15)"/><polyline points="201,80 217,65 233,48 249,60 265,35" fill="none" stroke="rgba(0,245,255,0.2)" stroke-width="1.3" stroke-linecap="round"/><circle cx="265" cy="35" r="3" fill="rgba(0,245,255,0.32)"/><text x="196" y="32" font-size="18" fill="rgba(0,245,255,0.07)" font-family="serif">₹</text></svg><span class="cat-arr">→</span><svg class="cat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><text x="11" y="16" font-size="10" text-anchor="middle" fill="currentColor" font-family="'Space Grotesk',sans-serif" font-weight="700">₹</text><circle cx="19" cy="6" r="1.7" fill="var(--accent)"/></svg><div class="cat-name">Payroll & Compliance</div><div class="cat-count">26 professionals</div><div class="cat-tags"><span class="ctag">PF/ESIC</span><span class="ctag">TDS</span><span class="ctag">Labour Law</span></div></a>
+    <a href="/partners.html?q=HRBP" class="cat-card cc3 reveal"><svg class="card-wm" aria-hidden="true" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="15" width="62" height="80" rx="3" fill="rgba(249,115,22,0.025)" stroke="rgba(249,115,22,0.038)" stroke-width="1"/><rect x="20" y="26" width="46" height="5" rx="1" fill="rgba(249,115,22,0.04)"/><rect x="20" y="35" width="36" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="20" y="43" width="40" height="4" rx="1" fill="rgba(249,115,22,0.028)"/><rect x="20" y="51" width="30" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="20" y="59" width="38" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="85" y="25" width="55" height="68" rx="3" fill="rgba(249,115,22,0.02)" stroke="rgba(249,115,22,0.03)" stroke-width="1"/><rect x="92" y="35" width="40" height="4" rx="1" fill="rgba(249,115,22,0.03)"/><rect x="92" y="43" width="32" height="4" rx="1" fill="rgba(249,115,22,0.025)"/><rect x="92" y="51" width="36" height="4" rx="1" fill="rgba(249,115,22,0.022)"/><rect x="155" y="15" width="48" height="60" rx="3" fill="rgba(249,115,22,0.018)" stroke="rgba(249,115,22,0.026)" stroke-width="1"/><rect x="205" y="18" width="50" height="65" rx="3" fill="rgba(249,115,22,0.06)" stroke="rgba(249,115,22,0.14)" stroke-width="1"/><rect x="212" y="28" width="36" height="4" rx="1" fill="rgba(249,115,22,0.2)"/><rect x="212" y="36" width="28" height="3" rx="1" fill="rgba(249,115,22,0.14)"/><rect x="212" y="43" width="32" height="3" rx="1" fill="rgba(249,115,22,0.12)"/><rect x="212" y="50" width="24" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><rect x="212" y="57" width="30" height="3" rx="1" fill="rgba(249,115,22,0.1)"/><circle cx="242" cy="72" r="8" fill="rgba(249,115,22,0.14)" stroke="rgba(249,115,22,0.24)" stroke-width="1"/><path d="M238 72 L241 75 L247 69" stroke="rgba(249,115,22,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg><span class="cat-arr">→</span><svg class="cat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="6" r="2" stroke="currentColor" stroke-width="1.6"/><line x1="7.6" y1="7.6" x2="11" y2="15" stroke="currentColor" stroke-width="1.6"/><line x1="16.4" y1="7.6" x2="13" y2="15" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="17.5" r="2.6" fill="var(--accent)"/></svg><div class="cat-name">HR Operations</div><div class="cat-count">61 professionals</div><div class="cat-tags"><span class="ctag">HRBP</span><span class="ctag">Policy</span><span class="ctag">Docs</span></div></a>
+    <a href="/partners.html?q=Training" class="cat-card cc4 reveal"><svg class="card-wm" aria-hidden="true" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="12" y="120" width="20" height="28" rx="2" fill="rgba(168,85,247,0.032)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><rect x="12" y="96" width="20" height="22" rx="2" fill="rgba(168,85,247,0.028)" stroke="rgba(168,85,247,0.035)" stroke-width="1"/><rect x="12" y="70" width="20" height="24" rx="2" fill="rgba(168,85,247,0.025)" stroke="rgba(168,85,247,0.032)" stroke-width="1"/><rect x="12" y="45" width="20" height="23" rx="2" fill="rgba(168,85,247,0.03)" stroke="rgba(168,85,247,0.04)" stroke-width="1"/><line x1="32" y1="130" x2="32" y2="20" stroke="rgba(168,85,247,0.04)" stroke-width="1.2"/><path d="M27 26 L32 18 L37 26" fill="none" stroke="rgba(168,85,247,0.055)" stroke-width="1.2" stroke-linecap="round"/><path d="M55 110 Q80 90 105 95 Q130 100 155 80 Q180 62 205 72 Q230 82 255 60" fill="none" stroke="rgba(168,85,247,0.03)" stroke-width="0.9" stroke-dasharray="4,3"/><circle cx="105" cy="95" r="5" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><circle cx="205" cy="72" r="6" fill="rgba(168,85,247,0.04)" stroke="rgba(168,85,247,0.055)" stroke-width="1"/><text x="102" y="94" font-size="9" fill="rgba(168,85,247,0.08)">★</text><text x="201" y="71" font-size="11" fill="rgba(168,85,247,0.09)">★</text><rect x="198" y="105" width="18" height="30" rx="2" fill="rgba(168,85,247,0.13)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><rect x="198" y="82" width="18" height="21" rx="2" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.17)" stroke-width="1"/><rect x="198" y="56" width="18" height="24" rx="2" fill="rgba(168,85,247,0.09)" stroke="rgba(168,85,247,0.16)" stroke-width="1"/><rect x="198" y="32" width="18" height="22" rx="2" fill="rgba(168,85,247,0.12)" stroke="rgba(168,85,247,0.22)" stroke-width="1"/><line x1="216" y1="96" x2="216" y2="20" stroke="rgba(168,85,247,0.16)" stroke-width="1.2"/><path d="M211 26 L216 18 L221 26" fill="none" stroke="rgba(168,85,247,0.28)" stroke-width="1.2" stroke-linecap="round"/><circle cx="248" cy="52" r="6" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="244" y="56" font-size="10" fill="rgba(168,85,247,0.35)">★</text><circle cx="268" cy="78" r="7" fill="rgba(168,85,247,0.1)" stroke="rgba(168,85,247,0.2)" stroke-width="1"/><text x="263" y="83" font-size="12" fill="rgba(168,85,247,0.35)">★</text></svg><span class="cat-arr">→</span><svg class="cat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5L12 5l9 4.5-9 4.5-9-4.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 11.7v3.6c0 1.7 2.2 3 5 3s5-1.3 5-3v-3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="19.5" y1="10.5" x2="19.5" y2="16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="19.5" cy="17.6" r="1.6" fill="var(--accent)"/></svg><div class="cat-name">Training & L&D</div><div class="cat-count">53 professionals</div><div class="cat-tags"><span class="ctag">Onboarding</span><span class="ctag">L&D</span><span class="ctag">Culture</span></div></a>
+  </div>
+</section>
+
+<!-- RECENTLY MATCHED -->
+<section class="recent-section">
+  <span class="eyebrow">Live on verQ</span>
+  <h2 class="section-title">Recently matched requirements.</h2>
+  <div class="activity-feed">
+    <div class="activity-card">
+      <div class="ac-avatar" style="background:linear-gradient(135deg,#BEFF00,#7EC800);color:#0A0A0F">SK</div>
+      <div class="ac-info"><div class="ac-name">Sejal Khandelwal</div><div class="ac-detail">Matched for E-commerce role</div></div>
+      <div class="ac-time">2m ago</div>
+      <div class="ac-dot"></div>
+    </div>
+    <div class="activity-card">
+      <div class="ac-avatar" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff">RB</div>
+      <div class="ac-info"><div class="ac-name">Rohit Bhardwaj</div><div class="ac-detail">Shortlisted for IT startup</div></div>
+      <div class="ac-time">11m ago</div>
+      <div class="ac-dot"></div>
+    </div>
+    <div class="activity-card">
+      <div class="ac-avatar" style="background:linear-gradient(135deg,#14B8A6,#0D9488);color:#fff">SM</div>
+      <div class="ac-info"><div class="ac-name">Suhani Mishra</div><div class="ac-detail">Compliance audit — CEAT</div></div>
+      <div class="ac-time">38m ago</div>
+      <div class="ac-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div>
+    </div>
+    <div class="activity-card">
+      <div class="ac-avatar" style="background:linear-gradient(135deg,#F97316,#EA580C);color:#fff">AB</div>
+      <div class="ac-info"><div class="ac-name">Ankita Biswas</div><div class="ac-detail">Joined — D2C brand</div></div>
+      <div class="ac-time">1h ago</div>
+      <div class="ac-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div>
+    </div>
   </div>
 </section>
 
@@ -890,7 +951,7 @@ footer {
   <p class="section-sub" style="margin-bottom:0;">Pay only when the candidate joins. Based on CTC — not years of experience.</p>
   <div class="pricing-grid">
     <div class="price-card pp1 reveal">
-      <svg class="card-wm" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="8" y="245" width="12" height="65" rx="2" fill="rgba(99,102,241,0.028)"/><rect x="24" y="218" width="12" height="92" rx="2" fill="rgba(99,102,241,0.032)"/><rect x="40" y="186" width="12" height="124" rx="2" fill="rgba(99,102,241,0.036)"/><rect x="56" y="202" width="12" height="108" rx="2" fill="rgba(99,102,241,0.028)"/><rect x="72" y="165" width="12" height="145" rx="2" fill="rgba(99,102,241,0.035)"/><rect x="88" y="182" width="12" height="128" rx="2" fill="rgba(99,102,241,0.028)"/><polyline points="14,245 30,218 46,186 62,202 78,165 94,182" fill="none" stroke="rgba(99,102,241,0.032)" stroke-width="0.9" stroke-linecap="round"/><circle cx="78" cy="165" r="2.5" fill="rgba(99,102,241,0.08)"/><circle cx="155" cy="245" r="30" fill="none" stroke="rgba(99,102,241,0.022)" stroke-width="1"/><circle cx="155" cy="245" r="18" fill="none" stroke="rgba(99,102,241,0.026)" stroke-width="1"/><circle cx="155" cy="245" r="4" fill="rgba(99,102,241,0.05)"/><line x1="155" y1="215" x2="155" y2="208" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><line x1="155" y1="275" x2="155" y2="282" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><line x1="125" y1="245" x2="118" y2="245" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><line x1="185" y1="245" x2="192" y2="245" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><rect x="8" y="220" width="14" height="70" rx="2" fill="rgba(99,102,241,0.1)"/><rect x="26" y="192" width="14" height="98" rx="2" fill="rgba(99,102,241,0.12)"/><rect x="44" y="158" width="14" height="132" rx="2" fill="rgba(99,102,241,0.14)"/><polyline points="15,220 33,192 51,158" fill="none" stroke="rgba(99,102,241,0.22)" stroke-width="1.3" stroke-linecap="round"/><circle cx="51" cy="158" r="3.5" fill="rgba(99,102,241,0.32)"/><circle cx="160" cy="72" r="28" fill="none" stroke="rgba(99,102,241,0.07)" stroke-width="1.5"/><circle cx="160" cy="72" r="16" fill="none" stroke="rgba(99,102,241,0.09)" stroke-width="1.5"/><circle cx="160" cy="72" r="5" fill="rgba(99,102,241,0.2)"/><line x1="160" y1="44" x2="160" y2="34" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/><line x1="160" y1="100" x2="160" y2="110" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/><line x1="132" y1="72" x2="122" y2="72" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/><line x1="188" y1="72" x2="198" y2="72" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/></svg>
+      <svg class="card-wm" aria-hidden="true" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="8" y="245" width="12" height="65" rx="2" fill="rgba(99,102,241,0.028)"/><rect x="24" y="218" width="12" height="92" rx="2" fill="rgba(99,102,241,0.032)"/><rect x="40" y="186" width="12" height="124" rx="2" fill="rgba(99,102,241,0.036)"/><rect x="56" y="202" width="12" height="108" rx="2" fill="rgba(99,102,241,0.028)"/><rect x="72" y="165" width="12" height="145" rx="2" fill="rgba(99,102,241,0.035)"/><rect x="88" y="182" width="12" height="128" rx="2" fill="rgba(99,102,241,0.028)"/><polyline points="14,245 30,218 46,186 62,202 78,165 94,182" fill="none" stroke="rgba(99,102,241,0.032)" stroke-width="0.9" stroke-linecap="round"/><circle cx="78" cy="165" r="2.5" fill="rgba(99,102,241,0.08)"/><circle cx="155" cy="245" r="30" fill="none" stroke="rgba(99,102,241,0.022)" stroke-width="1"/><circle cx="155" cy="245" r="18" fill="none" stroke="rgba(99,102,241,0.026)" stroke-width="1"/><circle cx="155" cy="245" r="4" fill="rgba(99,102,241,0.05)"/><line x1="155" y1="215" x2="155" y2="208" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><line x1="155" y1="275" x2="155" y2="282" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><line x1="125" y1="245" x2="118" y2="245" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><line x1="185" y1="245" x2="192" y2="245" stroke="rgba(99,102,241,0.025)" stroke-width="1"/><rect x="8" y="220" width="14" height="70" rx="2" fill="rgba(99,102,241,0.1)"/><rect x="26" y="192" width="14" height="98" rx="2" fill="rgba(99,102,241,0.12)"/><rect x="44" y="158" width="14" height="132" rx="2" fill="rgba(99,102,241,0.14)"/><polyline points="15,220 33,192 51,158" fill="none" stroke="rgba(99,102,241,0.22)" stroke-width="1.3" stroke-linecap="round"/><circle cx="51" cy="158" r="3.5" fill="rgba(99,102,241,0.32)"/><circle cx="160" cy="72" r="28" fill="none" stroke="rgba(99,102,241,0.07)" stroke-width="1.5"/><circle cx="160" cy="72" r="16" fill="none" stroke="rgba(99,102,241,0.09)" stroke-width="1.5"/><circle cx="160" cy="72" r="5" fill="rgba(99,102,241,0.2)"/><line x1="160" y1="44" x2="160" y2="34" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/><line x1="160" y1="100" x2="160" y2="110" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/><line x1="132" y1="72" x2="122" y2="72" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/><line x1="188" y1="72" x2="198" y2="72" stroke="rgba(99,102,241,0.1)" stroke-width="1.2"/></svg>
       <div class="price-band">Junior</div>
       <div class="price-role">Up to ₹5 LPA</div>
       <div class="price-ctc">Entry-level roles</div>
@@ -899,7 +960,7 @@ footer {
       <div class="price-save">Save ₹28–38K</div>
     </div>
     <div class="price-card pp2 reveal">
-      <svg class="card-wm" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="8" y="238" width="12" height="72" rx="2" fill="rgba(20,184,166,0.028)"/><rect x="24" y="208" width="12" height="102" rx="2" fill="rgba(20,184,166,0.032)"/><rect x="40" y="172" width="12" height="138" rx="2" fill="rgba(20,184,166,0.036)"/><rect x="56" y="190" width="12" height="120" rx="2" fill="rgba(20,184,166,0.028)"/><rect x="72" y="152" width="12" height="158" rx="2" fill="rgba(20,184,166,0.034)"/><rect x="88" y="168" width="12" height="142" rx="2" fill="rgba(20,184,166,0.028)"/><polyline points="14,238 30,208 46,172 62,190 78,152 94,168" fill="none" stroke="rgba(20,184,166,0.032)" stroke-width="0.9" stroke-linecap="round"/><circle cx="78" cy="152" r="2.5" fill="rgba(20,184,166,0.08)"/><rect x="118" y="240" width="108" height="52" rx="5" fill="rgba(20,184,166,0.022)" stroke="rgba(20,184,166,0.03)" stroke-width="1"/><text x="130" y="262" font-size="9" fill="rgba(20,184,166,0.06)" font-family="monospace">MID-LEVEL</text><text x="130" y="278" font-size="8" fill="rgba(20,184,166,0.05)" font-family="monospace">3–6 YRS EXP</text><text x="18" y="118" font-size="26" fill="rgba(20,184,166,0.025)" font-family="serif">₹</text><text x="100" y="100" font-size="20" fill="rgba(20,184,166,0.02)" font-family="serif">₹</text><rect x="8" y="210" width="14" height="80" rx="2" fill="rgba(20,184,166,0.1)"/><rect x="26" y="175" width="14" height="115" rx="2" fill="rgba(20,184,166,0.12)"/><rect x="44" y="140" width="14" height="150" rx="2" fill="rgba(20,184,166,0.14)"/><rect x="62" y="160" width="14" height="130" rx="2" fill="rgba(20,184,166,0.1)"/><polyline points="15,210 33,175 51,140 69,160" fill="none" stroke="rgba(20,184,166,0.22)" stroke-width="1.3" stroke-linecap="round"/><circle cx="51" cy="140" r="3.5" fill="rgba(20,184,166,0.32)"/><rect x="118" y="52" width="96" height="44" rx="5" fill="rgba(20,184,166,0.06)" stroke="rgba(20,184,166,0.12)" stroke-width="1"/><text x="130" y="70" font-size="9" fill="rgba(20,184,166,0.3)" font-family="monospace">MID-LEVEL</text><text x="130" y="84" font-size="8" fill="rgba(20,184,166,0.22)" font-family="monospace">3–6 YRS EXP</text></svg>
+      <svg class="card-wm" aria-hidden="true" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="8" y="238" width="12" height="72" rx="2" fill="rgba(20,184,166,0.028)"/><rect x="24" y="208" width="12" height="102" rx="2" fill="rgba(20,184,166,0.032)"/><rect x="40" y="172" width="12" height="138" rx="2" fill="rgba(20,184,166,0.036)"/><rect x="56" y="190" width="12" height="120" rx="2" fill="rgba(20,184,166,0.028)"/><rect x="72" y="152" width="12" height="158" rx="2" fill="rgba(20,184,166,0.034)"/><rect x="88" y="168" width="12" height="142" rx="2" fill="rgba(20,184,166,0.028)"/><polyline points="14,238 30,208 46,172 62,190 78,152 94,168" fill="none" stroke="rgba(20,184,166,0.032)" stroke-width="0.9" stroke-linecap="round"/><circle cx="78" cy="152" r="2.5" fill="rgba(20,184,166,0.08)"/><text x="18" y="118" font-size="26" fill="rgba(20,184,166,0.025)" font-family="serif">₹</text><text x="100" y="100" font-size="20" fill="rgba(20,184,166,0.02)" font-family="serif">₹</text><rect x="8" y="210" width="14" height="80" rx="2" fill="rgba(20,184,166,0.1)"/><rect x="26" y="175" width="14" height="115" rx="2" fill="rgba(20,184,166,0.12)"/><rect x="44" y="140" width="14" height="150" rx="2" fill="rgba(20,184,166,0.14)"/><rect x="62" y="160" width="14" height="130" rx="2" fill="rgba(20,184,166,0.1)"/><polyline points="15,210 33,175 51,140 69,160" fill="none" stroke="rgba(20,184,166,0.22)" stroke-width="1.3" stroke-linecap="round"/><circle cx="51" cy="140" r="3.5" fill="rgba(20,184,166,0.32)"/></svg>
       <div class="price-band">Mid-Level</div>
       <div class="price-role">₹5L – ₹12 LPA</div>
       <div class="price-ctc">Mid-level roles</div>
@@ -908,7 +969,7 @@ footer {
       <div class="price-save">Save ₹38–86K</div>
     </div>
     <div class="price-card pp3 featured reveal">
-      <svg class="card-wm" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="8" y="255" width="11" height="55" rx="2" fill="rgba(190,255,0,0.028)"/><rect x="23" y="230" width="11" height="80" rx="2" fill="rgba(190,255,0,0.032)"/><rect x="38" y="198" width="11" height="112" rx="2" fill="rgba(190,255,0,0.038)"/><rect x="53" y="178" width="11" height="132" rx="2" fill="rgba(190,255,0,0.042)"/><rect x="68" y="148" width="11" height="162" rx="2" fill="rgba(190,255,0,0.048)"/><rect x="83" y="165" width="11" height="145" rx="2" fill="rgba(190,255,0,0.038)"/><rect x="98" y="130" width="11" height="180" rx="2" fill="rgba(190,255,0,0.045)"/><polyline points="13,255 28,230 43,198 58,178 73,148 88,165 103,130" fill="none" stroke="rgba(190,255,0,0.042)" stroke-width="0.9" stroke-linecap="round"/><circle cx="103" cy="130" r="2.5" fill="rgba(190,255,0,0.12)"/><circle cx="175" cy="250" r="35" fill="rgba(190,255,0,0.012)" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><circle cx="175" cy="250" r="22" fill="rgba(190,255,0,0.015)" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><text x="164" y="258" font-size="20" fill="rgba(190,255,0,0.065)">★</text><rect x="8" y="238" width="14" height="62" rx="2" fill="rgba(190,255,0,0.08)"/><rect x="26" y="205" width="14" height="95" rx="2" fill="rgba(190,255,0,0.11)"/><rect x="44" y="165" width="14" height="135" rx="2" fill="rgba(190,255,0,0.14)"/><rect x="62" y="142" width="14" height="158" rx="2" fill="rgba(190,255,0,0.17)"/><rect x="80" y="108" width="14" height="192" rx="2" fill="rgba(190,255,0,0.2)"/><polyline points="15,238 33,205 51,165 69,142 87,108" fill="none" stroke="rgba(190,255,0,0.3)" stroke-width="1.5" stroke-linecap="round"/><circle cx="87" cy="108" r="4" fill="rgba(190,255,0,0.45)"/><circle cx="162" cy="64" r="30" fill="rgba(190,255,0,0.04)" stroke="rgba(190,255,0,0.1)" stroke-width="1.5"/><circle cx="162" cy="64" r="18" fill="rgba(190,255,0,0.05)" stroke="rgba(190,255,0,0.13)" stroke-width="1.5"/><text x="152" y="71" font-size="18" fill="rgba(190,255,0,0.3)">★</text></svg>
+      <svg class="card-wm" aria-hidden="true" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect x="8" y="255" width="11" height="55" rx="2" fill="rgba(190,255,0,0.028)"/><rect x="23" y="230" width="11" height="80" rx="2" fill="rgba(190,255,0,0.032)"/><rect x="38" y="198" width="11" height="112" rx="2" fill="rgba(190,255,0,0.038)"/><rect x="53" y="178" width="11" height="132" rx="2" fill="rgba(190,255,0,0.042)"/><rect x="68" y="148" width="11" height="162" rx="2" fill="rgba(190,255,0,0.048)"/><rect x="83" y="165" width="11" height="145" rx="2" fill="rgba(190,255,0,0.038)"/><rect x="98" y="130" width="11" height="180" rx="2" fill="rgba(190,255,0,0.045)"/><polyline points="13,255 28,230 43,198 58,178 73,148 88,165 103,130" fill="none" stroke="rgba(190,255,0,0.042)" stroke-width="0.9" stroke-linecap="round"/><circle cx="103" cy="130" r="2.5" fill="rgba(190,255,0,0.12)"/><circle cx="175" cy="250" r="35" fill="rgba(190,255,0,0.012)" stroke="rgba(190,255,0,0.022)" stroke-width="1"/><circle cx="175" cy="250" r="22" fill="rgba(190,255,0,0.015)" stroke="rgba(190,255,0,0.028)" stroke-width="1"/><text x="164" y="258" font-size="20" fill="rgba(190,255,0,0.065)">★</text><rect x="8" y="238" width="14" height="62" rx="2" fill="rgba(190,255,0,0.08)"/><rect x="26" y="205" width="14" height="95" rx="2" fill="rgba(190,255,0,0.11)"/><rect x="44" y="165" width="14" height="135" rx="2" fill="rgba(190,255,0,0.14)"/><rect x="62" y="142" width="14" height="158" rx="2" fill="rgba(190,255,0,0.17)"/><rect x="80" y="108" width="14" height="192" rx="2" fill="rgba(190,255,0,0.2)"/><polyline points="15,238 33,205 51,165 69,142 87,108" fill="none" stroke="rgba(190,255,0,0.3)" stroke-width="1.5" stroke-linecap="round"/><circle cx="87" cy="108" r="4" fill="rgba(190,255,0,0.45)"/><circle cx="162" cy="64" r="30" fill="rgba(190,255,0,0.04)" stroke="rgba(190,255,0,0.1)" stroke-width="1.5"/><circle cx="162" cy="64" r="18" fill="rgba(190,255,0,0.05)" stroke="rgba(190,255,0,0.13)" stroke-width="1.5"/><text x="152" y="71" font-size="18" fill="rgba(190,255,0,0.3)">★</text></svg>
       <div class="price-band hot">Most Popular</div>
       <div class="price-role">₹12L – ₹25 LPA</div>
       <div class="price-ctc">Senior roles</div>
@@ -917,7 +978,7 @@ footer {
       <div class="price-save">Save ₹70K–1.87L</div>
     </div>
     <div class="price-card pp4 reveal">
-      <svg class="card-wm" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M20 270 L20 210 L50 228 L80 178 L110 228 L140 210 L140 270 Z" fill="rgba(239,68,68,0.018)" stroke="rgba(239,68,68,0.03)" stroke-width="1" stroke-linejoin="round"/><circle cx="50" cy="228" r="3" fill="rgba(239,68,68,0.05)"/><circle cx="80" cy="178" r="4" fill="rgba(239,68,68,0.06)"/><circle cx="110" cy="228" r="3" fill="rgba(239,68,68,0.05)"/><path d="M20 160 L48 160 L34 140 Z" fill="rgba(239,68,68,0.025)" stroke="rgba(239,68,68,0.035)" stroke-width="1"/><path d="M55 150 L80 150 L67 132 Z" fill="rgba(239,68,68,0.022)" stroke="rgba(239,68,68,0.032)" stroke-width="1"/><path d="M165 175 L195 175 L180 155 Z" fill="rgba(239,68,68,0.02)" stroke="rgba(239,68,68,0.028)" stroke-width="1"/><path d="M200 155 L225 155 L212 138 Z" fill="rgba(239,68,68,0.018)" stroke="rgba(239,68,68,0.025)" stroke-width="1"/><circle cx="160" cy="250" r="4" fill="rgba(239,68,68,0.045)"/><circle cx="185" cy="235" r="3" fill="rgba(239,68,68,0.038)"/><circle cx="210" cy="255" r="3.5" fill="rgba(239,68,68,0.035)"/><circle cx="25" cy="95" r="3" fill="rgba(239,68,68,0.04)"/><circle cx="45" cy="115" r="2.5" fill="rgba(239,68,68,0.032)"/><circle cx="15" cy="120" r="2" fill="rgba(239,68,68,0.028)"/><path d="M68 225 L68 168 L90 182 L115 138 L140 182 L162 168 L162 225 Z" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.12)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="90" cy="182" r="4" fill="rgba(239,68,68,0.22)"/><circle cx="115" cy="138" r="5.5" fill="rgba(239,68,68,0.3)"/><circle cx="140" cy="182" r="4" fill="rgba(239,68,68,0.22)"/><path d="M108 72 L124 88 L108 104 L92 88 Z" fill="rgba(239,68,68,0.07)" stroke="rgba(239,68,68,0.13)" stroke-width="1"/><path d="M148 55 L162 69 L148 83 L134 69 Z" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.1)" stroke-width="1"/><circle cx="35" cy="75" r="2.5" fill="rgba(239,68,68,0.18)"/><circle cx="52" cy="95" r="2" fill="rgba(239,68,68,0.14)"/><circle cx="28" cy="105" r="2" fill="rgba(239,68,68,0.12)"/></svg>
+      <svg class="card-wm" aria-hidden="true" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><path d="M20 270 L20 210 L50 228 L80 178 L110 228 L140 210 L140 270 Z" fill="rgba(239,68,68,0.018)" stroke="rgba(239,68,68,0.03)" stroke-width="1" stroke-linejoin="round"/><circle cx="50" cy="228" r="3" fill="rgba(239,68,68,0.05)"/><circle cx="80" cy="178" r="4" fill="rgba(239,68,68,0.06)"/><circle cx="110" cy="228" r="3" fill="rgba(239,68,68,0.05)"/><path d="M20 160 L48 160 L34 140 Z" fill="rgba(239,68,68,0.025)" stroke="rgba(239,68,68,0.035)" stroke-width="1"/><path d="M55 150 L80 150 L67 132 Z" fill="rgba(239,68,68,0.022)" stroke="rgba(239,68,68,0.032)" stroke-width="1"/><path d="M165 175 L195 175 L180 155 Z" fill="rgba(239,68,68,0.02)" stroke="rgba(239,68,68,0.028)" stroke-width="1"/><path d="M200 155 L225 155 L212 138 Z" fill="rgba(239,68,68,0.018)" stroke="rgba(239,68,68,0.025)" stroke-width="1"/><circle cx="160" cy="250" r="4" fill="rgba(239,68,68,0.045)"/><circle cx="185" cy="235" r="3" fill="rgba(239,68,68,0.038)"/><circle cx="210" cy="255" r="3.5" fill="rgba(239,68,68,0.035)"/><circle cx="25" cy="95" r="3" fill="rgba(239,68,68,0.04)"/><circle cx="45" cy="115" r="2.5" fill="rgba(239,68,68,0.032)"/><circle cx="15" cy="120" r="2" fill="rgba(239,68,68,0.028)"/><path d="M68 225 L68 168 L90 182 L115 138 L140 182 L162 168 L162 225 Z" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.12)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="90" cy="182" r="4" fill="rgba(239,68,68,0.22)"/><circle cx="115" cy="138" r="5.5" fill="rgba(239,68,68,0.3)"/><circle cx="140" cy="182" r="4" fill="rgba(239,68,68,0.22)"/><path d="M108 72 L124 88 L108 104 L92 88 Z" fill="rgba(239,68,68,0.07)" stroke="rgba(239,68,68,0.13)" stroke-width="1"/><path d="M148 55 L162 69 L148 83 L134 69 Z" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.1)" stroke-width="1"/><circle cx="35" cy="75" r="2.5" fill="rgba(239,68,68,0.18)"/><circle cx="52" cy="95" r="2" fill="rgba(239,68,68,0.14)"/><circle cx="28" cy="105" r="2" fill="rgba(239,68,68,0.12)"/></svg>
       <div class="price-band">Leadership</div>
       <div class="price-role">₹25L+ LPA</div>
       <div class="price-ctc">Head / VP / Director roles</div>
@@ -959,9 +1020,9 @@ footer {
 <footer>
   <div class="footer-grid">
     <div><span class="footer-logo">ver<span>Q</span></span><p class="footer-tagline">India's On-Demand HR Marketplace. Connecting startups with verified HR professionals.</p></div>
-    <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/#browse">Browse HR Partners</a></li><li><a href="/pricing.html">Pricing</a></li></ul></div>
+    <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/partners.html">Browse HR Partners</a></li><li><a href="/pricing.html">Pricing</a></li></ul></div>
     <div><div class="footer-col-title">For HR Pros</div><ul class="footer-links"><li><a href="/join-hr-partner.html">Join as Partner</a></li><li><a href="/referral.html">Referral Program</a></li></ul></div>
-    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li><a href="/services.html">Services</a>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li>
     </li><li><a href="/contact.html">Contact</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2026 verQ. All rights reserved. Gurugram, Haryana.</div><div class="footer-email"><a href="mailto:info@verq.in">info@verq.in</a></div></div>
@@ -1099,6 +1160,17 @@ footer {
     resultsGrid.innerHTML = '';
   }
 
+  // Gently brings a hero-search element into view — but only if the person
+  // is still reasonably near the hero. If they've scrolled down to read
+  // Categories/Pricing/etc, this does nothing, so the demo never yanks them
+  // back up mid-browse (whether it's the background autoplay or a real search).
+  function nudgeIntoView(el, block){
+    if (!el) return;
+    if (window.scrollY < window.innerHeight * 1.3){
+      el.scrollIntoView({ behavior: 'smooth', block: block || 'center' });
+    }
+  }
+
   async function triggerSearch(query){
     if (!query || !query.trim()) return;
     hasSearched = true;
@@ -1107,27 +1179,31 @@ footer {
     searchBar.classList.add('active');
 
     statusSearching.classList.add('show');
-    await sleep(500);
+    await sleep(250);
+    nudgeIntoView(document.querySelector('.status-zone'), 'center');
+    await sleep(1850);
     statusSearching.classList.remove('show');
 
     cycle.parse.forEach(p => {
       const el = document.createElement('div');
       el.className = 'parse-item';
-      el.innerHTML = `<div class="parse-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4.2L3 6.2L7 2" stroke="#A8E600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>${p.label}: <b>${p.value}</b>`;
+      el.innerHTML = `<div class="parse-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4.2L3 6.2L7 2" stroke="#00DDF0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>${p.label}: <b>${p.value}</b>`;
       parseGrid.appendChild(el);
     });
     const items = parseGrid.querySelectorAll('.parse-item');
     for (const item of items){ item.classList.add('show'); await sleep(140); }
-    await sleep(300);
+    await sleep(1300);
 
     statusMatching.classList.add('show');
-    await sleep(500);
+    await sleep(200);
+    nudgeIntoView(statusMatching, 'center');
+    await sleep(1300);
     statusMatching.classList.remove('show');
 
     foundText.textContent = `${cycle.count} HR experts found`;
     foundLine.classList.add('show');
     await sleep(400);
-    foundLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    nudgeIntoView(foundLine, 'center');
 
     cycle.experts.forEach(e => {
       const card = document.createElement('div');
@@ -1137,7 +1213,7 @@ footer {
           <div class="rcard-avatar" style="background:${e.color}">${e.initials}</div>
           <span class="rcard-avail">${e.avail}</span>
         </div>
-        <div class="rcard-rating">★ ${e.rating}</div>
+        <div class="rcard-rating"><svg width="11" height="11" viewBox="0 0 24 24" fill="#FFC94A" style="flex-shrink:0"><path d="M12 2.5l2.9 6.2 6.6.7-4.9 4.6 1.3 6.7L12 17.5l-5.9 3.2 1.3-6.7-4.9-4.6 6.6-.7z"/></svg> ${e.rating}</div>
         <div class="rcard-name">${e.name}</div>
         <div class="rcard-role">${e.role}</div>
         <div class="rcard-trust">${e.trust}</div>
@@ -1192,15 +1268,32 @@ footer {
   }
 
   async function autoplay(){
-    const cycle = cycles[0];
-    searchBar.classList.add('active');
-    const perChar = Math.max(20, Math.min(38, 1700 / cycle.query.length));
-    const finishedTyping = await typeString(cycle.query, perChar);
-    if (!finishedTyping || userTookOver) return;
-    fakeCaret.style.display = 'none';
-    await sleep(900);
-    if (userTookOver) return;
-    await triggerSearch(cycle.query);
+    let idx = 0;
+    while (true){
+      if (userTookOver) return;
+      const cycle = cycles[idx % cycles.length];
+      fakeCaret.style.display = '';
+      searchBar.classList.add('active');
+      const perChar = Math.max(20, Math.min(38, 1700 / cycle.query.length));
+      const finishedTyping = await typeString(cycle.query, perChar);
+      if (!finishedTyping || userTookOver) return;
+      fakeCaret.style.display = 'none';
+      await sleep(700); // brief pause, like someone glancing over what they typed
+      if (userTookOver) return;
+      if (searchBtn){
+        searchBtn.classList.add('autoclick');
+        await sleep(140);
+        searchBtn.classList.remove('autoclick');
+      }
+      await sleep(180); // small gap between the 'click' and the response starting
+      if (userTookOver) return;
+      await triggerSearch(cycle.query);
+      if (userTookOver) return;
+      await sleep(10000); // pause 10s on the results before looping to the next example
+      if (userTookOver) return;
+      resetResultsZone();
+      idx++;
+    }
   }
 
   positionFakeCaret();
@@ -1228,7 +1321,7 @@ const statsObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       const counters = [
-        {el: document.querySelector('.stat-item:nth-child(1) .stat-num'), val: 150, suffix: '+'},
+        {el: document.querySelector('.stat-item:nth-child(1) .stat-num'), val: 68, suffix: '+'},
         {el: document.querySelector('.stat-item:nth-child(2) .stat-num'), val: 32, suffix: ''},
         {el: document.querySelector('.stat-item:nth-child(3) .stat-num'), val: 18, suffix: ' min'},
       ];
@@ -1295,11 +1388,14 @@ document.querySelectorAll('.step-card').forEach(card => {
 
 </script>
 
+<script src="js/partners-data.js"></script>
 <script>
-// ── REAL HR PARTNERS — fetched from consented Netlify Forms submissions ──
-// Falls back to a friendly empty state if the function isn't configured yet,
-// the request fails, or no one has consented to being featured yet. Never
-// falls back to fake/example people.
+// ── REAL HR PARTNERS ──
+// Tries live, consented Netlify Forms submissions first. If that returns
+// nothing (function not deployed, no one's consented yet, network error),
+// falls back to a rotating subset of the real, already-consented partner
+// dataset in js/partners-data.js — never to fake/example people, and never
+// to a bare empty state now that real partners exist.
 (function(){
   const grid = document.getElementById('realPartnersGrid');
   const empty = document.getElementById('partnersEmpty');
@@ -1308,17 +1404,36 @@ document.querySelectorAll('.step-card').forEach(card => {
   function cardHTML(p){
     const tags = (p.skills || []).map(s => `<span class="ptag">${s}</span>`).join('');
     const roleLine = [p.role, p.experience].filter(Boolean).join(' · ');
+    const badge = p.availability || p.workType; // live data has 'availability'; static dataset has 'workType'
     return `
       <div class="profile-card reveal visible">
         <div class="p-top">
           <div class="p-avatar" style="background:${p.color};color:#0A0A0F">${p.initials}</div>
-          ${p.availability ? `<div class="avail-now">${p.availability}</div>` : ''}
+          ${badge ? `<div class="avail-now">${badge}</div>` : ''}
         </div>
         <div class="p-name">${p.name}</div>
         ${roleLine ? `<div class="p-role">${roleLine}</div>` : ''}
         ${tags ? `<div class="p-tags">${tags}</div>` : ''}
-        ${p.city ? `<div class="p-meta"><div class="p-loc">📍 ${p.city}</div></div>` : ''}
+        ${p.city ? `<div class="p-meta"><div class="p-loc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;vertical-align:-1px;margin-right:3px"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.5 7 13 7 13s7-7.5 7-13c0-3.9-3.1-7-7-7z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" fill="var(--accent)"/></svg>${p.city}</div></div>` : ''}
       </div>`;
+  }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function showStaticFallback(){
+    const pool = window.VERQ_PARTNERS || [];
+    if (pool.length === 0){
+      empty.style.display = 'block';
+      return;
+    }
+    grid.innerHTML = shuffle(pool).slice(0, 4).map(cardHTML).join('');
   }
 
   fetch('/.netlify/functions/hr-partners')
@@ -1326,15 +1441,15 @@ document.querySelectorAll('.step-card').forEach(card => {
     .then(data => {
       const profiles = (data && data.profiles) || [];
       if (profiles.length === 0) {
-        empty.style.display = 'block';
+        showStaticFallback();
         return;
       }
       grid.innerHTML = profiles.slice(0, 4).map(cardHTML).join('');
     })
     .catch(() => {
       // Function not deployed yet, misconfigured, or network error —
-      // show the honest empty state rather than fake data.
-      empty.style.display = 'block';
+      // fall back to the real static dataset rather than an empty state.
+      showStaticFallback();
     });
 })();
 </script>

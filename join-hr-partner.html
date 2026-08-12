@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/png" href="/favicon.png?v=2">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Join as HR Partner | verQ</title>
 <meta name="description" content="Join verQ as an HR Partner — work flexible, get matched with funded startups, transparent on-time payments, and build a verified portfolio."/>
@@ -11,7 +11,7 @@
 <style>
 .page-layout { display: grid; grid-template-columns: 380px 1fr; max-width: 1180px; margin: 0 auto; position: relative; }
 
-.req-sidebar { position: sticky; top: 64px; align-self: start; padding: 44px 44px 64px 5%; border-right: 1px solid var(--border); min-height: 100vh; grid-column: 1; }
+.req-sidebar { position: sticky; top: 64px; align-self: start; padding: 44px 44px 64px 5%; border-right: 1px solid var(--border); grid-column: 1; }
 .rs-label { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
   letter-spacing: 0.5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 22px; }
 .rs-label::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
@@ -63,14 +63,17 @@
 .consent-row input:checked + .consent-box svg { opacity: 1; transform: scale(1); }
 .consent-text { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
 
-.perks-strip { margin-top: 64px; background: rgba(0,221,240,0.04); border-bottom: 1px solid rgba(0,221,240,0.12); padding: 12px 6%; display: flex; gap: 20px; overflow-x: auto; }
-.perk { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.perks-strip { margin-top: 64px; background: rgba(0,221,240,0.04); border-bottom: 1px solid rgba(0,221,240,0.12); padding: 12px 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.perks-track { display: flex; gap: 40px; width: max-content; animation: perksScroll 16s linear infinite; }
+.perks-strip:hover .perks-track { animation-play-state: paused; }
+@keyframes perksScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.perk { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--cyan); white-space: nowrap; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .perk::before { content: '✓'; }
 
 @media (max-width: 960px) {
-  .page-layout { grid-template-columns: 1fr; }
-  .req-sidebar { position: static; min-height: 0; border-right: none; border-bottom: 1px solid var(--border); padding: 44px 6%; }
-  .req-form-col { padding: 44px 6% 64px; }
+  .page-layout { grid-template-columns: 1fr; grid-auto-flow: row; }
+  .req-sidebar { position: static; min-height: 0; border-right: none; border-bottom: 1px solid var(--border); padding: 44px 6%; grid-column: 1; grid-row: 1; }
+  .req-form-col { padding: 44px 6% 64px; grid-column: 1; grid-row: 2; }
 }
 </style>
 </head>
@@ -89,8 +92,8 @@
   <a href="/" class="nav-logo">ver<span>Q</span></a>
   <div class="nav-links">
     <a href="/">Home</a>
-    <a href="/services.html">Services</a>
     <a href="/pricing.html">Pricing</a>
+    <a href="/partners.html">Partners</a>
     <a href="/about.html">About Us</a>
     <a href="/contact.html">Contact</a>
     <a href="/post-requirement.html" class="nav-cta">Post a Requirement</a>
@@ -99,10 +102,16 @@
 </nav>
 
 <div class="perks-strip">
-  <div class="perk">Flexible hours</div>
-  <div class="perk">Pan-India opportunities</div>
-  <div class="perk">Transparent payments</div>
-  <div class="perk">Work from anywhere</div>
+  <div class="perks-track">
+    <div class="perk">Flexible hours</div>
+    <div class="perk">Pan-India opportunities</div>
+    <div class="perk">Transparent payments</div>
+    <div class="perk">Work from anywhere</div>
+    <div class="perk">Flexible hours</div>
+    <div class="perk">Pan-India opportunities</div>
+    <div class="perk">Transparent payments</div>
+    <div class="perk">Work from anywhere</div>
+  </div>
 </div>
 
 <div class="page-layout">
@@ -220,31 +229,35 @@
 </script>
 
 <script>
-// JS-based sticky sidebar — see post-requirement.html for the reasoning
-// (native position:sticky is broken by the sitewide overflow-x:hidden fix).
+// JS-based sticky sidebar — desktop only. Native position:sticky is broken by
+// the sitewide overflow-x:hidden fix, so we simulate it with fixed/absolute
+// positioning — but only above the mobile breakpoint. We explicitly track
+// whether the simulation is active and proactively clear every inline style
+// the moment we drop into mobile mode, so mobile always gets a plain, fully
+// stacked layout with zero chance of leftover fixed/absolute positioning
+// causing content to overlap.
 (function(){
   const layout = document.querySelector('.page-layout');
   const sidebar = document.querySelector('.req-sidebar');
   if (!layout || !sidebar) return;
   const NAV_HEIGHT = 64;
+  const MOBILE_BREAKPOINT = 960;
+  let stickyActive = false;
 
-  function update(){
-    if (window.innerWidth <= 960) {
-      sidebar.style.position = '';
-      sidebar.style.top = '';
-      sidebar.style.left = '';
-      sidebar.style.width = '';
-      return;
-    }
+  function clearInlineStyles(){
+    sidebar.style.position = '';
+    sidebar.style.top = '';
+    sidebar.style.left = '';
+    sidebar.style.width = '';
+  }
+
+  function updateSticky(){
     const layoutRect = layout.getBoundingClientRect();
     const sidebarWidth = sidebar.offsetWidth || sidebar.getBoundingClientRect().width;
     const sidebarHeight = sidebar.offsetHeight;
 
     if (layoutRect.top >= NAV_HEIGHT) {
-      sidebar.style.position = '';
-      sidebar.style.top = '';
-      sidebar.style.left = '';
-      sidebar.style.width = '';
+      clearInlineStyles();
     } else if (layoutRect.bottom - sidebarHeight > NAV_HEIGHT) {
       sidebar.style.position = 'fixed';
       sidebar.style.top = NAV_HEIGHT + 'px';
@@ -258,10 +271,23 @@
     }
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
-  update();
+  function onScroll(){ if (stickyActive) updateSticky(); }
+
+  function checkMode(){
+    const shouldBeActive = window.innerWidth > MOBILE_BREAKPOINT;
+    if (shouldBeActive !== stickyActive) {
+      stickyActive = shouldBeActive;
+      if (!stickyActive) clearInlineStyles();
+    }
+    if (stickyActive) updateSticky();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', checkMode);
+  window.addEventListener('orientationchange', checkMode);
+  checkMode();
 })();
+</script>
 </script>
 
 </body>
