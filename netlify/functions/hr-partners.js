@@ -11,10 +11,30 @@ const CACHE_TTL_MS = 60_000; // avoid hammering the Netlify API on every page lo
 // Fields safe to expose publicly. Everything else (email, phone, linkedin,
 // earnings, notes, industries) is never returned by this function, even if
 // present in the submission.
+// Netlify Forms serializes a group of checkboxes sharing the same field name
+// inconsistently depending on submission path — sometimes a real array,
+// sometimes a plain comma-separated string, and sometimes (seen in practice)
+// a JSON-stringified array packed into a single string value, e.g. the
+// literal text '["Recruitment", "Payroll"]' rather than an actual array.
+// Handle all three so a real submission never renders as one raw blob.
+function parseSkillsField(skillsRaw) {
+  if (Array.isArray(skillsRaw)) return skillsRaw.map(s => String(s).trim()).filter(Boolean);
+  if (typeof skillsRaw === 'string') {
+    const trimmed = skillsRaw.trim();
+    if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) return parsed.map(s => String(s).trim()).filter(Boolean);
+      } catch (e) { /* not valid JSON — fall through to comma-split */ }
+    }
+    return trimmed.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
 function toPublicProfile(sub) {
   const d = sub.data || {};
-  const skillsRaw = d.skills;
-  const skills = Array.isArray(skillsRaw) ? skillsRaw : (skillsRaw ? [skillsRaw] : []);
+  const skills = parseSkillsField(d.skills);
 
   return {
     name: (d.name || '').trim(),

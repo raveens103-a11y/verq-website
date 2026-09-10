@@ -57,7 +57,9 @@ nav {
   font-size: 22px; font-weight: 700;
   color: var(--white); text-decoration: none; letter-spacing: -0.5px;
   flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 0px;
 }
+.nav-logo-icon { width: 26px; height: 26px; flex-shrink: 0; filter: drop-shadow(0 0 5px rgba(168,230,0,0.3)); }
 
 .nav-logo span { color: var(--accent); text-shadow: 0 0 8px rgba(168,230,0,0.22); }
 

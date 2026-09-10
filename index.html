@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
 <title>verQ | The HR Marketplace</title>
-<link rel="icon" type="image/png" href="/favicon.png?v=2">
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.verq.in/"/>
+<meta property="og:site_name" content="verQ"/>
+<meta property="og:title" content="verQ | The HR Marketplace"/>
+<meta property="og:description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
+<meta property="og:image" content="https://www.verq.in/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="verQ | The HR Marketplace"/>
+<meta name="twitter:description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
+<meta name="twitter:image" content="https://www.verq.in/og-image.png"/>
+<link rel="icon" type="image/png" href="/favicon.png?v=3">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 /* ── verQ THEME v2 — Refined ── */
@@ -63,8 +75,9 @@ nav {
   font-size: 22px; font-weight: 700;
   color: var(--white); text-decoration: none; letter-spacing: -0.5px;
   flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 0px;
 }
-.nav-logo span { color: var(--accent); text-shadow: 0 0 8px rgba(168,230,0,0.22); }
+.nav-logo-icon { width: 26px; height: 26px; flex-shrink: 0; filter: drop-shadow(0 0 5px rgba(168,230,0,0.3)); }
 
 .nav-links {
   display: flex; align-items: center; gap: 6px;
@@ -376,7 +389,7 @@ footer {
 </style>
 <style>
 /* HERO */
-.hero { min-height: 100vh; padding: 120px 5% 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 1; }
+.hero { min-height: 100vh; padding: 104px 5% 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; z-index: 1; }
 .hero::before { content: ''; position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: min(600px, 92vw); height: 400px; background: radial-gradient(ellipse, rgba(168,230,0,0.06) 0%, transparent 70%); pointer-events: none; }
 .hero::after { content: ''; position: absolute; bottom: 10%; right: 5%; width: 400px; height: 400px; background: radial-gradient(ellipse, rgba(0,221,240,0.04) 0%, transparent 70%); pointer-events: none; }
 
@@ -393,26 +406,74 @@ footer {
 .match-net .n6 { animation: netpulse 3.6s ease-in-out infinite 3s; }
 @keyframes netpulse { 0%,100%{opacity:0.35;r:2.2;} 50%{opacity:1;r:3.4;} }
 
-.hero-badge { position: relative; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0,221,240,0.25); background: rgba(0,221,240,0.05); color: var(--cyan); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; animation: fadeUp 0.6s ease both; }
+/* Two-column hero on desktop: copy (badge/title/CTA) sits beside the
+   console instead of stacked above it, so the total vertical space needed
+   is whichever COLUMN is taller — not both added together. On mobile,
+   .hero-inner/.hero-copy/.hero-visual use display:contents, meaning they
+   don't exist as boxes at all — their children (badge, title, actions,
+   console) just participate directly in .hero's existing stacked layout,
+   completely unchanged from before. */
+.hero-inner, .hero-copy, .hero-visual { display: contents; }
+
+@media (min-width: 1024px) {
+  .hero-inner {
+    display: flex; align-items: center; gap: 48px;
+    max-width: 1280px; width: 100%; margin: 0 auto;
+  }
+  .hero-copy {
+    display: block; flex: 0 0 380px; text-align: left;
+  }
+  .hero-visual { display: block; flex: 1; min-width: 0; }
+  .hero-copy .hero-badge { margin: 0 0 16px; }
+  .hero-copy .hero-title { margin: 0 0 28px; text-align: left; max-width: none; font-size: clamp(32px, 3vw, 46px); }
+  .hero-copy .hero-actions { justify-content: flex-start; margin: 0; }
+}
+
+.hero-badge { position: relative; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0,221,240,0.25); background: rgba(0,221,240,0.05); color: var(--cyan); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 14px; animation: fadeUp 0.6s ease both; }
 .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: pulse 2s infinite; }
 
-.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5.4vw, 58px); font-weight: 700; letter-spacing: -2px; line-height: 1.08; max-width: 680px; margin: 0 auto var(--sp-heading); animation: fadeUp 0.6s 0.1s ease both; }
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5.4vw, 58px); font-weight: 700; letter-spacing: -2px; line-height: 1.08; max-width: 680px; margin: 0 auto 32px; animation: fadeUp 0.6s 0.1s ease both; }
 .gradient-text { background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .dim { color: var(--muted); }
 
 /* SEARCH — the search bar IS the hero. It wraps long queries onto multiple
    lines instead of hiding them, so the full prompt stays visible and
    models good prompt-writing for the person typing it. */
-.search-shell { position: relative; width: 100%; max-width: 780px; margin: 0 auto 8px; animation: fadeUp 0.6s 0.2s ease both; }
+/* The unified "AI Match Console" — everything from the search bar through
+   results lives inside one bordered, backgrounded container, so it reads as
+   ONE interface rather than four separate floating elements. The inner
+   .demo-stage still uses min-height (not a hard height + overflow:hidden) —
+   measured directly against real rendered content, so it can never silently
+   clip something that's slightly taller than expected; it can only ever add
+   a little extra breathing room. */
+.match-console {
+  position: relative; width: 100%; max-width: 1060px; margin: 12px auto 0;
+  padding: 16px 5% 18px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(168,230,0,0.055), transparent 55%), rgba(15,17,23,0.72);
+  border: 1px solid rgba(168,230,0,0.16); border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.035);
+  z-index: 1;
+}
+.match-console-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan);
+}
+.match-console-header .console-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan); animation: pulse 2s infinite;
+}
+
+.search-shell { position: relative; width: 100%; max-width: 900px; margin: 0 auto 8px; animation: fadeUp 0.6s 0.2s ease both; }
 .search-shell::before { content: ''; position: absolute; inset: -44px -24px; background: radial-gradient(ellipse at center, rgba(168,230,0,0.10) 0%, transparent 72%); filter: blur(4px); pointer-events: none; z-index: -1; }
 .search-bar { position: relative; display: flex; align-items: center; gap: 16px;
   background: rgba(21,25,35,0.72); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  border: 1.5px solid var(--border); border-radius: 28px; min-height: 120px; padding: 18px 16px 18px 34px;
+  border: 1.5px solid var(--border); border-radius: 22px; min-height: 88px; padding: 14px 16px 14px 28px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
 .search-bar.active, .search-bar:focus-within { border-color: rgba(168,230,0,0.5); box-shadow: 0 0 0 4px rgba(168,230,0,0.1), 0 24px 60px rgba(0,0,0,0.45); }
 .search-text-wrap { flex: 1; min-width: 0; position: relative; display: flex; align-items: center; }
 .search-input { width: 100%; background: transparent; border: none; outline: none; resize: none; overflow: hidden;
-  text-align: left; font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; color: var(--white); padding: 0; display: block; }
+  text-align: left; font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; color: #C8CCD3; padding: 0; display: block; }
 .search-input::placeholder { color: #4B5364; }
 .search-mirror { position: absolute; top: 0; left: 0; visibility: hidden; white-space: pre-wrap; word-wrap: break-word;
   font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; padding: 0; pointer-events: none; }
@@ -427,9 +488,9 @@ footer {
 .search-btn:hover { background: var(--accent-dark); box-shadow: 0 0 32px rgba(168,230,0,0.45); }
 .search-btn:active, .search-btn.autoclick { transform: scale(0.96); box-shadow: 0 0 36px rgba(168,230,0,0.5); }
 
-.helper-line { margin-top: 14px; font-size: 12px; color: #5A6272; animation: fadeUp 0.6s 0.3s ease both; }
+.helper-line { margin-top: 8px; font-size: 12px; color: #5A6272; animation: fadeUp 0.6s 0.3s ease both; }
 
-.chip-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; animation: fadeUp 0.6s 0.35s ease both; }
+.chip-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; animation: fadeUp 0.6s 0.35s ease both; }
 .example-chip { font-size: 12.5px; color: var(--muted); background: var(--surface); border: 1px solid var(--border);
   padding: 8px 16px; border-radius: 100px; cursor: pointer; text-decoration: none; display: inline-block;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease; font-family: 'DM Sans', sans-serif; }
@@ -438,7 +499,13 @@ footer {
 /* (cat-line removed from hero) */
 
 /* ── Searching → parsing → matching → results sequence ── */
-.status-zone { max-width: 680px; margin: 26px auto 0; min-height: 20px; position: relative; z-index: 1; }
+.status-zone { max-width: 680px; margin: 12px auto 0; min-height: 20px; position: relative; z-index: 1; }
+/* Reserves enough height for the tallest possible state (status lines +
+   3 parsed fields + found line + 3 result cards) — measured directly by
+   rendering the page, not guessed — so the page around it never needs to
+   grow/shrink or scroll as the demo plays out. */
+.demo-stage { min-height: 335px; }
+@media (max-width: 760px) { .demo-stage { min-height: 810px; } }
 .status-line { display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'JetBrains Mono', monospace;
   font-size: 13px; color: var(--muted); opacity: 0; transition: opacity 0.3s ease; }
 .status-line.show { opacity: 1; }
@@ -447,7 +514,7 @@ footer {
 .spinner-dot:nth-child(3) { animation-delay: 0.3s; }
 @keyframes sdot { 0%,100%{opacity:.25;} 50%{opacity:1;} }
 
-.parse-grid { max-width: 520px; margin: 18px auto 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 22px; }
+.parse-grid { max-width: 760px; margin: 10px auto 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }
 .parse-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted);
   opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; }
 .parse-item.show { opacity: 1; transform: translateY(0); }
@@ -464,7 +531,7 @@ footer {
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .found-check svg { width: 11px; height: 11px; }
 
-.results { max-width: 920px; margin: 36px auto 0; padding: 0 6px; display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
+.results { max-width: 920px; margin: 26px auto 0; padding: 0 6px; display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
   position: relative; z-index: 1; }
 .rcard { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 18px 16px;
   opacity: 0; transform: translateY(10px); transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1); }
@@ -491,9 +558,9 @@ footer {
 }
 
 @media (max-width: 760px) {
-  .search-bar { min-height: 110px; padding: 20px 10px 20px 22px; }
-  .search-input, .search-mirror { font-size: 15px; }
-  .search-btn { padding: 0 18px; height: 52px; border-radius: 14px; font-size: 13px; }
+  .search-bar { min-height: 140px; padding: 16px; flex-direction: column; align-items: stretch; gap: 10px; }
+  .search-input, .search-mirror { font-size: 14px; line-height: 1.45; }
+  .search-btn { padding: 0 18px; height: 46px; border-radius: 12px; font-size: 13px; width: 100%; }
 }
 
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s 0.35s ease both; margin: 40px 0 88px; }
@@ -516,6 +583,18 @@ footer {
 .profile-card:first-child .p-avatar { width: 60px; height: 60px; font-size: 20px; }
 .profile-card:first-child .p-name { font-size: 20px; }
 .profile-card:first-child .p-role { font-size: 13px; }
+/* Shorter laptop screens (e.g. 1366x768) — tighten further so the console
+   comes as close as possible to fitting in one view without scrolling,
+   without touching the more generous spacing on taller screens. */
+@media (max-height: 800px) and (min-width: 761px) {
+  .hero { padding: 55px 5% 10px; }
+  .hero-badge { margin-bottom: 8px; }
+  .hero-title { margin-bottom: 18px; font-size: clamp(30px, 4.2vw, 44px); }
+  .match-console { margin-top: 4px; padding: 10px 5% 12px; }
+  .match-console-header { margin-bottom: 6px; }
+  .search-bar { min-height: 76px; }
+}
+
 @media (max-width: 1024px) { .profile-card:first-child { grid-row: span 1; } }
 .partners-empty { grid-column: 1 / -1; text-align: center; padding: 56px 24px; border: 1px dashed var(--border); border-radius: 14px; }
 .partners-empty-icon { font-size: 28px; margin-bottom: 12px; }
@@ -577,7 +656,7 @@ footer {
 /* PRICING */
 .pricing-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-card); margin-top: var(--sp-heading); }
-.price-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease; }
+.price-card { position: relative; background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease; }
 .price-card:hover { border-color: rgba(168,230,0,0.22); transform: translateY(-4px); box-shadow: var(--glow); }
 .price-card.featured { border-color: rgba(168,230,0,0.32); background: rgba(168,230,0,0.03); }
 .price-band { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
@@ -635,7 +714,7 @@ footer {
 .p-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 10px;
   font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14.5px; text-decoration: none;
   transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, gap 0.2s ease, background 0.2s ease; }
-.panel-a .p-btn { background: var(--accent); color: var(--ink); box-shadow: 0 0 24px rgba(168,230,0,0.2); }
+.panel-a .p-btn { background: var(--accent); color: var(--accent-text); box-shadow: 0 0 24px rgba(168,230,0,0.2); }
 .panel-a .p-btn:hover { background: var(--accent-dark); box-shadow: 0 0 32px rgba(168,230,0,0.35); gap: 12px; }
 .panel-b .p-btn { background: transparent; color: var(--cyan); border: 1.5px solid rgba(0,221,240,0.4); }
 .panel-b .p-btn:hover { background: rgba(0,221,240,0.08); border-color: var(--cyan); gap: 12px; }
@@ -644,7 +723,7 @@ footer {
 /* RESPONSIVE */
 @media (max-width: 1024px) { .profiles-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .pricing-grid { grid-template-columns: repeat(2, 1fr); } .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } .steps-grid::before { display: none; } }
 @media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } }
+@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .profile-card:first-child { grid-column: span 1; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } }
 
 /* CANVAS BACKGROUND */
 
@@ -754,7 +833,7 @@ footer {
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">ver<span>Q</span></a>
+  <a href="/" class="nav-logo">ver<svg class="nav-logo-icon" viewBox="16 12 72 72" xmlns="http://www.w3.org/2000/svg"><circle cx="46" cy="42" r="24" stroke="#F2F3F5" stroke-width="11" fill="none"/><line x1="61" y1="57" x2="74" y2="70" stroke="#A8E600" stroke-width="11" stroke-linecap="round"/><circle cx="74" cy="70" r="7.5" fill="#A8E600"/><circle cx="78" cy="26" r="4" fill="#00DDF0"/><line x1="65" y1="34" x2="75" y2="28" stroke="#00DDF0" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/></svg></a>
   <div class="nav-links">
     <a href="/" class="active">Home</a>
     <a href="/pricing.html">Pricing</a>
@@ -783,45 +862,58 @@ footer {
     <circle class="node n5" cx="500" cy="400" r="3"/>
     <circle class="node n6" cx="720" cy="420" r="2.6"/>
   </svg>
+
+  <div class="hero-inner">
+  <div class="hero-copy">
   <div class="hero-badge"><div class="badge-dot"></div>The HR Marketplace</div>
   <h1 class="hero-title">Find the right <span class="gradient-text">HR expert</span> in minutes.</h1>
 
-  <div class="search-shell">
-    <div class="search-bar" id="searchBar">
-      <div class="search-text-wrap" id="searchTextWrap">
-        <textarea class="search-input" id="homeSearch" rows="1" placeholder="Describe what you need help with..." autocomplete="off"></textarea>
-        <span class="search-caret" id="fakeCaret"></span>
-        <div class="search-mirror" id="mirrorDiv"></div>
-      </div>
-      <button class="search-btn">
-        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/><path d="M13.5 13.5L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Find Experts
-      </button>
-    </div>
-  </div>
-
-  <div class="helper-line">Describe your hiring or HR requirement in a sentence. We'll find the right expert.</div>
-  <div class="chip-row">
-    <button type="button" class="example-chip" data-query="Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore">Recruit a backend engineer</button>
-    <button type="button" class="example-chip" data-query="Need someone to set up payroll for 25 employees">Set up payroll</button>
-    <button type="button" class="example-chip" data-query="Looking for a fractional HRBP for a Series A startup">Hire a fractional HRBP</button>
-    <button type="button" class="example-chip" data-query="Need a POSH compliance audit for our office in Mumbai">Conduct a POSH audit</button>
-  </div>
-
-  <div class="status-zone">
-    <div class="status-line" id="statusSearching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Searching...</div>
-    <div class="parse-grid" id="parseGrid"></div>
-    <div class="status-line" id="statusMatching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Matching experts...</div>
-    <div class="found-line" id="foundLine">
-      <div class="found-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <span id="foundText"></span>
-    </div>
-  </div>
-
-  <div class="results" id="resultsGrid"></div>
-
   <div class="hero-actions">
     <a href="/post-requirement.html" class="btn-primary">Post a Requirement →</a>
+  </div>
+  </div>
+
+  <div class="hero-visual">
+  <div class="match-console">
+    <div class="match-console-header"><span class="console-dot"></span>AI Match</div>
+
+    <div class="search-shell">
+      <div class="search-bar" id="searchBar">
+        <div class="search-text-wrap" id="searchTextWrap">
+          <textarea class="search-input" id="homeSearch" rows="1" placeholder="Describe what you need help with..." autocomplete="off"></textarea>
+          <span class="search-caret" id="fakeCaret"></span>
+          <div class="search-mirror" id="mirrorDiv"></div>
+        </div>
+        <button class="search-btn">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/><path d="M13.5 13.5L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Find Experts
+        </button>
+      </div>
+    </div>
+
+    <div class="helper-line">Describe your hiring or HR requirement in a sentence. We'll find the right expert.</div>
+    <div class="chip-row">
+      <button type="button" class="example-chip" data-query="Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore">Recruit a backend engineer</button>
+      <button type="button" class="example-chip" data-query="Need someone to set up payroll for 25 employees">Set up payroll</button>
+      <button type="button" class="example-chip" data-query="Looking for a fractional HRBP for a Series A startup">Hire a fractional HRBP</button>
+      <button type="button" class="example-chip" data-query="Need a POSH compliance audit for our office in Mumbai">Conduct a POSH audit</button>
+    </div>
+
+    <div class="demo-stage">
+      <div class="status-zone">
+        <div class="status-line" id="statusSearching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Searching...</div>
+        <div class="parse-grid" id="parseGrid"></div>
+        <div class="status-line" id="statusMatching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Matching experts...</div>
+        <div class="found-line" id="foundLine">
+          <div class="found-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span id="foundText"></span>
+        </div>
+      </div>
+
+      <div class="results" id="resultsGrid"></div>
+    </div>
+  </div>
+  </div>
   </div>
 
 </section>
@@ -829,33 +921,33 @@ footer {
 
 <!-- TRUST STRIP -->
 <div class="trust-section">
-  <div class="trust-label">HR Partners from companies including</div>
+  <div class="trust-label">Trusted by teams at</div>
   <div class="trust-scroll" id="trustScroll">
-    <span class="trust-item">CEAT LIMITED</span>
-    <span class="trust-item">BOSTON CONSULTING GROUP</span>
-    <span class="trust-item">RANDSTAD GLOBAL</span>
-    <span class="trust-item">CARDEKHO GROUP</span>
-    <span class="trust-item">LEMON TREE HOTELS</span>
-    <span class="trust-item">BIRLA GLOBAL</span>
-    <span class="trust-item">NATIONAL ALUMINIUM</span>
-    <span class="trust-item">AKM GLOBAL</span>
-    <span class="trust-item">INDOSPACE</span>
-    <span class="trust-item">MARKIVIS</span>
-    <span class="trust-item">ODISHA KNOWLEDGE CORP</span>
-    <span class="trust-item">RATTANINDIA</span>
+    <span class="trust-item">MAXSOSHA</span>
+    <span class="trust-item">HILO DESIGN</span>
+    <span class="trust-item">HEALHFAB</span>
+    <span class="trust-item">WISELIFE</span>
+    <span class="trust-item">MOCEMSA</span>
+    <span class="trust-item">GUSH BEAUTY</span>
+    <span class="trust-item">MAXSOSHA</span>
+    <span class="trust-item">HILO DESIGN</span>
+    <span class="trust-item">HEALHFAB</span>
+    <span class="trust-item">WISELIFE</span>
+    <span class="trust-item">MOCEMSA</span>
+    <span class="trust-item">GUSH BEAUTY</span>
     <!-- duplicate for seamless loop -->
-    <span class="trust-item">CEAT LIMITED</span>
-    <span class="trust-item">BOSTON CONSULTING GROUP</span>
-    <span class="trust-item">RANDSTAD GLOBAL</span>
-    <span class="trust-item">CARDEKHO GROUP</span>
-    <span class="trust-item">LEMON TREE HOTELS</span>
-    <span class="trust-item">BIRLA GLOBAL</span>
-    <span class="trust-item">NATIONAL ALUMINIUM</span>
-    <span class="trust-item">AKM GLOBAL</span>
-    <span class="trust-item">INDOSPACE</span>
-    <span class="trust-item">MARKIVIS</span>
-    <span class="trust-item">ODISHA KNOWLEDGE CORP</span>
-    <span class="trust-item">RATTANINDIA</span>
+    <span class="trust-item">MAXSOSHA</span>
+    <span class="trust-item">HILO DESIGN</span>
+    <span class="trust-item">HEALHFAB</span>
+    <span class="trust-item">WISELIFE</span>
+    <span class="trust-item">MOCEMSA</span>
+    <span class="trust-item">GUSH BEAUTY</span>
+    <span class="trust-item">MAXSOSHA</span>
+    <span class="trust-item">HILO DESIGN</span>
+    <span class="trust-item">HEALHFAB</span>
+    <span class="trust-item">WISELIFE</span>
+    <span class="trust-item">MOCEMSA</span>
+    <span class="trust-item">GUSH BEAUTY</span>
   </div>
 </div>
 
@@ -1022,8 +1114,7 @@ footer {
     <div><span class="footer-logo">ver<span>Q</span></span><p class="footer-tagline">India's On-Demand HR Marketplace. Connecting startups with verified HR professionals.</p></div>
     <div><div class="footer-col-title">For Companies</div><ul class="footer-links"><li><a href="/post-requirement.html">Post a Requirement</a></li><li><a href="/partners.html">Browse HR Partners</a></li><li><a href="/pricing.html">Pricing</a></li></ul></div>
     <div><div class="footer-col-title">For HR Pros</div><ul class="footer-links"><li><a href="/join-hr-partner.html">Join as Partner</a></li><li><a href="/referral.html">Referral Program</a></li></ul></div>
-    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li>
-    </li><li><a href="/contact.html">Contact</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/about.html">About Us</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
   </div>
   <div class="footer-bottom"><div class="footer-copy">© 2026 verQ. All rights reserved. Gurugram, Haryana.</div><div class="footer-email"><a href="mailto:info@verq.in">info@verq.in</a></div></div>
 </footer>
@@ -1041,7 +1132,7 @@ footer {
   const cycles = [
     {
       keywords: ["recruit","engineer","backend","node","aws","microservices","bangalore","developer","tech","d2c"],
-      query: "Need a recruiter for a D2C brand hiring a senior backend engineer with Node.js, AWS, and microservices experience in Bangalore within 3 weeks.",
+      query: "Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore",
       parse: [
         { label: "Role", value: "Technical Recruiter" },
         { label: "Industry", value: "D2C / E-commerce" },
@@ -1116,7 +1207,11 @@ footer {
   if (!searchInput || !fakeCaret || !mirrorDiv || !searchTextWrap || !searchBar) return;
 
   let userTookOver = false;
-  let hasSearched = false;
+  let searchToken = 0; // incremented on every triggerSearch() call — an older,
+                        // still-running search checks this after each await and
+                        // bails out if a newer search has since started, so a
+                        // user-clicked search can never get overwritten by a
+                        // slower-finishing autoplay search (or vice versa).
 
   function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
@@ -1160,28 +1255,16 @@ footer {
     resultsGrid.innerHTML = '';
   }
 
-  // Gently brings a hero-search element into view — but only if the person
-  // is still reasonably near the hero. If they've scrolled down to read
-  // Categories/Pricing/etc, this does nothing, so the demo never yanks them
-  // back up mid-browse (whether it's the background autoplay or a real search).
-  function nudgeIntoView(el, block){
-    if (!el) return;
-    if (window.scrollY < window.innerHeight * 1.3){
-      el.scrollIntoView({ behavior: 'smooth', block: block || 'center' });
-    }
-  }
-
   async function triggerSearch(query){
     if (!query || !query.trim()) return;
-    hasSearched = true;
+    const myToken = ++searchToken;
     const cycle = pickCycle(query);
     resetResultsZone();
     searchBar.classList.add('active');
 
     statusSearching.classList.add('show');
-    await sleep(250);
-    nudgeIntoView(document.querySelector('.status-zone'), 'center');
-    await sleep(1850);
+    await sleep(2100);
+    if (myToken !== searchToken) return;
     statusSearching.classList.remove('show');
 
     cycle.parse.forEach(p => {
@@ -1191,19 +1274,22 @@ footer {
       parseGrid.appendChild(el);
     });
     const items = parseGrid.querySelectorAll('.parse-item');
-    for (const item of items){ item.classList.add('show'); await sleep(140); }
+    for (const item of items){
+      if (myToken !== searchToken) return;
+      item.classList.add('show'); await sleep(140);
+    }
     await sleep(1300);
+    if (myToken !== searchToken) return;
 
     statusMatching.classList.add('show');
-    await sleep(200);
-    nudgeIntoView(statusMatching, 'center');
-    await sleep(1300);
+    await sleep(1500);
+    if (myToken !== searchToken) return;
     statusMatching.classList.remove('show');
 
-    foundText.textContent = `${cycle.count} HR experts found`;
+    foundText.textContent = `These are your ${cycle.experts.length} best-fit matches`;
     foundLine.classList.add('show');
     await sleep(400);
-    nudgeIntoView(foundLine, 'center');
+    if (myToken !== searchToken) return;
 
     cycle.experts.forEach(e => {
       const card = document.createElement('div');
@@ -1222,7 +1308,10 @@ footer {
       resultsGrid.appendChild(card);
     });
     const cards = resultsGrid.querySelectorAll('.rcard');
-    for (const card of cards){ card.classList.add('show'); await sleep(90); }
+    for (const card of cards){
+      if (myToken !== searchToken) return;
+      card.classList.add('show'); await sleep(90);
+    }
   }
 
   // Exposed globally so category cards and other on-page links can jump
@@ -1289,9 +1378,21 @@ footer {
       if (userTookOver) return;
       await triggerSearch(cycle.query);
       if (userTookOver) return;
-      await sleep(10000); // pause 10s on the results before looping to the next example
+      await sleep(2000); // hold the completed query + results together briefly
       if (userTookOver) return;
-      resetResultsZone();
+      // Clear just the search bar text here — NOT the results. The results
+      // from this cycle stay fully visible while the box quietly resets and
+      // sits clean until the next example starts typing. They only actually
+      // clear later, right as the next search visually begins (triggerSearch
+      // already does that itself, at its own start) — so the box never sits
+      // empty.
+      searchInput.value = '';
+      autoGrow();
+      fakeCaret.style.display = '';
+      positionFakeCaret();
+      await sleep(9000); // clean box + results stay visible together — next
+                          // example starts typing ~11s after results first appeared
+      if (userTookOver) return;
       idx++;
     }
   }

@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<link rel="icon" type="image/png" href="/favicon.png?v=2">
+<link rel="icon" type="image/png" href="/favicon.png?v=3">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Browse HR Partners | verQ</title>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.verq.in/partners.html"/>
+<meta property="og:site_name" content="verQ"/>
+<meta property="og:title" content="Browse HR Partners | verQ"/>
+<meta property="og:description" content="Browse verified HR partners on verQ — real recruiters, payroll specialists, compliance experts and HR generalists across India, ready to work with your startup."/>
+<meta property="og:image" content="https://www.verq.in/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Browse HR Partners | verQ"/>
+<meta name="twitter:description" content="Browse verified HR partners on verQ — real recruiters, payroll specialists, compliance experts and HR generalists across India, ready to work with your startup."/>
+<meta name="twitter:image" content="https://www.verq.in/og-image.png"/>
 <meta name="description" content="Browse verified HR partners on verQ — real recruiters, payroll specialists, compliance experts and HR generalists across India, ready to work with your startup."/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="css/theme.css"/>
@@ -21,13 +33,22 @@
 .dstat-num { font-family:'Bebas Neue', sans-serif; font-size: 26px; color: var(--cyan); line-height:1; }
 .dstat-label { font-size: 11px; color: var(--muted); margin-top:4px; }
 
+/* real, data-driven 'live' signal — not decoration, an actual current count */
+.live-stat { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:20px; font-size:12.5px; color: var(--muted); position:relative; z-index:1; opacity:0; transition: opacity 0.4s ease; }
+.live-stat.show { opacity:1; }
+.live-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); animation:pulse 2s infinite; flex-shrink:0; }
+.live-stat b { color: var(--accent); font-weight:700; }
+
 /* FILTER BAR */
 .filter-section { padding: 40px 5% 0; max-width: 1180px; margin: 0 auto; position: relative; z-index: 1; }
 .search-row { max-width: 480px; margin: 0 auto 20px; position: relative; }
+.search-row::before { content:''; position:absolute; inset:-14px -10px; background:radial-gradient(ellipse at center, rgba(168,230,0,0.07) 0%, transparent 75%); opacity:0; transition:opacity 0.3s ease; pointer-events:none; z-index:-1; }
+.search-row:focus-within::before { opacity:1; }
 .dsearch { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 13px 16px 13px 42px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.25s ease, box-shadow 0.25s ease; }
-.dsearch:focus { border-color: rgba(168,230,0,0.4); box-shadow: 0 0 0 3px rgba(168,230,0,0.08); }
+.dsearch:focus { border-color: rgba(168,230,0,0.45); box-shadow: 0 0 0 3px rgba(168,230,0,0.1); }
 .dsearch::placeholder { color: #3E4658; }
-.search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.5; }
+.search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.5; transition: opacity 0.25s ease; }
+.search-row:focus-within .search-icon { opacity: 0.9; color: var(--accent); }
 
 .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 8px; }
 .fchip { font-size: 12.5px; font-weight: 600; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: 7px 15px; border-radius: 100px; cursor: pointer; transition: all 0.18s ease; }
@@ -44,6 +65,11 @@
 .profile-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--cyan)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
 .profile-card:hover { border-color: rgba(0,221,240,0.24); box-shadow: var(--glow-cyan); transform: translateY(-4px); }
 .profile-card:hover::before { transform: scaleX(1); }
+
+/* staggered entrance — plays whenever the grid repopulates (load, search, filter) */
+@keyframes cardIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.profile-card.card-enter { animation: cardIn 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+
 .p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
 .p-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; flex-shrink: 0; color: #0A0A0F; }
 .p-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
@@ -58,6 +84,16 @@
 .pdir-empty-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 6px; }
 .pdir-empty-sub { font-size: 13px; color: var(--muted); }
 
+/* skeleton loading state — shown briefly while live+static data merges */
+@keyframes shimmer { 0% { background-position: -150% 0; } 100% { background-position: 250% 0; } }
+.skel-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.skel-block { border-radius: 6px; background: linear-gradient(90deg, var(--surface2) 25%, #1c2230 50%, var(--surface2) 75%); background-size: 250% 100%; animation: shimmer 1.5s ease-in-out infinite; }
+.skel-avatar { width: 44px; height: 44px; border-radius: 50%; margin-bottom: 4px; }
+.skel-line { height: 11px; }
+.skel-line.w70 { width: 70%; }
+.skel-line.w45 { width: 45%; }
+.skel-line.w30 { width: 30%; margin-top: 16px; }
+
 @media (max-width: 1024px) { .pdir-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .pdir-grid { grid-template-columns: 1fr; } .dstat { padding: 0 16px; } }
 </style>
@@ -65,7 +101,7 @@
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">ver<span>Q</span></a>
+  <a href="/" class="nav-logo">ver<svg class="nav-logo-icon" viewBox="16 12 72 72" xmlns="http://www.w3.org/2000/svg"><circle cx="46" cy="42" r="24" stroke="#F2F3F5" stroke-width="11" fill="none"/><line x1="61" y1="57" x2="74" y2="70" stroke="#A8E600" stroke-width="11" stroke-linecap="round"/><circle cx="74" cy="70" r="7.5" fill="#A8E600"/><circle cx="78" cy="26" r="4" fill="#00DDF0"/><line x1="65" y1="34" x2="75" y2="28" stroke="#00DDF0" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/></svg></a>
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="/pricing.html">Pricing</a>
@@ -87,6 +123,7 @@
     <div class="dstat"><div class="dstat-num" id="statCities">—</div><div class="dstat-label">Cities covered</div></div>
     <div class="dstat"><div class="dstat-num" id="statRemote">—</div><div class="dstat-label">Remote-ready</div></div>
   </div>
+  <div class="live-stat" id="liveStat"><span class="live-dot"></span><span id="liveStatText"></span></div>
 </div>
 
 <div class="filter-section">
@@ -100,7 +137,12 @@
 </div>
 
 <div class="directory-section">
-  <div class="pdir-grid" id="pdirGrid"></div>
+  <div class="pdir-grid" id="pdirGrid">
+    <div class="skel-card"><div class="skel-block skel-avatar"></div><div class="skel-block skel-line w70"></div><div class="skel-block skel-line w45"></div><div class="skel-block skel-line w30"></div></div>
+    <div class="skel-card"><div class="skel-block skel-avatar"></div><div class="skel-block skel-line w70"></div><div class="skel-block skel-line w45"></div><div class="skel-block skel-line w30"></div></div>
+    <div class="skel-card"><div class="skel-block skel-avatar"></div><div class="skel-block skel-line w70"></div><div class="skel-block skel-line w45"></div><div class="skel-block skel-line w30"></div></div>
+    <div class="skel-card"><div class="skel-block skel-avatar"></div><div class="skel-block skel-line w70"></div><div class="skel-block skel-line w45"></div><div class="skel-block skel-line w30"></div></div>
+  </div>
 </div>
 
 <footer>
@@ -124,11 +166,29 @@
   const roleChipsEl = document.getElementById('roleChips');
   const workChipsEl = document.getElementById('workChips');
   const resultCount = document.getElementById('resultCount');
+  const liveStat = document.getElementById('liveStat');
+  const liveStatText = document.getElementById('liveStatText');
 
   let activeRole = null;
   let activeWork = null;
 
   function uniqueSorted(arr){ return Array.from(new Set(arr)).sort(); }
+
+  // Counts a stat number up from 0 to its real value — same treatment the
+  // homepage stats already get, so this page doesn't feel static the moment
+  // real data arrives.
+  function countUp(el, target, suffix){
+    suffix = suffix || '';
+    const duration = 700;
+    const start = performance.now();
+    function tick(now){
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 
   function buildChips(container, values, getActive, setActive){
     container.innerHTML = '';
@@ -162,6 +222,16 @@
       </div>`;
   }
 
+  // Staggers each card's entrance so filtering/searching feels alive rather
+  // than an instant, jarring content swap.
+  function playEntrance(){
+    const cards = grid.querySelectorAll('.profile-card');
+    cards.forEach((card, i) => {
+      card.classList.add('card-enter');
+      card.style.animationDelay = Math.min(i * 70, 500) + 'ms';
+    });
+  }
+
   function render(){
     const q = (searchInput.value || '').trim().toLowerCase();
     const filtered = all.filter(p => {
@@ -178,17 +248,31 @@
       grid.innerHTML = `<div class="pdir-empty"><div class="pdir-empty-title">No partners match that search.</div><div class="pdir-empty-sub">Try a different city, skill, or clear the filters above.</div></div>`;
     } else {
       grid.innerHTML = filtered.map(cardHTML).join('');
+      playEntrance();
     }
     resultCount.textContent = `Showing ${filtered.length} of ${all.length} verified partners`;
   }
 
-  searchInput.addEventListener('input', render);
+  let searchDebounce;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(render, 220);
+  });
 
-  VerqPartnersShared.loadAllPartners().then(list => {
+  function wait(ms){ return new Promise(res => setTimeout(res, ms)); }
+
+  Promise.all([VerqPartnersShared.loadAllPartners(), wait(550)]).then(([list]) => {
     all = list;
-    document.getElementById('statTotal').textContent = all.length + '+';
-    document.getElementById('statCities').textContent = new Set(all.map(p => p.city)).size;
-    document.getElementById('statRemote').textContent = all.filter(p => p.workMode === 'Remote').length;
+    countUp(document.getElementById('statTotal'), all.length, '+');
+    countUp(document.getElementById('statCities'), new Set(all.map(p => p.city)).size);
+    countUp(document.getElementById('statRemote'), all.filter(p => p.workMode === 'Remote').length);
+
+    const availableNow = all.filter(p => p.available).length;
+    if (availableNow > 0){
+      liveStatText.innerHTML = `<b>${availableNow}</b> of ${all.length} partners open to new work right now`;
+      liveStat.classList.add('show');
+    }
+
     buildChips(roleChipsEl, uniqueSorted(all.map(p => p.role)), () => activeRole, v => activeRole = v);
     buildChips(workChipsEl, uniqueSorted(all.map(p => p.workType)), () => activeWork, v => activeWork = v);
 

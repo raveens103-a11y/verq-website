@@ -31,13 +31,32 @@
 
   // Live feed entries (from hr-partners.js) have a different, simpler shape
   // than the static baseline — normalize them to match before merging.
+  // Defensive parsing for the same reason the server-side function has it:
+  // Netlify Forms can serialize a multi-checkbox field as a JSON-stringified
+  // array packed into a single string, rather than a real array. This is a
+  // client-side safety net in case that ever slips through unparsed.
+  function parseSkillsField(skillsRaw) {
+    if (Array.isArray(skillsRaw)) return skillsRaw.map(s => String(s).trim()).filter(Boolean);
+    if (typeof skillsRaw === 'string') {
+      const trimmed = skillsRaw.trim();
+      if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed)) return parsed.map(s => String(s).trim()).filter(Boolean);
+        } catch (e) { /* not valid JSON — fall through to comma-split */ }
+      }
+      return trimmed.split(',').map(s => s.trim()).filter(Boolean);
+    }
+    return [];
+  }
+
   function normalizeLive(p) {
     return {
       name: p.name,
       city: p.city,
       experience: p.experience,
       role: p.role,
-      skills: p.skills || [],
+      skills: parseSkillsField(p.skills),
       workType: p.availability || '',
       workMode: '',
       status: p.availability || '',
