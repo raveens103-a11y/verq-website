@@ -64,6 +64,7 @@
       categories: categorize(p.role),
       initials: p.initials,
       color: p.color,
+      photo: p.photo || null,
     };
   }
 

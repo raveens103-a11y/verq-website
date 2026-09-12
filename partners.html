@@ -72,6 +72,7 @@
 
 .p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
 .p-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; flex-shrink: 0; color: #0A0A0F; }
+.p-avatar-photo { object-fit: cover; background: var(--surface); }
 .p-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
 .p-role { font-size: 11.5px; color: var(--cyan); margin-bottom: 12px; line-height: 1.4; }
 .p-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
@@ -207,10 +208,13 @@
 
   function cardHTML(p){
     const tags = (p.skills || []).map(s => `<span class="ptag">${s}</span>`).join('');
+    const avatar = p.photo
+      ? `<img class="p-avatar p-avatar-photo" src="${p.photo}" alt="${p.name}" loading="lazy"/>`
+      : `<div class="p-avatar" style="background:${p.color}">${p.initials}</div>`;
     return `
       <div class="profile-card">
         <div class="p-top">
-          <div class="p-avatar" style="background:${p.color}">${p.initials}</div>
+          ${avatar}
         </div>
         <div class="p-name">${p.name}</div>
         <div class="p-role">${p.role}${p.experience ? ' · ' + p.experience : ''}</div>

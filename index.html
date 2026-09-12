@@ -406,33 +406,12 @@ footer {
 .match-net .n6 { animation: netpulse 3.6s ease-in-out infinite 3s; }
 @keyframes netpulse { 0%,100%{opacity:0.35;r:2.2;} 50%{opacity:1;r:3.4;} }
 
-/* Two-column hero on desktop: copy (badge/title/CTA) sits beside the
-   console instead of stacked above it, so the total vertical space needed
-   is whichever COLUMN is taller — not both added together. On mobile,
-   .hero-inner/.hero-copy/.hero-visual use display:contents, meaning they
-   don't exist as boxes at all — their children (badge, title, actions,
-   console) just participate directly in .hero's existing stacked layout,
-   completely unchanged from before. */
-.hero-inner, .hero-copy, .hero-visual { display: contents; }
-
-@media (min-width: 1024px) {
-  .hero-inner {
-    display: flex; align-items: center; gap: 48px;
-    max-width: 1280px; width: 100%; margin: 0 auto;
-  }
-  .hero-copy {
-    display: block; flex: 0 0 380px; text-align: left;
-  }
-  .hero-visual { display: block; flex: 1; min-width: 0; }
-  .hero-copy .hero-badge { margin: 0 0 16px; }
-  .hero-copy .hero-title { margin: 0 0 28px; text-align: left; max-width: none; font-size: clamp(32px, 3vw, 46px); }
-  .hero-copy .hero-actions { justify-content: flex-start; margin: 0; }
-}
 
 .hero-badge { position: relative; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(0,221,240,0.25); background: rgba(0,221,240,0.05); color: var(--cyan); font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 14px; animation: fadeUp 0.6s ease both; }
+.hero-badge .badge-slash { opacity: 0.4; font-weight: 400; }
 .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: pulse 2s infinite; }
 
-.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5.4vw, 58px); font-weight: 700; letter-spacing: -2px; line-height: 1.08; max-width: 680px; margin: 0 auto 32px; animation: fadeUp 0.6s 0.1s ease both; }
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(34px, 4.6vw, 52px); font-weight: 700; letter-spacing: -2px; line-height: 1.15; max-width: 780px; margin: 0 auto 32px; animation: fadeUp 0.6s 0.1s ease both; }
 .gradient-text { background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .dim { color: var(--muted); }
 
@@ -471,11 +450,42 @@ footer {
   border: 1.5px solid var(--border); border-radius: 22px; min-height: 88px; padding: 14px 16px 14px 28px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
 .search-bar.active, .search-bar:focus-within { border-color: rgba(168,230,0,0.5); box-shadow: 0 0 0 4px rgba(168,230,0,0.1), 0 24px 60px rgba(0,0,0,0.45); }
+
+/* Traveling light hover effect — a thin cyan comet sweeps around the border,
+   signaling "this is an intelligent surface" before the visitor has clicked.
+   Uses a conic-gradient masked down to just the ring (not the whole box),
+   animated via a registered custom property so the sweep interpolates
+   smoothly instead of snapping. Only shows on hover — the moment the box
+   becomes active/focused, this fades out in favor of the existing lime
+   glow, which stays the one true 'action' signal. Hovering never pauses
+   the demo; only clicking/typing (via stopAutoplay) does. */
+@property --sweep-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.match-console::before {
+  content: '';
+  position: absolute; inset: -1.5px; border-radius: inherit; padding: 1.5px;
+  background: conic-gradient(from var(--sweep-angle), transparent 0%, rgba(0,221,240,0.9) 5%, rgba(0,221,240,0.35) 11%, transparent 20%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: blur(0.6px);
+  opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+}
+.match-console:hover::before {
+  opacity: 1;
+  animation: sweepLight 1.8s linear infinite;
+}
+.match-console:has(.search-bar.active)::before, .match-console:focus-within::before { opacity: 0; }
+@keyframes sweepLight { to { --sweep-angle: 360deg; } }
 .search-text-wrap { flex: 1; min-width: 0; position: relative; display: flex; align-items: center; }
 .search-input { width: 100%; background: transparent; border: none; outline: none; resize: none; overflow: hidden;
   text-align: left; font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; color: #C8CCD3; padding: 0; display: block; }
 .search-input::placeholder { color: #4B5364; }
-.search-mirror { position: absolute; top: 0; left: 0; visibility: hidden; white-space: pre-wrap; word-wrap: break-word;
+.search-mirror { position: absolute; top: 0; left: 0; visibility: hidden; white-space: pre-wrap; word-wrap: break-word; text-align: left;
   font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1.55; padding: 0; pointer-events: none; }
 .search-caret { position: absolute; width: 2px; height: 22px; background: var(--accent);
   animation: caretBlink 0.9s step-end infinite; pointer-events: none; }
@@ -498,38 +508,42 @@ footer {
 
 /* (cat-line removed from hero) */
 
-/* ── Searching → parsing → matching → results sequence ── */
-.status-zone { max-width: 680px; margin: 12px auto 0; min-height: 20px; position: relative; z-index: 1; }
-/* Reserves enough height for the tallest possible state (status lines +
-   3 parsed fields + found line + 3 result cards) — measured directly by
-   rendering the page, not guessed — so the page around it never needs to
-   grow/shrink or scroll as the demo plays out. */
-.demo-stage { min-height: 335px; }
-@media (max-width: 760px) { .demo-stage { min-height: 810px; } }
-.status-line { display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'JetBrains Mono', monospace;
-  font-size: 13px; color: var(--muted); opacity: 0; transition: opacity 0.3s ease; }
-.status-line.show { opacity: 1; }
-.spinner-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: sdot 1s ease-in-out infinite; }
-.spinner-dot:nth-child(2) { animation-delay: 0.15s; }
-.spinner-dot:nth-child(3) { animation-delay: 0.3s; }
-@keyframes sdot { 0%,100%{opacity:.25;} 50%{opacity:1;} }
+/* ── Progressive stages: input → processing → results. Only one stage is
+   visible at a time — each replaces the last, instead of everything
+   accumulating on screen together. .console-stage reserves the height of
+   the tallest single stage (results, with its 3 cards) so switching
+   between stages never resizes the console or moves the page. ── */
+.console-stage { position: relative; min-height: 275px; display: flex; flex-direction: column; justify-content: flex-start; }
+@media (max-width: 760px) { .console-stage { min-height: 720px; } }
 
-.parse-grid { max-width: 760px; margin: 10px auto 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }
-.parse-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted);
-  opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; }
-.parse-item.show { opacity: 1; transform: translateY(0); }
-.parse-check { width: 15px; height: 15px; border-radius: 50%; background: rgba(0,221,240,0.12); border: 1px solid rgba(0,221,240,0.4);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.parse-check svg { width: 8px; height: 8px; }
-.parse-item b { color: var(--white); font-weight: 600; }
+.stage-idle, .stage-processing, .stage-results {
+  opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none; position: absolute; top: 0; left: 0; right: 0;
+}
+.stage-idle.active, .stage-processing.active, .stage-results.active {
+  opacity: 1; transform: translateY(0); pointer-events: auto; position: relative;
+}
 
-.found-line { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px;
-  font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--accent);
+.process-steps { max-width: 460px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 14px; }
+.process-step { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--muted);
+  opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+.process-step.show { opacity: 1; transform: translateY(0); }
+.process-step b { color: var(--white); font-weight: 500; }
+.process-step-icon { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.process-step-icon.pending { background: rgba(0,221,240,0.1); border: 1px solid rgba(0,221,240,0.3); }
+.process-step-icon.pending .spinner-dot-sm { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); animation: sdot 1s ease-in-out infinite; }
+.process-step-icon.done { background: rgba(0,221,240,0.14); border: 1px solid rgba(0,221,240,0.45); }
+.process-step-icon svg { width: 9px; height: 9px; }
+@keyframes sdot { 0%,100%{opacity:.3;} 50%{opacity:1;} }
+
+.match-complete-line { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 26px;
   opacity: 0; transform: translateY(4px); transition: opacity 0.35s ease, transform 0.35s ease; }
-.found-line.show { opacity: 1; transform: translateY(0); }
-.found-check { width: 20px; height: 20px; border-radius: 50%; background: rgba(168,230,0,0.14); border: 1px solid rgba(168,230,0,0.45);
+.stage-results.active .match-complete-line { opacity: 1; transform: translateY(0); }
+.match-complete-title { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--cyan); text-align: left; }
+.match-complete-sub { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); text-align: left; }
+.found-check { width: 26px; height: 26px; border-radius: 50%; background: rgba(0,221,240,0.14); border: 1px solid rgba(0,221,240,0.45);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.found-check svg { width: 11px; height: 11px; }
+.found-check svg { width: 13px; height: 13px; }
 
 .results { max-width: 920px; margin: 26px auto 0; padding: 0 6px; display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
   position: relative; z-index: 1; }
@@ -539,12 +553,12 @@ footer {
 .rcard-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
 .rcard-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
   font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0F; flex-shrink: 0; }
-.rcard-avail { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--accent);
-  background: rgba(168,230,0,0.1); border: 1px solid rgba(168,230,0,0.25); padding: 3px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+.rcard-avail { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(0,221,240,0.75);
+  background: rgba(0,221,240,0.04); border: 1px solid rgba(0,221,240,0.14); padding: 3px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
 .rcard-rating { font-size: 12px; color: #FFC94A; font-weight: 600; display: flex; align-items: center; gap: 3px; margin-bottom: 2px; }
 .rcard-name { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 1px; }
 .rcard-role { font-size: 12.5px; color: var(--cyan); }
-.rcard-trust { font-size: 12px; color: var(--white); font-weight: 600; margin: 10px 0; padding-top: 10px; border-top: 1px solid var(--border); }
+.rcard-trust { font-size: 12px; color: var(--white); font-weight: 400; margin: 10px 0; padding-top: 10px; border-top: 1px solid var(--border); }
 .rcard-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .rcard-tag { font-size: 10.5px; color: var(--muted); background: rgba(255,255,255,0.03); border: 1px solid var(--border);
   padding: 3px 9px; border-radius: 100px; }
@@ -587,7 +601,7 @@ footer {
    comes as close as possible to fitting in one view without scrolling,
    without touching the more generous spacing on taller screens. */
 @media (max-height: 800px) and (min-width: 761px) {
-  .hero { padding: 55px 5% 10px; }
+  .hero { padding: 78px 5% 10px; }
   .hero-badge { margin-bottom: 8px; }
   .hero-title { margin-bottom: 18px; font-size: clamp(30px, 4.2vw, 44px); }
   .match-console { margin-top: 4px; padding: 10px 5% 12px; }
@@ -607,11 +621,12 @@ footer {
 .profile-card:hover::before { transform: scaleX(1); }
 .p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
 .p-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; flex-shrink: 0; }
+.p-avatar-photo { object-fit: cover; background: var(--surface2); }
 .avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; flex-shrink: 0; }
 .p-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
 .ptag { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
 .p-loc { font-size: 11px; color: var(--muted); }
-.avail-now { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0,221,240,0.1); color: var(--cyan); border: 1px solid rgba(0,221,240,0.22); }
+.avail-now { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0,221,240,0.04); color: rgba(0,221,240,0.75); border: 1px solid rgba(0,221,240,0.14); }
 .avail-soon { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(0,221,240,0.08); color: var(--cyan); border: 1px solid rgba(0,221,240,0.2); }
 .p-name { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
 .p-role { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
@@ -863,20 +878,11 @@ footer {
     <circle class="node n6" cx="720" cy="420" r="2.6"/>
   </svg>
 
-  <div class="hero-inner">
-  <div class="hero-copy">
   <div class="hero-badge"><div class="badge-dot"></div>The HR Marketplace</div>
-  <h1 class="hero-title">Find the right <span class="gradient-text">HR expert</span> in minutes.</h1>
+  <h1 class="hero-title">Got an HR problem?<br>We'll find who can fix it.</h1>
 
-  <div class="hero-actions">
-    <a href="/post-requirement.html" class="btn-primary">Post a Requirement →</a>
-  </div>
-  </div>
-
-  <div class="hero-visual">
   <div class="match-console">
     <div class="match-console-header"><span class="console-dot"></span>AI Match</div>
-
     <div class="search-shell">
       <div class="search-bar" id="searchBar">
         <div class="search-text-wrap" id="searchTextWrap">
@@ -891,29 +897,38 @@ footer {
       </div>
     </div>
 
-    <div class="helper-line">Describe your hiring or HR requirement in a sentence. We'll find the right expert.</div>
-    <div class="chip-row">
-      <button type="button" class="example-chip" data-query="Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore">Recruit a backend engineer</button>
-      <button type="button" class="example-chip" data-query="Need someone to set up payroll for 25 employees">Set up payroll</button>
-      <button type="button" class="example-chip" data-query="Looking for a fractional HRBP for a Series A startup">Hire a fractional HRBP</button>
-      <button type="button" class="example-chip" data-query="Need a POSH compliance audit for our office in Mumbai">Conduct a POSH audit</button>
-    </div>
+    <div class="console-stage" id="consoleStage">
 
-    <div class="demo-stage">
-      <div class="status-zone">
-        <div class="status-line" id="statusSearching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Searching...</div>
-        <div class="parse-grid" id="parseGrid"></div>
-        <div class="status-line" id="statusMatching"><span class="spinner-dot"></span><span class="spinner-dot"></span><span class="spinner-dot"></span>&nbsp;Matching experts...</div>
-        <div class="found-line" id="foundLine">
-          <div class="found-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#A8E600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span id="foundText"></span>
+      <div class="stage-idle active" id="stageIdle">
+        <div class="helper-line">Describe your hiring or HR requirement in a sentence. We'll find the right expert.</div>
+        <div class="chip-row">
+          <button type="button" class="example-chip" data-query="Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore">Recruit a backend engineer</button>
+          <button type="button" class="example-chip" data-query="Need someone to set up payroll for 25 employees">Set up payroll</button>
+          <button type="button" class="example-chip" data-query="Looking for a fractional HRBP for a Series A startup">Hire a fractional HRBP</button>
+          <button type="button" class="example-chip" data-query="Need a POSH compliance audit for our office in Mumbai">Conduct a POSH audit</button>
         </div>
       </div>
 
-      <div class="results" id="resultsGrid"></div>
+      <div class="stage-processing" id="stageProcessing">
+        <div class="process-steps" id="processSteps"></div>
+      </div>
+
+      <div class="stage-results" id="stageResults">
+        <div class="match-complete-line" id="matchCompleteLine">
+          <div class="found-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#00DDF0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>
+            <div class="match-complete-title">AI Match Complete</div>
+            <div class="match-complete-sub" id="foundText"></div>
+          </div>
+        </div>
+        <div class="results" id="resultsGrid"></div>
+      </div>
+
     </div>
   </div>
-  </div>
+
+  <div class="hero-actions">
+    <a href="/post-requirement.html" class="btn-primary">Post a Requirement →</a>
   </div>
 
 </section>
@@ -997,7 +1012,7 @@ footer {
   <h2 class="section-title">Recently matched requirements.</h2>
   <div class="activity-feed">
     <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#BEFF00,#7EC800);color:#0A0A0F">SK</div>
+      <div class="ac-avatar" style="background:linear-gradient(135deg,#A8E600,#7EC800);color:#0A0A0F">SK</div>
       <div class="ac-info"><div class="ac-name">Sejal Khandelwal</div><div class="ac-detail">Matched for E-commerce role</div></div>
       <div class="ac-time">2m ago</div>
       <div class="ac-dot"></div>
@@ -1140,9 +1155,9 @@ footer {
       ],
       count: 24,
       experts: [
-        { name: "Priya Sharma", role: "Recruiter · Technical Hiring", rating: "4.9", trust: "Placed 40+ engineering hires", tags: ["D2C","Node.js"], avail: "Available Today", initials: "PS", color: "#6366F1" },
-        { name: "Karan Mehta", role: "Recruiter · Backend & Infra", rating: "4.8", trust: "94 startup hires", tags: ["AWS","Microservices"], avail: "Available Today", initials: "KM", color: "#00DDF0" },
-        { name: "Sonal Iyer", role: "Recruiter · D2C Hiring", rating: "4.9", trust: "Worked with 14 startups", tags: ["Backend Hiring"], avail: "This Week", initials: "SI", color: "#F97316" }
+        { name: "Priya Sharma", role: "Recruiter · Technical Hiring", rating: "4.9", trust: "Placed 40+ engineering hires", tags: ["D2C","Node.js"], avail: "Available Today", initials: "PS", color: "#6C8CFF" },
+        { name: "Karan Mehta", role: "Recruiter · Backend & Infra", rating: "4.8", trust: "94 startup hires", tags: ["AWS","Microservices"], avail: "Available Today", initials: "KM", color: "#00C4D6" },
+        { name: "Sonal Iyer", role: "Recruiter · D2C Hiring", rating: "4.9", trust: "Worked with 14 startups", tags: ["Backend Hiring"], avail: "This Week", initials: "SI", color: "#4A9B94" }
       ]
     },
     {
@@ -1155,9 +1170,9 @@ footer {
       ],
       count: 18,
       experts: [
-        { name: "Rahul Verma", role: "Payroll Expert", rating: "5.0", trust: "200+ payrolls processed", tags: ["PF / ESIC"], avail: "Available Today", initials: "RV", color: "#6366F1" },
-        { name: "Deepa Nair", role: "Payroll & Compliance", rating: "4.9", trust: "Worked with 30+ startups", tags: ["PF / ESIC Specialist"], avail: "Available Today", initials: "DN", color: "#00DDF0" },
-        { name: "Vikram Rao", role: "Payroll Specialist", rating: "4.7", trust: "60+ payrolls processed", tags: ["Startup Payroll"], avail: "This Week", initials: "VR", color: "#F97316" }
+        { name: "Rahul Verma", role: "Payroll Expert", rating: "5.0", trust: "200+ payrolls processed", tags: ["PF / ESIC"], avail: "Available Today", initials: "RV", color: "#6C8CFF" },
+        { name: "Deepa Nair", role: "Payroll & Compliance", rating: "4.9", trust: "Worked with 30+ startups", tags: ["PF / ESIC Specialist"], avail: "Available Today", initials: "DN", color: "#00C4D6" },
+        { name: "Vikram Rao", role: "Payroll Specialist", rating: "4.7", trust: "60+ payrolls processed", tags: ["Startup Payroll"], avail: "This Week", initials: "VR", color: "#4A9B94" }
       ]
     },
     {
@@ -1170,9 +1185,9 @@ footer {
       ],
       count: 12,
       experts: [
-        { name: "Anjali Kapoor", role: "HRBP", rating: "4.8", trust: "Worked with 9 startups", tags: ["Startup Specialist"], avail: "Available Today", initials: "AK", color: "#6366F1" },
-        { name: "Suhani Mishra", role: "HR Compliance · HRBP", rating: "4.9", trust: "40+ policy audits", tags: ["1–2 Yrs Exp"], avail: "This Week", initials: "SM", color: "#00DDF0" },
-        { name: "Ravi Prakash", role: "HR Generalist", rating: "4.7", trust: "Worked with 6 startups", tags: ["0–1 Yrs Exp"], avail: "Available Today", initials: "RP", color: "#F97316" }
+        { name: "Anjali Kapoor", role: "HRBP", rating: "4.8", trust: "Worked with 9 startups", tags: ["Startup Specialist"], avail: "Available Today", initials: "AK", color: "#6C8CFF" },
+        { name: "Suhani Mishra", role: "HR Compliance · HRBP", rating: "4.9", trust: "40+ policy audits", tags: ["1–2 Yrs Exp"], avail: "This Week", initials: "SM", color: "#00C4D6" },
+        { name: "Ravi Prakash", role: "HR Generalist", rating: "4.7", trust: "Worked with 6 startups", tags: ["0–1 Yrs Exp"], avail: "Available Today", initials: "RP", color: "#4A9B94" }
       ]
     },
     {
@@ -1185,9 +1200,9 @@ footer {
       ],
       count: 9,
       experts: [
-        { name: "Ritika Malhotra", role: "Compliance Consultant", rating: "4.9", trust: "50+ POSH audits", tags: ["Labour Law","Policy Drafting"], avail: "Available Today", initials: "RM", color: "#6366F1" },
-        { name: "Arjun Nair", role: "HR Compliance", rating: "4.7", trust: "Worked with 20+ companies", tags: ["Statutory Compliance"], avail: "This Week", initials: "AN", color: "#00DDF0" },
-        { name: "Meera Iyer", role: "Compliance & Audit", rating: "4.8", trust: "35+ policy audits", tags: ["POSH Certified"], avail: "Available Today", initials: "MI", color: "#F97316" }
+        { name: "Ritika Malhotra", role: "Compliance Consultant", rating: "4.9", trust: "50+ POSH audits", tags: ["Labour Law","Policy Drafting"], avail: "Available Today", initials: "RM", color: "#6C8CFF" },
+        { name: "Arjun Nair", role: "HR Compliance", rating: "4.7", trust: "Worked with 20+ companies", tags: ["Statutory Compliance"], avail: "This Week", initials: "AN", color: "#00C4D6" },
+        { name: "Meera Iyer", role: "Compliance & Audit", rating: "4.8", trust: "35+ policy audits", tags: ["POSH Certified"], avail: "Available Today", initials: "MI", color: "#4A9B94" }
       ]
     }
   ];
@@ -1198,10 +1213,10 @@ footer {
   const searchTextWrap = document.getElementById('searchTextWrap');
   const searchBar = document.getElementById('searchBar');
   const searchBtn = document.querySelector('.search-btn');
-  const statusSearching = document.getElementById('statusSearching');
-  const parseGrid = document.getElementById('parseGrid');
-  const statusMatching = document.getElementById('statusMatching');
-  const foundLine = document.getElementById('foundLine');
+  const stageIdle = document.getElementById('stageIdle');
+  const stageProcessing = document.getElementById('stageProcessing');
+  const stageResults = document.getElementById('stageResults');
+  const processSteps = document.getElementById('processSteps');
   const foundText = document.getElementById('foundText');
   const resultsGrid = document.getElementById('resultsGrid');
   if (!searchInput || !fakeCaret || !mirrorDiv || !searchTextWrap || !searchBar) return;
@@ -1247,11 +1262,15 @@ footer {
     return cycles[0];
   }
 
+  function showStage(stage){
+    stageIdle.classList.remove('active');
+    stageProcessing.classList.remove('active');
+    stageResults.classList.remove('active');
+    stage.classList.add('active');
+  }
+
   function resetResultsZone(){
-    statusSearching.classList.remove('show');
-    statusMatching.classList.remove('show');
-    foundLine.classList.remove('show');
-    parseGrid.innerHTML = '';
+    processSteps.innerHTML = '';
     resultsGrid.innerHTML = '';
   }
 
@@ -1262,34 +1281,42 @@ footer {
     resetResultsZone();
     searchBar.classList.add('active');
 
-    statusSearching.classList.add('show');
-    await sleep(2100);
-    if (myToken !== searchToken) return;
-    statusSearching.classList.remove('show');
+    // STAGE: PROCESSING — sequential steps, each replacing the sense that
+    // the previous one is still 'in progress'. Only the final step shows a
+    // pending spinner; everything before it is already confirmed done.
+    showStage(stageProcessing);
 
-    cycle.parse.forEach(p => {
-      const el = document.createElement('div');
-      el.className = 'parse-item';
-      el.innerHTML = `<div class="parse-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4.2L3 6.2L7 2" stroke="#00DDF0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>${p.label}: <b>${p.value}</b>`;
-      parseGrid.appendChild(el);
-    });
-    const items = parseGrid.querySelectorAll('.parse-item');
-    for (const item of items){
+    const steps = [
+      { text: 'Requirement understood', pending: false },
+      ...cycle.parse.map(p => ({ text: `${p.label}: <b>${p.value}</b>`, pending: false })),
+      { text: 'Finding best-fit experts…', pending: true },
+    ];
+
+    for (const step of steps){
       if (myToken !== searchToken) return;
-      item.classList.add('show'); await sleep(140);
+      processSteps.innerHTML = ''; // replace, don't accumulate — only one step visible at a time
+      const el = document.createElement('div');
+      el.className = 'process-step';
+      const icon = step.pending
+        ? `<div class="process-step-icon pending"><span class="spinner-dot-sm"></span></div>`
+        : `<div class="process-step-icon done"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4.2L3 6.2L7 2" stroke="#00DDF0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+      el.innerHTML = `${icon}${step.text}`;
+      processSteps.appendChild(el);
+      requestAnimationFrame(() => el.classList.add('show'));
+      await sleep(step.pending ? 1400 : 900);
+      if (myToken !== searchToken) return;
     }
-    await sleep(1300);
-    if (myToken !== searchToken) return;
 
-    statusMatching.classList.add('show');
-    await sleep(1500);
+    // STAGE: RESULTS — the processing checklist is done its job (building
+    // confidence); only the outcome remains on screen now.
     if (myToken !== searchToken) return;
-    statusMatching.classList.remove('show');
+    foundText.textContent = `${cycle.experts.length} HR partners matched to your requirement`;
+    showStage(stageResults);
 
-    foundText.textContent = `These are your ${cycle.experts.length} best-fit matches`;
-    foundLine.classList.add('show');
-    await sleep(400);
-    if (myToken !== searchToken) return;
+    // The submitted requirement STAYS in the box — it's a persistent
+    // reference ("my requirement → AI match → these results"), not
+    // something that resets the instant results land. It only clears later
+    // when the whole cycle resets back to a genuinely empty idle state.
 
     cycle.experts.forEach(e => {
       const card = document.createElement('div');
@@ -1361,13 +1388,26 @@ footer {
     while (true){
       if (userTookOver) return;
       const cycle = cycles[idx % cycles.length];
+
+      // IDLE — a genuinely quiet, empty state held long enough that a new
+      // visitor reads this as a real, interactive search box rather than an
+      // animation that's just playing on the page.
+      showStage(stageIdle);
+      searchInput.value = '';
+      autoGrow();
+      searchBar.classList.remove('active');
+      fakeCaret.style.display = '';
+      positionFakeCaret();
+      await sleep(17000);
+      if (userTookOver) return;
+
       fakeCaret.style.display = '';
       searchBar.classList.add('active');
       const perChar = Math.max(20, Math.min(38, 1700 / cycle.query.length));
       const finishedTyping = await typeString(cycle.query, perChar);
       if (!finishedTyping || userTookOver) return;
       fakeCaret.style.display = 'none';
-      await sleep(700); // brief pause, like someone glancing over what they typed
+      await sleep(650); // brief pause, like someone glancing over what they typed
       if (userTookOver) return;
       if (searchBtn){
         searchBtn.classList.add('autoclick');
@@ -1376,22 +1416,9 @@ footer {
       }
       await sleep(180); // small gap between the 'click' and the response starting
       if (userTookOver) return;
-      await triggerSearch(cycle.query);
+      await triggerSearch(cycle.query); // moves through processing → results; query stays visible throughout
       if (userTookOver) return;
-      await sleep(2000); // hold the completed query + results together briefly
-      if (userTookOver) return;
-      // Clear just the search bar text here — NOT the results. The results
-      // from this cycle stay fully visible while the box quietly resets and
-      // sits clean until the next example starts typing. They only actually
-      // clear later, right as the next search visually begins (triggerSearch
-      // already does that itself, at its own start) — so the box never sits
-      // empty.
-      searchInput.value = '';
-      autoGrow();
-      fakeCaret.style.display = '';
-      positionFakeCaret();
-      await sleep(9000); // clean box + results stay visible together — next
-                          // example starts typing ~11s after results first appeared
+      await sleep(7500); // hold on the results — long enough to actually read them
       if (userTookOver) return;
       idx++;
     }
@@ -1436,7 +1463,7 @@ if (statsBar) statsObs.observe(statsBar);
 
 // ── ROTATING ACTIVITY CARDS ──
 const activities = [
-  {initials:'SK', bg:'linear-gradient(135deg,#BEFF00,#7EC800)', color:'#0A0A0F', name:'Sejal Khandelwal', detail:'Matched for E-commerce role', time:'2m ago', live:true},
+  {initials:'SK', bg:'linear-gradient(135deg,#A8E600,#7EC800)', color:'#0A0A0F', name:'Sejal Khandelwal', detail:'Matched for E-commerce role', time:'2m ago', live:true},
   {initials:'RB', bg:'linear-gradient(135deg,#A855F7,#7C3AED)', color:'#fff', name:'Rohit Bhardwaj', detail:'Shortlisted for IT startup', time:'11m ago', live:true},
   {initials:'SM', bg:'linear-gradient(135deg,#14B8A6,#0D9488)', color:'#fff', name:'Suhani Mishra', detail:'Compliance audit — CEAT', time:'38m ago', live:false},
   {initials:'AB', bg:'linear-gradient(135deg,#F97316,#EA580C)', color:'#fff', name:'Ankita Biswas', detail:'Joined — D2C brand', time:'1h ago', live:false},
@@ -1506,10 +1533,13 @@ document.querySelectorAll('.step-card').forEach(card => {
     const tags = (p.skills || []).map(s => `<span class="ptag">${s}</span>`).join('');
     const roleLine = [p.role, p.experience].filter(Boolean).join(' · ');
     const badge = p.availability || p.workType; // live data has 'availability'; static dataset has 'workType'
+    const avatar = p.photo
+      ? `<img class="p-avatar p-avatar-photo" src="${p.photo}" alt="${p.name}" loading="lazy"/>`
+      : `<div class="p-avatar" style="background:${p.color};color:#0A0A0F">${p.initials}</div>`;
     return `
       <div class="profile-card reveal visible">
         <div class="p-top">
-          <div class="p-avatar" style="background:${p.color};color:#0A0A0F">${p.initials}</div>
+          ${avatar}
           ${badge ? `<div class="avail-now">${badge}</div>` : ''}
         </div>
         <div class="p-name">${p.name}</div>

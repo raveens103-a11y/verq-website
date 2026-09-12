@@ -52,6 +52,8 @@
   transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16,1,0.3,1); transform-origin: left center;
 }
 .req-form-col .form-field.focused label.form-label { color: var(--cyan); transform: translateY(-2px); }
+.form-optional { color: var(--muted); font-weight: 400; text-transform: none; font-size: 11px; }
+.form-hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
 .req-form-col .form-input:focus, .req-form-col .form-select:focus, .req-form-col .form-textarea:focus {
   border-color: rgba(0,221,240,0.45); box-shadow: 0 0 0 3px rgba(0,221,240,0.1);
 }
@@ -92,12 +94,12 @@
 <body>
 
 <!-- Netlify form detection (hidden) -->
-<form name="hr-partner" netlify netlify-honeypot="bot-field" hidden>
+<form name="hr-partner" netlify netlify-honeypot="bot-field" hidden enctype="multipart/form-data">
   <input name="name"/><input name="city"/><input name="email"/>
   <input name="phone"/><input name="linkedin"/><input name="experience"/>
   <input name="role"/><input name="industries"/><input name="skills"/>
   <input name="availability"/><input name="earnings"/><textarea name="notes"></textarea>
-  <input name="consent"/>
+  <input type="file" name="photo"/><input name="consent"/><input name="photo-consent"/>
 </form>
 
 <nav>
@@ -141,7 +143,7 @@
   </aside>
 
   <div class="req-form-col">
-    <form id="partnerForm" name="hr-partner" method="POST" action="/success-partner.html" data-netlify="true">
+    <form id="partnerForm" name="hr-partner" method="POST" action="/success-partner.html" data-netlify="true" enctype="multipart/form-data">
       <input type="hidden" name="form-name" value="hr-partner"/>
       <p hidden><input name="bot-field"/></p>
 
@@ -153,6 +155,7 @@
           <div class="form-field" data-field><label class="form-label">Email <span class="req">*</span></label><input class="form-input" type="email" name="email" placeholder="priya@email.com" required/></div>
           <div class="form-field" data-field><label class="form-label">Phone <span class="req">*</span></label><input class="form-input" type="tel" name="phone" placeholder="+91 98765 43210" required/></div>
           <div class="form-field full" data-field><label class="form-label">LinkedIn Profile URL</label><input class="form-input" type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile"/></div>
+          <div class="form-field full" data-field><label class="form-label">Profile Photo <span class="form-optional">(optional)</span></label><input class="form-input" type="file" name="photo" accept="image/png,image/jpeg,image/webp"/><div class="form-hint">A clear headshot. If you'd rather not share one, we'll show your initials instead — either way, we never show your photo without the consent below.</div></div>
         </div>
       </div>
 
@@ -218,6 +221,11 @@
           <input type="checkbox" name="consent" value="yes"/>
           <span class="consent-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#0A0A0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="consent-text">I agree to have my name, role, experience, and skills featured publicly on the verQ website if my profile is shown to startups. My email, phone, and other contact details will never be shown publicly.</span>
+        </label>
+        <label class="consent-row" style="margin-top:14px;">
+          <input type="checkbox" name="photo-consent" value="yes"/>
+          <span class="consent-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#0A0A0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="consent-text">If I've uploaded a photo above, I separately agree that verQ may display it publicly alongside my profile. Without this checked, my profile will show my initials instead, even if a photo was uploaded.</span>
         </label>
       </div>
 

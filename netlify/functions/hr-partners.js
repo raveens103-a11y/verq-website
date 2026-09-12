@@ -32,9 +32,26 @@ function parseSkillsField(skillsRaw) {
   return [];
 }
 
+// Netlify includes a URL to any uploaded file directly in the submission's
+// data for that field. We can't fully verify the exact shape without a real
+// test submission, so this is defensive: if it's not a plain https URL
+// string, we just treat it as no photo — same safe fallback as if nothing
+// was uploaded at all, never a broken image or a crash.
+function extractPhotoUrl(d) {
+  const raw = d.photo;
+  if (typeof raw === 'string' && /^https:\/\//.test(raw.trim())) return raw.trim();
+  return null;
+}
+
+function hasPhotoConsent(d) {
+  const c = d['photo-consent'];
+  return c === 'yes' || c === 'on' || c === true;
+}
+
 function toPublicProfile(sub) {
   const d = sub.data || {};
   const skills = parseSkillsField(d.skills);
+  const photo = hasPhotoConsent(d) ? extractPhotoUrl(d) : null;
 
   return {
     name: (d.name || '').trim(),
@@ -43,6 +60,7 @@ function toPublicProfile(sub) {
     role: (d.role || '').trim(),
     skills: skills.slice(0, 3),
     availability: (d.availability || '').trim(),
+    photo,
     submittedAt: sub.created_at || null,
   };
 }
