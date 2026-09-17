@@ -185,14 +185,28 @@ exports.handler = async function (event) {
       return { statusCode: 200, headers: corsHeaders(origin), body: JSON.stringify(empty) };
     }
 
-    // 2. Fetch submissions for that form.
-    const subsRes = await fetch(`https://api.netlify.com/api/v1/forms/${form.id}/submissions`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log(`[hr-partners] submissions lookup status: ${subsRes.status}`);
-    if (!subsRes.ok) throw new Error(`submissions lookup failed: ${subsRes.status} ${await subsRes.text()}`);
-    const submissions = await subsRes.json();
-    console.log(`[hr-partners] total submissions found: ${submissions.length}`);
+    // 2. Fetch submissions for that form. Netlify paginates at 100 items per
+    //    page by default and we were never requesting a specific page or
+    //    sort order — meaning if a form accumulates more than 100 total
+    //    submissions, whichever ones land outside whatever Netlify's default
+    //    'page 1' happens to be are silently never even fetched, regardless
+    //    of consent or verification status. Fetch multiple pages (capped, so
+    //    this can't grow unbounded) and merge them before filtering, so a
+    //    real submission can't be missed just because of where it falls in
+    //    Netlify's own default ordering.
+    const MAX_PAGES = 5; // 5 x 100 = up to 500 submissions considered
+    let submissions = [];
+    for (let page = 1; page <= MAX_PAGES; page++) {
+      const subsRes = await fetch(`https://api.netlify.com/api/v1/forms/${form.id}/submissions?per_page=100&page=${page}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(`[hr-partners] submissions lookup page ${page} status: ${subsRes.status}`);
+      if (!subsRes.ok) throw new Error(`submissions lookup failed: ${subsRes.status} ${await subsRes.text()}`);
+      const pageData = await subsRes.json();
+      submissions = submissions.concat(pageData);
+      if (pageData.length < 100) break; // fewer than a full page — we've reached the end
+    }
+    console.log(`[hr-partners] total submissions found across all pages: ${submissions.length}`);
 
     // 3. Only include submissions where the person explicitly consented to
     //    being publicly featured. Everything else is silently excluded.
@@ -201,9 +215,20 @@ exports.handler = async function (event) {
       return c === 'yes' || c === 'on' || c === true;
     });
     console.log(`[hr-partners] submissions with consent=yes: ${consented.length}`);
+    consented.forEach(s => {
+      const d = s.data || {};
+      console.log(`[hr-partners]   consented submission: name="${d.name || '(missing)'}" created_at=${s.created_at} has_photo_field=${!!d.photo} photo_consent="${d['photo-consent'] || '(missing)'}"`);
+    });
 
     // 4. Most recent first, capped, mapped to safe public fields only.
-    consented.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    //    Guard against a missing/malformed created_at (treat it as very old
+    //    rather than letting NaN comparisons scatter it unpredictably),
+    //    so a real submission's sort position is always sensible.
+    consented.sort((a, b) => {
+      const at = new Date(a.created_at).getTime() || 0;
+      const bt = new Date(b.created_at).getTime() || 0;
+      return bt - at;
+    });
     const profiles = consented.slice(0, MAX_RESULTS).map(sub => {
       const p = toPublicProfile(sub);
       return { ...p, initials: initialsOf(p.name || '??'), color: colorFor(p.name || 'x') };

@@ -3,20 +3,21 @@
 <head> 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
+<meta name="description" content="verQ is India's on-demand HR marketplace — verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
 <title>verQ | The HR Marketplace</title>
 <meta property="og:type" content="website"/>
+<link rel="canonical" href="https://www.verq.in/"/>
 <meta property="og:url" content="https://www.verq.in/"/>
 <meta property="og:site_name" content="verQ"/>
 <meta property="og:title" content="verQ | The HR Marketplace"/>
-<meta property="og:description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
-<meta property="og:image" content="https://www.verq.in/og-image.png"/>
+<meta property="og:description" content="verQ is India's on-demand HR marketplace — verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
+<meta property="og:image" content="https://www.verq.in/og-image.png?v=2"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="verQ | The HR Marketplace"/>
-<meta name="twitter:description" content="verQ is India's on-demand HR marketplace — 68+ verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
-<meta name="twitter:image" content="https://www.verq.in/og-image.png"/>
+<meta name="twitter:description" content="verQ is India's on-demand HR marketplace — verified HR professionals, matched in 48 hours. Flat fee, not % of CTC. No mandate required."/>
+<meta name="twitter:image" content="https://www.verq.in/og-image.png?v=2"/>
 <link rel="icon" type="image/png" href="/favicon.png?v=3">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -593,10 +594,6 @@ footer {
 .view-all { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
 .view-all:hover { opacity: 0.75; }
 .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(190px, auto); gap: var(--sp-card); }
-.profile-card:first-child { grid-column: span 2; grid-row: span 2; }
-.profile-card:first-child .p-avatar { width: 60px; height: 60px; font-size: 20px; }
-.profile-card:first-child .p-name { font-size: 20px; }
-.profile-card:first-child .p-role { font-size: 13px; }
 /* Shorter laptop screens (e.g. 1366x768) — tighten further so the console
    comes as close as possible to fitting in one view without scrolling,
    without touching the more generous spacing on taller screens. */
@@ -609,7 +606,7 @@ footer {
   .search-bar { min-height: 76px; }
 }
 
-@media (max-width: 1024px) { .profile-card:first-child { grid-row: span 1; } }
+@media (max-width: 1024px) { }
 .partners-empty { grid-column: 1 / -1; text-align: center; padding: 56px 24px; border: 1px dashed var(--border); border-radius: 14px; }
 .partners-empty-icon { font-size: 28px; margin-bottom: 12px; }
 .partners-empty-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
@@ -738,7 +735,7 @@ footer {
 /* RESPONSIVE */
 @media (max-width: 1024px) { .profiles-grid { grid-template-columns: repeat(2, 1fr); } .cats-grid { grid-template-columns: repeat(2, 1fr); } .pricing-grid { grid-template-columns: repeat(2, 1fr); } .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } .steps-grid::before { display: none; } }
 @media (max-width: 768px) { .split-section { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .profile-card:first-child { grid-column: span 1; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } }
+@media (max-width: 520px) { .profiles-grid { grid-template-columns: 1fr; } .cats-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .steps-grid { grid-template-columns: 1fr; } .split-lime, .split-dark-card { padding: 32px 24px; } }
 
 /* CANVAS BACKGROUND */
 
@@ -1448,18 +1445,53 @@ function animateCounter(el, target, suffix) {
 const statsObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      const counters = [
-        {el: document.querySelector('.stat-item:nth-child(1) .stat-num'), val: 68, suffix: '+'},
+      const expertsCounterEl = document.querySelector('.stat-item:nth-child(1) .stat-num');
+      const otherCounters = [
         {el: document.querySelector('.stat-item:nth-child(2) .stat-num'), val: 32, suffix: ''},
         {el: document.querySelector('.stat-item:nth-child(3) .stat-num'), val: 18, suffix: ' min'},
       ];
-      counters.forEach(c => { if (c.el) animateCounter(c.el, c.val, c.suffix); });
+      otherCounters.forEach(c => { if (c.el) animateCounter(c.el, c.val, c.suffix); });
+
+      // Verified-experts count is real, merged live+static data — not a
+      // hardcoded number — so it can never silently drift out of sync with
+      // what the Partners page actually shows.
+      if (expertsCounterEl) {
+        if (window.VerqPartnersShared) {
+          window.VerqPartnersShared.loadAllPartners()
+            .then(all => animateCounter(expertsCounterEl, all.length, '+'))
+            .catch(() => animateCounter(expertsCounterEl, (window.VERQ_PARTNERS || []).length, '+'));
+        } else {
+          animateCounter(expertsCounterEl, (window.VERQ_PARTNERS || []).length, '+');
+        }
+      }
       statsObs.disconnect();
     }
   });
 }, { threshold: 0.5 });
 const statsBar = document.querySelector('.stats-bar');
 if (statsBar) statsObs.observe(statsBar);
+
+// Category card counts (Recruitment, Payroll & Compliance, HR Operations,
+// Training & L&D) are also real, computed from the same merged live+static
+// data — not hardcoded — so they can't silently drift out of sync with the
+// Partners page either, as new consented partners join over time.
+if (window.VerqPartnersShared) {
+  window.VerqPartnersShared.loadAllPartners().then(all => {
+    function countFor(...targetCats) {
+      return all.filter(p => (p.categories || []).some(c => targetCats.includes(c))).length;
+    }
+    const catCounts = {
+      '.cc1 .cat-count': countFor('Recruitment') + ' professionals',
+      '.cc2 .cat-count': countFor('Payroll', 'Compliance') + ' professionals',
+      '.cc3 .cat-count': countFor('HRBP') + ' professionals',
+      '.cc4 .cat-count': countFor('Training') + ' professionals',
+    };
+    Object.keys(catCounts).forEach(sel => {
+      const el = document.querySelector(sel);
+      if (el) el.textContent = catCounts[sel];
+    });
+  }).catch(() => { /* leave the existing static counts in place if this fails */ });
+}
 
 // ── ROTATING ACTIVITY CARDS ──
 const activities = [
@@ -1472,6 +1504,7 @@ const activities = [
 ];
 
 let activityIndex = 0;
+let slotIndex = 0;
 setInterval(() => {
   const feed = document.querySelector('.activity-feed');
   if (!feed) return;
@@ -1479,19 +1512,22 @@ setInterval(() => {
   if (cards.length === 0) return;
   activityIndex = (activityIndex + 1) % activities.length;
   const a = activities[activityIndex];
-  const oldCard = cards[0];
-  const newCard = document.createElement('div');
-  newCard.className = 'activity-card';
-  newCard.style.opacity = '0';
-  newCard.style.transform = 'translateY(-10px)';
-  newCard.innerHTML = `
-    <div class="ac-avatar" style="background:${a.bg};color:${a.color}">${a.initials}</div>
-    <div class="ac-info"><div class="ac-name">${a.name}</div><div class="ac-detail">${a.detail}</div></div>
-    <div class="ac-time">${a.time}</div>
-    <div class="ac-dot" style="${a.live ? '' : 'background:var(--cyan);box-shadow:0 0 6px var(--cyan)'}"></div>`;
-  feed.insertBefore(newCard, feed.firstChild);
-  setTimeout(() => { newCard.style.transition = 'all 0.4s ease'; newCard.style.opacity = '1'; newCard.style.transform = 'translateY(0)'; }, 50);
-  setTimeout(() => { oldCard.style.transition = 'all 0.4s ease'; oldCard.style.opacity = '0'; oldCard.style.transform = 'translateY(10px)'; setTimeout(() => oldCard.remove(), 400); }, 200);
+  // Update one existing card's content in place, rather than inserting a
+  // new node and removing an old one — the feed always has exactly this
+  // many cards, never briefly more, so the grid around it never reflows
+  // and the rest of the page never shifts.
+  const card = cards[slotIndex % cards.length];
+  slotIndex++;
+  card.style.transition = 'opacity 0.3s ease';
+  card.style.opacity = '0';
+  setTimeout(() => {
+    card.innerHTML = `
+      <div class="ac-avatar" style="background:${a.bg};color:${a.color}">${a.initials}</div>
+      <div class="ac-info"><div class="ac-name">${a.name}</div><div class="ac-detail">${a.detail}</div></div>
+      <div class="ac-time">${a.time}</div>
+      <div class="ac-dot" style="${a.live ? '' : 'background:var(--cyan);box-shadow:0 0 6px var(--cyan)'}"></div>`;
+    card.style.opacity = '1';
+  }, 300);
 }, 3000);
 
 // ── SCROLL REVEAL ──
@@ -1517,6 +1553,7 @@ document.querySelectorAll('.step-card').forEach(card => {
 </script>
 
 <script src="js/partners-data.js"></script>
+<script src="js/partners-shared.js"></script>
 <script>
 // ── REAL HR PARTNERS ──
 // Tries live, consented Netlify Forms submissions first. If that returns
