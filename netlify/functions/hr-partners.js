@@ -69,19 +69,22 @@ function unwrapScalar(raw) {
   return raw;
 }
 
-// Netlify usually includes a URL to any uploaded file directly in the
-// submission's data for that field (d.photo). But Netlify's Forms API can
-// also carry uploaded files in a separate "files" array on the submission
-// itself — sibling to "data", not inside it — with entries shaped roughly
-// like { filename, url } or { id, url }. We accept a photo URL from either
-// location rather than assuming only one, since we can't fully verify the
-// exact shape without live production data. Defensive throughout: anything
-// that isn't a plain https URL string once found is treated as no photo —
-// same safe fallback as if nothing was uploaded at all, never a broken
-// image or a crash.
+// Confirmed against a real production submission: Netlify puts an uploaded
+// file's info directly on data.photo, but NOT as a plain URL string — it's
+// an object shaped like:
+//   { filename: "...jpg", type: "file", size: 172423, url: "https://..." }
+// The real download URL is that object's .url property. Still defensive
+// beyond that known shape (a bare string, or a files array elsewhere on the
+// submission) in case Netlify's exact packaging varies by submission path.
 function extractPhotoUrl(sub) {
   const d = sub.data || {};
-  const raw = unwrapScalar(d.photo);
+  let raw = unwrapScalar(d.photo);
+
+  // The real, confirmed shape: an object with a .url field.
+  if (raw && typeof raw === 'object' && typeof raw.url === 'string') {
+    raw = raw.url;
+  }
+
   if (typeof raw === 'string' && /^https:\/\//.test(raw.trim())) return raw.trim();
 
   // Fallback: look for the file in a sibling "files" array on the
