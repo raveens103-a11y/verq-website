@@ -59,20 +59,32 @@ function parseSkillsField(skillsRaw) {
   return [];
 }
 
+// A single scalar field (a checkbox or a file upload) can still arrive
+// wrapped in a 1-item array — the same Netlify serialization quirk we found
+// on the multi-checkbox "skills" field. Unwrap that case before checking the
+// real value, rather than requiring an exact-shape match that silently fails
+// the moment Netlify packages a value slightly differently than expected.
+function unwrapScalar(raw) {
+  if (Array.isArray(raw)) return raw.length ? raw[0] : undefined;
+  return raw;
+}
+
 // Netlify includes a URL to any uploaded file directly in the submission's
-// data for that field. We can't fully verify the exact shape without a real
-// test submission, so this is defensive: if it's not a plain https URL
-// string, we just treat it as no photo — same safe fallback as if nothing
-// was uploaded at all, never a broken image or a crash.
+// data for that field. Defensive: if it's not a plain https URL string once
+// unwrapped and trimmed, we treat it as no photo — same safe fallback as if
+// nothing was uploaded at all, never a broken image or a crash.
 function extractPhotoUrl(d) {
-  const raw = d.photo;
+  const raw = unwrapScalar(d.photo);
   if (typeof raw === 'string' && /^https:\/\//.test(raw.trim())) return raw.trim();
   return null;
 }
 
 function hasPhotoConsent(d) {
-  const c = d['photo-consent'];
-  return c === 'yes' || c === 'on' || c === true;
+  const raw = unwrapScalar(d['photo-consent']);
+  if (typeof raw === 'boolean') return raw === true;
+  if (typeof raw !== 'string') return false;
+  const c = raw.trim().toLowerCase();
+  return c === 'yes' || c === 'on' || c === 'true';
 }
 
 function toPublicProfile(sub) {
@@ -238,13 +250,22 @@ exports.handler = async function (event) {
     // 3. Only include submissions where the person explicitly consented to
     //    being publicly featured. Everything else is silently excluded.
     const consented = submissions.filter(s => {
-      const c = s.data && s.data.consent;
-      return c === 'yes' || c === 'on' || c === true;
+      const raw = unwrapScalar(s.data && s.data.consent);
+      if (typeof raw === 'boolean') return raw === true;
+      if (typeof raw !== 'string') return false;
+      const c = raw.trim().toLowerCase();
+      return c === 'yes' || c === 'on' || c === 'true';
     });
     console.log(`[hr-partners] submissions with consent=yes: ${consented.length}`);
     consented.forEach(s => {
       const d = s.data || {};
-      console.log(`[hr-partners]   consented submission: name="${d.name || '(missing)'}" created_at=${s.created_at} has_photo_field=${!!d.photo} photo_consent="${d['photo-consent'] || '(missing)'}"`);
+      const resolvedPhoto = extractPhotoUrl(d);
+      const resolvedConsent = hasPhotoConsent(d);
+      console.log(
+        `[hr-partners]   consented submission: name="${d.name || '(missing)'}" created_at=${s.created_at} ` +
+        `raw_photo=${JSON.stringify(d.photo)} raw_photo_consent=${JSON.stringify(d['photo-consent'])} ` +
+        `resolved_photo_consent=${resolvedConsent} resolved_photo_url=${resolvedPhoto || '(none)'}`
+      );
     });
 
     // 4. Most recent first, capped, mapped to safe public fields only.
