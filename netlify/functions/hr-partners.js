@@ -69,13 +69,33 @@ function unwrapScalar(raw) {
   return raw;
 }
 
-// Netlify includes a URL to any uploaded file directly in the submission's
-// data for that field. Defensive: if it's not a plain https URL string once
-// unwrapped and trimmed, we treat it as no photo — same safe fallback as if
-// nothing was uploaded at all, never a broken image or a crash.
-function extractPhotoUrl(d) {
+// Netlify usually includes a URL to any uploaded file directly in the
+// submission's data for that field (d.photo). But Netlify's Forms API can
+// also carry uploaded files in a separate "files" array on the submission
+// itself — sibling to "data", not inside it — with entries shaped roughly
+// like { filename, url } or { id, url }. We accept a photo URL from either
+// location rather than assuming only one, since we can't fully verify the
+// exact shape without live production data. Defensive throughout: anything
+// that isn't a plain https URL string once found is treated as no photo —
+// same safe fallback as if nothing was uploaded at all, never a broken
+// image or a crash.
+function extractPhotoUrl(sub) {
+  const d = sub.data || {};
   const raw = unwrapScalar(d.photo);
   if (typeof raw === 'string' && /^https:\/\//.test(raw.trim())) return raw.trim();
+
+  // Fallback: look for the file in a sibling "files" array on the
+  // submission, matching by field name if present, else just taking the
+  // first file that looks like an image URL.
+  if (Array.isArray(sub.files) && sub.files.length) {
+    const candidate =
+      sub.files.find(f => f && f.field === 'photo' && typeof f.url === 'string') ||
+      sub.files.find(f => f && typeof f.url === 'string' && /^https:\/\//.test(f.url.trim()));
+    if (candidate && /^https:\/\//.test(candidate.url.trim())) {
+      return candidate.url.trim();
+    }
+  }
+
   return null;
 }
 
@@ -90,7 +110,7 @@ function hasPhotoConsent(d) {
 function toPublicProfile(sub) {
   const d = sub.data || {};
   const skills = parseSkillsField(d.skills);
-  const photo = hasPhotoConsent(d) ? extractPhotoUrl(d) : null;
+  const photo = hasPhotoConsent(d) ? extractPhotoUrl(sub) : null;
 
   return {
     name: (d.name || '').trim(),
@@ -259,13 +279,21 @@ exports.handler = async function (event) {
     console.log(`[hr-partners] submissions with consent=yes: ${consented.length}`);
     consented.forEach(s => {
       const d = s.data || {};
-      const resolvedPhoto = extractPhotoUrl(d);
+      const resolvedPhoto = extractPhotoUrl(s);
       const resolvedConsent = hasPhotoConsent(d);
       console.log(
         `[hr-partners]   consented submission: name="${d.name || '(missing)'}" created_at=${s.created_at} ` +
         `raw_photo=${JSON.stringify(d.photo)} raw_photo_consent=${JSON.stringify(d['photo-consent'])} ` +
-        `resolved_photo_consent=${resolvedConsent} resolved_photo_url=${resolvedPhoto || '(none)'}`
+        `resolved_photo_consent=${resolvedConsent} resolved_photo_url=${resolvedPhoto || '(none)'} ` +
+        `data_keys=${JSON.stringify(Object.keys(d))} has_files_array=${Array.isArray(s.files)} files_count=${Array.isArray(s.files) ? s.files.length : 0}`
       );
+      // One-time full dump of the entire raw submission object (not just
+      // .data) for whichever record is missing its photo, so we can see
+      // whether the file lives somewhere else on the submission — e.g. a
+      // separate "files" array — rather than directly in .data as assumed.
+      if (!resolvedPhoto && d.name && d.name.toLowerCase().includes('abhishek')) {
+        console.log(`[hr-partners]   FULL RAW SUBMISSION for "${d.name}": ${JSON.stringify(s)}`);
+      }
     });
 
     // 4. Most recent first, capped, mapped to safe public fields only.
