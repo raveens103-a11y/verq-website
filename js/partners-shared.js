@@ -36,9 +36,30 @@
   // array packed into a single string, rather than a real array. This is a
   // client-side safety net in case that ever slips through unparsed.
   function parseSkillsField(skillsRaw) {
-    if (Array.isArray(skillsRaw)) return skillsRaw.map(s => String(s).trim()).filter(Boolean);
+    // A single item that is itself still a bracketed/quoted string means one
+    // parse pass wasn't enough (seen in practice: Netlify sometimes wraps an
+    // already-stringified array as the lone element of a 1-item array, or
+    // double-encodes it with an extra layer of quotes). Re-run the whole
+    // parser on that item rather than printing it as a literal skill name.
+    if (Array.isArray(skillsRaw)) {
+      if (skillsRaw.length === 1 && typeof skillsRaw[0] === 'string') {
+        const inner = skillsRaw[0].trim();
+        if (inner.startsWith('[') || (inner.startsWith('"') && inner.includes('['))) {
+          return parseSkillsField(skillsRaw[0]);
+        }
+      }
+      return skillsRaw.map(s => String(s).trim()).filter(Boolean);
+    }
     if (typeof skillsRaw === 'string') {
-      const trimmed = skillsRaw.trim();
+      let trimmed = skillsRaw.trim();
+      // Peel off one extra layer of JSON-string quoting if present, e.g.
+      // '"[\"Recruitment\", \"Payroll\"]"' instead of '["Recruitment", "Payroll"]'.
+      if (trimmed.startsWith('"') && trimmed.endsWith('"') && trimmed.length > 1) {
+        try {
+          const unwrapped = JSON.parse(trimmed);
+          if (typeof unwrapped === 'string') trimmed = unwrapped.trim();
+        } catch (e) { /* not a valid quoted string — leave as-is */ }
+      }
       if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
         try {
           const parsed = JSON.parse(trimmed);

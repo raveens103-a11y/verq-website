@@ -156,7 +156,16 @@
           <div class="form-field" data-field><label class="form-label">Email <span class="req">*</span></label><input class="form-input" type="email" name="email" placeholder="priya@email.com" required/></div>
           <div class="form-field" data-field><label class="form-label">Phone <span class="req">*</span></label><input class="form-input" type="tel" name="phone" placeholder="+91 98765 43210" required/></div>
           <div class="form-field full" data-field><label class="form-label">LinkedIn Profile URL</label><input class="form-input" type="url" name="linkedin" placeholder="https://linkedin.com/in/yourprofile"/></div>
-          <div class="form-field full" data-field><label class="form-label">Profile Photo <span class="form-optional">(optional)</span></label><input class="form-input" type="file" name="photo" accept="image/png,image/jpeg,image/webp"/><div class="form-hint">A clear headshot. If you'd rather not share one, we'll show your initials instead — either way, we never show your photo without the consent below.</div></div>
+          <div class="form-field full" data-field>
+            <label class="form-label">Profile Photo <span class="req">*</span></label>
+            <input class="form-input" type="file" name="photo" id="photoInput" accept="image/png,image/jpeg,image/webp" required/>
+            <div class="form-hint">A clear headshot. Profiles with a real photo get noticed first — startups feel more confident reaching out directly.</div>
+            <label class="consent-row" style="margin-top:12px;">
+              <input type="checkbox" name="photo-consent" id="photoConsentInput" value="yes" required/>
+              <span class="consent-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#0A0A0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="consent-text">Yes, show this photo on my public profile. <span class="req">*</span></span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -222,11 +231,6 @@
           <input type="checkbox" name="consent" value="yes" required/>
           <span class="consent-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#0A0A0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="consent-text">I agree to have my name, role, experience, and skills featured publicly on the verQ website if my profile is shown to startups. My email, phone, and other contact details will never be shown publicly. <span class="req">*</span></span>
-        </label>
-        <label class="consent-row" style="margin-top:14px;">
-          <input type="checkbox" name="photo-consent" value="yes"/>
-          <span class="consent-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.6 9L10 3" stroke="#0A0A0F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="consent-text">If I've uploaded a photo above, I separately agree that verQ may display it publicly alongside my profile. Without this checked, my profile will show my initials instead, even if a photo was uploaded.</span>
         </label>
       </div>
 
@@ -308,7 +312,6 @@
   window.addEventListener('orientationchange', checkMode);
   checkMode();
 })();
-</script>
 </script>
 
 </body>

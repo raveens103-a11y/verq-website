@@ -5,7 +5,13 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 const FORM_NAME = 'hr-partner';
-const MAX_RESULTS = 8;
+// This used to be capped at 8, which silently dropped any consented partner
+// once more than 8 others had applied more recently than them — a real
+// applicant with fully confirmed consent and photo consent could vanish from
+// the site for no reason other than "too many people applied after them."
+// Match this to the pagination cap below (500) so a consented partner is
+// never excluded purely because of how many others have since applied.
+const MAX_RESULTS = 500;
 const CACHE_TTL_MS = 60_000; // avoid hammering the Netlify API on every page load
 
 // Fields safe to expose publicly. Everything else (email, phone, linkedin,
@@ -18,9 +24,30 @@ const CACHE_TTL_MS = 60_000; // avoid hammering the Netlify API on every page lo
 // literal text '["Recruitment", "Payroll"]' rather than an actual array.
 // Handle all three so a real submission never renders as one raw blob.
 function parseSkillsField(skillsRaw) {
-  if (Array.isArray(skillsRaw)) return skillsRaw.map(s => String(s).trim()).filter(Boolean);
+  // A single item that is itself still a bracketed/quoted string means one
+  // parse pass wasn't enough (seen in practice: Netlify sometimes wraps an
+  // already-stringified array as the lone element of a 1-item array, or
+  // double-encodes it with an extra layer of quotes). Re-run the whole
+  // parser on that item rather than exposing it as a literal skill name.
+  if (Array.isArray(skillsRaw)) {
+    if (skillsRaw.length === 1 && typeof skillsRaw[0] === 'string') {
+      const inner = skillsRaw[0].trim();
+      if (inner.startsWith('[') || (inner.startsWith('"') && inner.includes('['))) {
+        return parseSkillsField(skillsRaw[0]);
+      }
+    }
+    return skillsRaw.map(s => String(s).trim()).filter(Boolean);
+  }
   if (typeof skillsRaw === 'string') {
-    const trimmed = skillsRaw.trim();
+    let trimmed = skillsRaw.trim();
+    // Peel off one extra layer of JSON-string quoting if present, e.g.
+    // '"[\"Recruitment\", \"Payroll\"]"' instead of '["Recruitment", "Payroll"]'.
+    if (trimmed.startsWith('"') && trimmed.endsWith('"') && trimmed.length > 1) {
+      try {
+        const unwrapped = JSON.parse(trimmed);
+        if (typeof unwrapped === 'string') trimmed = unwrapped.trim();
+      } catch (e) { /* not a valid quoted string — leave as-is */ }
+    }
     if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
       try {
         const parsed = JSON.parse(trimmed);
