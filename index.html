@@ -654,6 +654,20 @@ footer {
 
 /* HOW IT WORKS */
 .how-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+
+/* TESTIMONIAL — single featured quote; add more .testi-card blocks to grow it into a grid */
+.testi-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
+.testi-grid { display: grid; grid-template-columns: minmax(0, 760px); justify-content: center; gap: var(--sp-card, 20px); margin-top: var(--sp-heading, 56px); }
+.testi-card { position: relative; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 40px 44px 36px; overflow: hidden; transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+.testi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--cyan)); }
+.testi-card:hover { border-color: rgba(0,221,240,0.24); }
+.testi-mark { font-family: 'Space Grotesk', sans-serif; font-size: 64px; line-height: 0.6; color: var(--accent); opacity: 0.55; height: 28px; margin-bottom: 14px; }
+.testi-quote { font-size: 17px; line-height: 1.7; color: var(--white); margin: 0 0 28px; }
+.testi-author { display: flex; align-items: center; gap: 14px; padding-top: 22px; border-top: 1px solid var(--border); }
+.testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: #14B8A6; color: #0A0A0F; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.testi-name { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); }
+.testi-role { font-size: 12.5px; color: var(--cyan); margin-top: 2px; }
+@media (max-width: 560px) { .testi-card { padding: 28px 22px 26px; } .testi-quote { font-size: 15.5px; } }
 .steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: var(--sp-heading); position: relative; }
 .steps-grid::before { content: ''; position: absolute; top: 27px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
 .step-item { text-align: center; padding: 0 12px; }
@@ -742,24 +756,6 @@ footer {
 /* MARKETPLACE METRICS — its own section, editorial layout */
 .metrics-section { padding: 64px 5% var(--sp-section); position: relative; z-index: 1; display: flex; justify-content: center; border-top: 1px solid var(--border); }
 
-/* RECENTLY MATCHED — promoted from a floating widget (previously hidden
-   below 1500px viewport width) into a proper section visible everywhere */
-.recent-section { padding: var(--sp-section) 5%; position: relative; z-index: 1; border-top: 1px solid var(--border); }
-.activity-feed { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-card); margin-top: var(--sp-heading); }
-.activity-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 18px; display: flex; align-items: center; gap: 12px; box-shadow: none; animation: slideIn 0.5s ease both; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
-.activity-card:hover { transform: translateY(-3px); border-color: rgba(168,230,0,0.2); box-shadow: var(--glow); }
-.activity-card:nth-child(2) { animation-delay:0.1s; }
-.activity-card:nth-child(3) { animation-delay:0.2s; }
-.activity-card:nth-child(4) { animation-delay:0.3s; }
-@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
-.ac-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; flex-shrink:0; }
-.ac-info { flex:1; min-width:0; }
-.ac-name { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--white); }
-.ac-detail { font-size:12px; color:var(--muted); margin-top:2px; }
-.ac-time { font-size:11px; color:var(--accent); font-weight:600; white-space:nowrap; }
-.ac-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); flex-shrink:0; animation:pulse 2s infinite; }
-@media (max-width:1024px) { .activity-feed { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width:560px) { .activity-feed { grid-template-columns: 1fr; } }
 
 /* (stat-num sizing now lives with the editorial stats-bar rules above) */
 
@@ -785,7 +781,6 @@ footer {
 /* SECTION EYEBROW ANIMATED DOT */
 .eyebrow::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--cyan); margin-right:8px; animation:pulse 2s infinite; vertical-align:middle; }
 
-/* (activity feed is now a normal in-flow section — no width-based hiding needed) */
 
 
 /* Card watermark shared */
@@ -1003,38 +998,6 @@ footer {
   </div>
 </section>
 
-<!-- RECENTLY MATCHED -->
-<section class="recent-section">
-  <span class="eyebrow">Live on verQ</span>
-  <h2 class="section-title">Recently matched requirements.</h2>
-  <div class="activity-feed">
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#A8E600,#7EC800);color:#0A0A0F">SK</div>
-      <div class="ac-info"><div class="ac-name">Sejal Khandelwal</div><div class="ac-detail">Matched for E-commerce role</div></div>
-      <div class="ac-time">2m ago</div>
-      <div class="ac-dot"></div>
-    </div>
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#A855F7,#7C3AED);color:#fff">RB</div>
-      <div class="ac-info"><div class="ac-name">Rohit Bhardwaj</div><div class="ac-detail">Shortlisted for IT startup</div></div>
-      <div class="ac-time">11m ago</div>
-      <div class="ac-dot"></div>
-    </div>
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#14B8A6,#0D9488);color:#fff">SM</div>
-      <div class="ac-info"><div class="ac-name">Suhani Mishra</div><div class="ac-detail">Compliance audit — CEAT</div></div>
-      <div class="ac-time">38m ago</div>
-      <div class="ac-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div>
-    </div>
-    <div class="activity-card">
-      <div class="ac-avatar" style="background:linear-gradient(135deg,#F97316,#EA580C);color:#fff">AB</div>
-      <div class="ac-info"><div class="ac-name">Ankita Biswas</div><div class="ac-detail">Joined — D2C brand</div></div>
-      <div class="ac-time">1h ago</div>
-      <div class="ac-dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan)"></div>
-    </div>
-  </div>
-</section>
-
 <!-- HOW IT WORKS -->
 <section class="how-section" id="how">
   <span class="eyebrow">How It Works</span>
@@ -1045,6 +1008,25 @@ footer {
     <div class="step-item reveal"><div class="step-circle"><span class="step-num">03</span><svg class="step-svg" width="30" height="30" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="13" r="5" fill="rgba(168,230,0,0.1)" stroke="currentColor" stroke-width="1.5"/><path d="M9 28 Q9 21 18 21 Q27 21 27 28" fill="rgba(168,230,0,0.08)" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M22 17 L24 19 L28 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="step-title">Review &amp; select</div><div class="step-desc">Profiles with our honest personal assessment.</div></div>
     <div class="step-item reveal"><div class="step-circle"><span class="step-num">04</span><svg class="step-svg" width="30" height="30" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="18" r="4.5" fill="rgba(168,230,0,0.1)" stroke="currentColor" stroke-width="1.5"/><circle cx="26" cy="18" r="4.5" fill="rgba(168,230,0,0.1)" stroke="currentColor" stroke-width="1.5"/><line x1="14.5" y1="18" x2="21.5" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="19" y1="15" x2="22" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="19" y1="21" x2="22" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="9" r="2.5" fill="rgba(168,230,0,0.15)" stroke="currentColor" stroke-width="1.1"/><circle cx="26" cy="27" r="2.5" fill="rgba(168,230,0,0.15)" stroke="currentColor" stroke-width="1.1"/></svg></div><div class="step-title">Work tracked</div><div class="step-desc">Contracts and timesheets via verQ.</div></div>
     <div class="step-item reveal"><div class="step-circle"><span class="step-num">05</span><svg class="step-svg" width="30" height="30" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="24" height="16" rx="3" fill="rgba(168,230,0,0.08)" stroke="currentColor" stroke-width="1.5"/><line x1="6" y1="15" x2="30" y2="15" stroke="currentColor" stroke-width="1.4" opacity="0.6"/><rect x="10" y="19" width="6" height="3" rx="1" fill="currentColor" opacity="0.7"/><circle cx="26" cy="27" r="5" fill="rgba(168,230,0,0.18)" stroke="currentColor" stroke-width="1.4"/><path d="M23 27 L25.5 29.5 L30 24.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="step-title">Pay on joining</div><div class="step-desc">100% fee due only on candidate's joining date.</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" id="testimonials">
+  <span class="eyebrow">What clients say</span>
+  <h2 class="section-title">Hiring help that actually listens.</h2>
+  <div class="testi-grid">
+    <figure class="testi-card reveal" style="margin:0;">
+      <div class="testi-mark" aria-hidden="true">&ldquo;</div>
+      <blockquote class="testi-quote" style="margin:0 0 28px;">We had a good experience working with verQ for our hiring requirements. The team was responsive, understood our requirements well, and helped us connect with relevant candidates. We appreciate their support and look forward to working with them again.</blockquote>
+      <figcaption class="testi-author">
+        <div class="testi-avatar" aria-hidden="true">M</div>
+        <div>
+          <div class="testi-name">Minakshi</div>
+          <div class="testi-role">Co-founder, Maxsosha</div>
+        </div>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -1492,43 +1474,6 @@ if (window.VerqPartnersShared) {
     });
   }).catch(() => { /* leave the existing static counts in place if this fails */ });
 }
-
-// ── ROTATING ACTIVITY CARDS ──
-const activities = [
-  {initials:'SK', bg:'linear-gradient(135deg,#A8E600,#7EC800)', color:'#0A0A0F', name:'Sejal Khandelwal', detail:'Matched for E-commerce role', time:'2m ago', live:true},
-  {initials:'RB', bg:'linear-gradient(135deg,#A855F7,#7C3AED)', color:'#fff', name:'Rohit Bhardwaj', detail:'Shortlisted for IT startup', time:'11m ago', live:true},
-  {initials:'SM', bg:'linear-gradient(135deg,#14B8A6,#0D9488)', color:'#fff', name:'Suhani Mishra', detail:'Compliance audit — CEAT', time:'38m ago', live:false},
-  {initials:'AB', bg:'linear-gradient(135deg,#F97316,#EA580C)', color:'#fff', name:'Ankita Biswas', detail:'Joined — D2C brand', time:'1h ago', live:false},
-  {initials:'DS', bg:'linear-gradient(135deg,#EC4899,#BE185D)', color:'#fff', name:'Deepa Sen', detail:'Matched for BFSI role', time:'2h ago', live:false},
-  {initials:'NN', bg:'linear-gradient(135deg,#F59E0B,#D97706)', color:'#0A0A0F', name:'Nakshatra Nagar', detail:'Payroll setup complete', time:'3h ago', live:false},
-];
-
-let activityIndex = 0;
-let slotIndex = 0;
-setInterval(() => {
-  const feed = document.querySelector('.activity-feed');
-  if (!feed) return;
-  const cards = feed.querySelectorAll('.activity-card');
-  if (cards.length === 0) return;
-  activityIndex = (activityIndex + 1) % activities.length;
-  const a = activities[activityIndex];
-  // Update one existing card's content in place, rather than inserting a
-  // new node and removing an old one — the feed always has exactly this
-  // many cards, never briefly more, so the grid around it never reflows
-  // and the rest of the page never shifts.
-  const card = cards[slotIndex % cards.length];
-  slotIndex++;
-  card.style.transition = 'opacity 0.3s ease';
-  card.style.opacity = '0';
-  setTimeout(() => {
-    card.innerHTML = `
-      <div class="ac-avatar" style="background:${a.bg};color:${a.color}">${a.initials}</div>
-      <div class="ac-info"><div class="ac-name">${a.name}</div><div class="ac-detail">${a.detail}</div></div>
-      <div class="ac-time">${a.time}</div>
-      <div class="ac-dot" style="${a.live ? '' : 'background:var(--cyan);box-shadow:0 0 6px var(--cyan)'}"></div>`;
-    card.style.opacity = '1';
-  }, 300);
-}, 3000);
 
 // ── SCROLL REVEAL ──
 const revealObs = new IntersectionObserver(entries => {
