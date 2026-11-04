@@ -1128,6 +1128,8 @@ footer {
   const cycles = [
     {
       category: "Recruitment",
+      roleRe: /recruit|talent acq|hiring|sourcing|staffing/i,
+      skillRe: /recruit|talent acq|sourcing|staffing/i,
       keywords: ["recruit","engineer","backend","node","aws","microservices","bangalore","developer","tech","d2c"],
       query: "Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore",
       parse: [
@@ -1144,6 +1146,8 @@ footer {
     },
     {
       category: "Payroll",
+      roleRe: /payroll|compensation|salary|c&b|pf|esic/i,
+      skillRe: /payroll|compensation|salary|pf|esic/i,
       keywords: ["payroll","salary","pf","esic"],
       query: "Need someone to set up payroll for 25 employees.",
       parse: [
@@ -1160,6 +1164,8 @@ footer {
     },
     {
       category: "HRBP",
+      roleRe: /hrbp|business partner|hr ops|hr operations|hr generalist|generalist|people ops|people operations|hr manager|hr executive|hr specialist/i,
+      skillRe: /hrbp|hr ops|hr operations|generalist|business partner/i,
       keywords: ["hrbp","business partner","series a","fractional","startup","generalist"],
       query: "Looking for a fractional HRBP for a Series A startup.",
       parse: [
@@ -1176,6 +1182,8 @@ footer {
     },
     {
       category: "Compliance",
+      roleRe: /compliance|posh|labour law|labor law|statutory/i,
+      skillRe: /compliance|posh|labour law|statutory/i,
       keywords: ["posh","compliance","audit","policy","labour law","mumbai"],
       query: "Need a POSH compliance audit for our office in Mumbai.",
       parse: [
@@ -1281,15 +1289,21 @@ footer {
   // so the caller can fall back to the demo cards.
   function pickRealExperts(cycle){
     if (!realPartners || realPartners.length === 0) return null;
-    const inCat = realPartners.filter(p => (p.categories || []).includes(cycle.category));
-    if (inCat.length === 0) return null;
-    // Photo profiles first; within each group, partners whose own role fits the
-    // category rank above those who only list it among their specialisations.
-    const shared = window.VerqPartnersShared;
-    const roleFits = p => shared ? shared.categorize(p.role).includes(cycle.category) : false;
-    const rank = p => (p.photo ? 2 : 0) + (roleFits(p) ? 1 : 0);
-    const ranked = inCat.map((p, i) => ({ p, i })).sort((a, b) => (rank(b.p) - rank(a.p)) || (a.i - b.i)).map(x => x.p);
-    return { top: ranked.slice(0, 3), total: inCat.length };
+    // A partner fits a search when their own role matches (strongest signal) or
+    // they list a matching skill. Nobody is included on category alone, so a
+    // payroll search never fills up with recruiters.
+    const roleFit = p => cycle.roleRe.test(p.role || '');
+    const skillFit = p => (p.allSkills || p.skills || []).some(sk => cycle.skillRe.test(sk));
+    // Tiers, best first: photo + role match, photo + skill match, then the same without a photo.
+    const tier = p => {
+      const r = roleFit(p), sk = skillFit(p);
+      if (!r && !sk) return 99;
+      return (p.photo ? 0 : 2) + (r ? 0 : 1);
+    };
+    const fits = realPartners.map((p, i) => ({ p, i, t: tier(p) })).filter(x => x.t < 99);
+    if (fits.length === 0) return null;
+    fits.sort((a, b) => (a.t - b.t) || (a.i - b.i));
+    return { top: fits.slice(0, 3).map(x => x.p), total: fits.length };
   }
 
   async function triggerSearch(query){

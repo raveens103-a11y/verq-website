@@ -78,6 +78,7 @@
       experience: p.experience,
       role: p.role,
       skills: parseSkillsField(p.skills),
+      allSkills: parseSkillsField(p.allSkills || p.skills),
       workType: p.availability || '',
       workMode: '',
       status: p.availability || '',

@@ -121,6 +121,7 @@ function toPublicProfile(sub) {
     experience: (d.experience || '').trim(),
     role: (d.role || '').trim(),
     skills: skills.slice(0, 3),
+    allSkills: skills.slice(0, 12), // full list, used only for matching searches to partners
     availability: (d.availability || '').trim(),
     photo,
     submittedAt: sub.created_at || null,
