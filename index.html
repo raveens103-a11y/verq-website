@@ -556,6 +556,8 @@ footer {
   font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #0A0A0F; flex-shrink: 0; }
 .rcard-avail { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: rgba(0,221,240,0.75);
   background: rgba(0,221,240,0.04); border: 1px solid rgba(0,221,240,0.14); padding: 3px 8px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+.rcard-avatar-photo { object-fit: cover; background: var(--surface2); }
+.rcard-loc { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
 .rcard-rating { font-size: 12px; color: #FFC94A; font-weight: 600; display: flex; align-items: center; gap: 3px; margin-bottom: 2px; }
 .rcard-name { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 1px; }
 .rcard-role { font-size: 12.5px; color: var(--cyan); }
@@ -1125,6 +1127,7 @@ footer {
 (function(){
   const cycles = [
     {
+      category: "Recruitment",
       keywords: ["recruit","engineer","backend","node","aws","microservices","bangalore","developer","tech","d2c"],
       query: "Need a recruiter for a senior backend engineer with Node.js and AWS experience in Bangalore",
       parse: [
@@ -1140,6 +1143,7 @@ footer {
       ]
     },
     {
+      category: "Payroll",
       keywords: ["payroll","salary","pf","esic"],
       query: "Need someone to set up payroll for 25 employees.",
       parse: [
@@ -1155,6 +1159,7 @@ footer {
       ]
     },
     {
+      category: "HRBP",
       keywords: ["hrbp","business partner","series a","fractional","startup","generalist"],
       query: "Looking for a fractional HRBP for a Series A startup.",
       parse: [
@@ -1170,6 +1175,7 @@ footer {
       ]
     },
     {
+      category: "Compliance",
       keywords: ["posh","compliance","audit","policy","labour law","mumbai"],
       query: "Need a POSH compliance audit for our office in Mumbai.",
       parse: [
@@ -1253,6 +1259,39 @@ footer {
     resultsGrid.innerHTML = '';
   }
 
+  // Real partners, loaded once up front (photo profiles already sorted first by
+  // VerqPartnersShared). The match results show these instead of invented people.
+  let realPartners = null;
+  // This script sits above the partners-shared.js include, so wait for the page
+  // to finish loading before calling it.
+  const realPartnersReady = new Promise(resolve => {
+    const go = () => {
+      const shared = window.VerqPartnersShared;
+      (shared ? shared.loadAllPartners() : Promise.resolve([]))
+        .then(list => { realPartners = list || []; })
+        .catch(() => { realPartners = []; })
+        .then(resolve);
+    };
+    if (document.readyState === 'complete') go();
+    else window.addEventListener('load', go);
+  });
+
+  // Top 3 real partners for a cycle's category: photo profiles first, then the
+  // rest in the order loadAllPartners returned them. Null if none are available,
+  // so the caller can fall back to the demo cards.
+  function pickRealExperts(cycle){
+    if (!realPartners || realPartners.length === 0) return null;
+    const inCat = realPartners.filter(p => (p.categories || []).includes(cycle.category));
+    if (inCat.length === 0) return null;
+    // Photo profiles first; within each group, partners whose own role fits the
+    // category rank above those who only list it among their specialisations.
+    const shared = window.VerqPartnersShared;
+    const roleFits = p => shared ? shared.categorize(p.role).includes(cycle.category) : false;
+    const rank = p => (p.photo ? 2 : 0) + (roleFits(p) ? 1 : 0);
+    const ranked = inCat.map((p, i) => ({ p, i })).sort((a, b) => (rank(b.p) - rank(a.p)) || (a.i - b.i)).map(x => x.p);
+    return { top: ranked.slice(0, 3), total: inCat.length };
+  }
+
   async function triggerSearch(query){
     if (!query || !query.trim()) return;
     const myToken = ++searchToken;
@@ -1289,7 +1328,12 @@ footer {
     // STAGE: RESULTS — the processing checklist is done its job (building
     // confidence); only the outcome remains on screen now.
     if (myToken !== searchToken) return;
-    foundText.textContent = `${cycle.experts.length} HR partners matched to your requirement`;
+    await realPartnersReady;
+    if (myToken !== searchToken) return;
+    const real = pickRealExperts(cycle);
+    foundText.textContent = real
+      ? `Top ${real.top.length} of ${real.total} verified HR partners for your requirement`
+      : `${cycle.experts.length} HR partners matched to your requirement`;
     showStage(stageResults);
 
     // The submitted requirement STAYS in the box — it's a persistent
@@ -1297,6 +1341,30 @@ footer {
     // something that resets the instant results land. It only clears later
     // when the whole cycle resets back to a genuinely empty idle state.
 
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    if (real) {
+      real.top.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'rcard';
+        const avatar = p.photo
+          ? `<img class="rcard-avatar rcard-avatar-photo" src="${esc(p.photo)}" alt="${esc(p.name)}"/>`
+          : `<div class="rcard-avatar" style="background:${esc(p.color)};color:#0A0A0F">${esc(p.initials)}</div>`;
+        const avail = p.status || p.workType || '';
+        const roleLine = [p.role, p.experience].filter(Boolean).join(' · ');
+        card.innerHTML = `
+          <div class="rcard-top">
+            ${avatar}
+            ${avail ? `<span class="rcard-avail">${esc(avail)}</span>` : ''}
+          </div>
+          <div class="rcard-name">${esc(p.name)}</div>
+          <div class="rcard-role">${esc(roleLine)}</div>
+          ${p.city ? `<div class="rcard-loc">${esc(p.city)}</div>` : ''}
+          <div class="rcard-trust"></div>
+          <div class="rcard-tags">${(p.skills || []).slice(0, 3).map(t => `<span class="rcard-tag">${esc(t)}</span>`).join('')}</div>
+        `;
+        resultsGrid.appendChild(card);
+      });
+    } else {
     cycle.experts.forEach(e => {
       const card = document.createElement('div');
       card.className = 'rcard';
@@ -1313,6 +1381,7 @@ footer {
       `;
       resultsGrid.appendChild(card);
     });
+    }
     const cards = resultsGrid.querySelectorAll('.rcard');
     for (const card of cards){
       if (myToken !== searchToken) return;
@@ -1557,7 +1626,11 @@ document.querySelectorAll('.step-card').forEach(card => {
         showStaticFallback();
         return;
       }
-      grid.innerHTML = profiles.slice(0, 4).map(cardHTML).join('');
+      // Profiles with a photo lead; within each group the newest come first.
+      const ranked = window.VerqPartnersShared
+        ? window.VerqPartnersShared.sortPhotoFirst(profiles)
+        : profiles;
+      grid.innerHTML = ranked.slice(0, 4).map(cardHTML).join('');
     })
     .catch(() => {
       // Function not deployed yet, misconfigured, or network error —

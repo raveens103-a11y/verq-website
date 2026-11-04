@@ -86,7 +86,26 @@
       initials: p.initials,
       color: p.color,
       photo: p.photo || null,
+      submittedAt: p.submittedAt || null,
     };
+  }
+
+  // Partners with a profile photo come first, since a real face builds more
+  // trust than initials. Within each group, newer live submissions lead,
+  // and anything without a date (the static baseline) keeps its original
+  // order after them. Array.sort is stable, so ties never shuffle.
+  function sortPhotoFirst(list) {
+    const time = p => (p.submittedAt ? new Date(p.submittedAt).getTime() || 0 : 0);
+    return list
+      .map((p, i) => ({ p, i }))
+      .sort((a, b) => {
+        const ap = a.p.photo ? 1 : 0, bp = b.p.photo ? 1 : 0;
+        if (ap !== bp) return bp - ap;
+        const at = time(a.p), bt = time(b.p);
+        if (at !== bt) return bt - at;
+        return a.i - b.i;
+      })
+      .map(x => x.p);
   }
 
   function mergeByName(staticList, liveList) {
@@ -103,9 +122,9 @@
     const staticList = global.VERQ_PARTNERS || [];
     return fetch('/.netlify/functions/hr-partners')
       .then(res => res.ok ? res.json() : Promise.reject(new Error('bad response')))
-      .then(data => mergeByName(staticList, (data && data.profiles) || []))
-      .catch(() => staticList.slice());
+      .then(data => sortPhotoFirst(mergeByName(staticList, (data && data.profiles) || [])))
+      .catch(() => sortPhotoFirst(staticList.slice()));
   }
 
-  global.VerqPartnersShared = { CATEGORIES, CATEGORY_MAP, categorize, loadAllPartners };
+  global.VerqPartnersShared = { CATEGORIES, CATEGORY_MAP, categorize, loadAllPartners, sortPhotoFirst };
 })(window);
